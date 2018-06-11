@@ -10,6 +10,9 @@ import com.game.common.vo.BaseMenuVO;
 import com.game.module.tavern.mediator.TavernMediator;
 import com.signal.SignalDispatcher;
 
+import config.ConfigManager;
+import config.ceshi.ICeShiCfg;
+
 import laya.events.Event;
 
 import ui.tavern.TavernViewUI;
@@ -107,7 +110,6 @@ public class TavernView extends BaseFrame {
     }
 
     public function refresh():void {
-        trace("收到响应");
         ui.leftBtn.visible = dir == -1;
         ui.rightBtn.visible = dir == 1;
     }

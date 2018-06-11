@@ -1,0 +1,63 @@
+#parse("ActionScript File Header.as")
+package ${PACKAGE_NAME}#if (${PACKAGE_NAME} && ${PACKAGE_NAME} != "") #end{ 
+import com.game.common.view.BaseDialog;
+import com.signal.SignalDispatcher;
+
+import laya.events.Event;
+import laya.ui.Dialog;
+import laya.utils.Handler;
+
+import com.game.common.mvc.BaseMediator;
+
+${Access_modifier} class ${NAME} extends BaseDialog {
+    private var ui:*;
+    public var vo:*;
+    //public var buySignal:SignalDispatcher;
+
+
+    public function ${NAME}() {
+        super()
+        //buySignal = new SignalDispatcher();
+    }
+
+    override public function disposeUI():void {
+        closeHandler.clear();
+        closeHandler = null;
+        removeEventHandler();
+    }
+
+    override public function getMediator():BaseMediator {
+        //return new BuyPopupMediator(this);
+    }
+
+    override public function setContent():void {
+        //ui = new BuyPopupViewUI();
+        setUI(ui);
+        super.setContent();
+
+        addEventHandler();
+    }
+
+    private function addEventHandler():void {
+        closeHandler = Handler.create(this, __doClose, null, false);
+
+        //ui.addBtn.on(Event.MOUSE_DOWN, this, startAdd);
+    }
+
+    private function removeEventHandler():void {
+        //ui.addBtn.off(Event.MOUSE_DOWN, this, startAdd);
+    }
+
+    override public function refresh():void{
+        if(!vo){
+            return;
+        }
+        
+    }
+
+    private function __doClose(type:String):void {
+        if (type == Dialog.SURE) {
+        }
+    }
+}
+}

@@ -1,0 +1,53 @@
+﻿#parse("ActionScript File Header.as")
+package ${PACKAGE_NAME}#if (${PACKAGE_NAME} && ${PACKAGE_NAME} != "") #end{ 
+import com.game.common.view.BaseWindow;
+import com.game.common.mvc.BaseMediator;
+
+${Access_modifier} class ${NAME} extends BaseFrame{
+    private var resArray:Array = [];
+   
+    public function ${NAME}() {
+        //exchangeSignal = new SignalDispatcher();
+        super(resArray);
+    }
+
+    public function set vo(value:Object):void {
+       
+    }
+   
+
+    override public function dispose():void {
+        //exchangeSignal.dispose();
+        super.dispose();
+    }
+
+    override public function getMediator():BaseMediator {      
+        //return new ArenaMediator(this);
+    }
+
+    override public function hide():void {
+        super.hide();
+    }
+
+    override public function show():void {
+        super.show();
+    }
+
+    override public function onComplete():void {
+        __onComplete();
+        super.onComplete();
+      
+    }
+    function __onComplete():void {
+        //setToolBarItems([new BaseMenuVO("任务"), new BaseMenuVO("日常")]);
+        //setViewStackItems([new TaskView(), new TaskActivityView()]);
+        setToolBarSelect(0);
+    }
+
+
+    override public function toolBarSelectHandler(index:int):void {
+        super.toolBarSelectHandler(index);
+    }
+
+}
+}

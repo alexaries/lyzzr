@@ -1,0 +1,46 @@
+#parse("ActionScript File Header.as")
+package ${PACKAGE_NAME}#if (${PACKAGE_NAME} && ${PACKAGE_NAME} != "") #end{ 
+import com.game.common.view.BaseWindow;
+import com.game.common.mvc.BaseMediator;
+
+${Access_modifier} class ${NAME} extends BaseWindow{
+ 
+    var _vo:Object;
+    public function ${NAME}() {
+        super ([]);
+    }
+
+    public function set vo(value:Object):void {
+        _vo=value;
+    }
+    public function get vo(){
+        return _vo;
+    }
+
+    override public function dispose():void {
+        super.dispose();
+    }
+
+    override public function getMediator():BaseMediator {
+        return super.getMediator();
+    }
+
+    override public function hide():void {
+        super.hide();
+    }
+
+    override public function show():void {
+        super.show();
+    }
+
+    override public function onComplete():void {
+  	__onComplete();
+        super.onComplete();
+      
+    }
+    function  __onComplete():void{
+
+    }
+
+}
+}

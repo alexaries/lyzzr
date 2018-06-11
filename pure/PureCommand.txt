@@ -1,0 +1,15 @@
+#parse("ActionScript File Header.as")
+package ${PACKAGE_NAME}#if (${PACKAGE_NAME} && ${PACKAGE_NAME} != "") #end{
+
+import org.puremvc.as3.interfaces.ICommand;
+import org.puremvc.as3.interfaces.INotification;
+import com.game.common.mvc.BaseCommand;
+
+${Access_modifier} class ${NAME} extends BaseCommand implements ICommand {
+    public function ${NAME}() {
+    }
+    override public function execute(notification:INotification):void {
+
+    }
+}
+}

@@ -1,0 +1,23 @@
+5v5->gift5v5
+mission/61.xml->a61.xml
+mission/new upgrade.xml->mission/new_upgrade.xml
+language.txt ->lang/language.txt
+help/content.xml->help/content.txt
+
+message/titleName.xml->message/titleShowName.xml
+
+item/itemProp.txt->item/itemProp.csv
+
+item/trumpProp.xml
+
+<item level="0" color="2" str="1" phy="1" agi="1" int=
+改成 <item level="0" color="2" str="1" phy="1" agi="1" intelligence=  
+
+istance/explo.xml
+  <area id="1" title="1000" item="9012" itemname="1001">
+改成  <area id="1" title="1000" itemid="9012" itemname="1001">
+
+
+
+scene/city.xml
+default="  改成defaulted=" 

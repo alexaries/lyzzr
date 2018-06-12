@@ -20,7 +20,8 @@ public class BattleView extends BaseWindow {
 
     public var progressView:BattleProgressView;//节目得分
     public var strengthView:BattleStrengthView;//公司实力
-    public var eventView:BattleEventView;//特殊事件
+    public var eventView:BattleEventView;//特殊事件以及事件结果
+    public var fetterView:BattleFetterView;//召唤羁绊
 
     public function BattleView() {
         super([]);
@@ -84,6 +85,12 @@ public class BattleView extends BaseWindow {
         eventView.pos(0, 400);
     }
 
+    public function addFetterView():void {
+        if (!fetterView)fetterView = new BattleFetterView();
+        addChildView(fetterView);
+        fetterView.pos(0, 400);
+    }
+
     private function addChildView(view:Sprite):void {
         if (view && !ui.container.contains(view)) {
             ui.container.addChild(view);
@@ -111,10 +118,18 @@ public class BattleView extends BaseWindow {
         }
     }
 
+    public function removeFetterView():void {
+        if (fetterView) {
+            fetterView.tryDispose();
+            fetterView = null;
+        }
+    }
+
     public function clear():void {
         removeProgressView();
         removeStrengthView();
         removeEventView();
+        removeFetterView();
     }
 
     override public function dispose():void {

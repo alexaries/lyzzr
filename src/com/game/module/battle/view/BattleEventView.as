@@ -17,11 +17,15 @@ import ui.battle.BattleEventViewUI;
 public class BattleEventView extends BaseView {
     private var ui:BattleEventViewUI;
 
+    //info
     public var skipSignal:SignalDispatcher;
     public var moreSignal:SignalDispatcher;
     public var sureSignal:SignalDispatcher;
 
     public var itemSignal:SignalDispatcher;
+
+    //result
+    public var resultSureSignal:SignalDispatcher;
 
     public function BattleEventView() {
         super([]);
@@ -29,6 +33,7 @@ public class BattleEventView extends BaseView {
         moreSignal = new SignalDispatcher();
         sureSignal = new SignalDispatcher();
         itemSignal = new SignalDispatcher();
+        resultSureSignal = new SignalDispatcher();
     }
 
     override public function getMediator():BaseMediator {
@@ -55,6 +60,9 @@ public class BattleEventView extends BaseView {
     }
 
     private function init():void {
+        updateState(0);
+
+        //info
         ui.skipBtn.on(Event.CLICK, this, onClickSkipBtn, null);
         ui.moreBtn.on(Event.CLICK, this, onClickMoreBtn, null);
         ui.sureBtn.on(Event.CLICK, this, onClickSureBtn, null);
@@ -73,6 +81,13 @@ public class BattleEventView extends BaseView {
         ui.playerList.array = arr;
 
         itemSignal.getSignal(this).listen(onItemClick);
+
+        //result
+        ui.resultSureBtn.on(Event.CLICK, this, onClickResultSureBtn, null);
+    }
+
+    private function onClickResultSureBtn(e:Event):void {
+        if (resultSureSignal)resultSureSignal.dispatch(null);
     }
 
     public function onItemClick(item:BattleSelectionItem, selectIndex:int) {
@@ -98,6 +113,7 @@ public class BattleEventView extends BaseView {
 
     private function onClickSureBtn(e:Event):void {
         if (sureSignal)sureSignal.dispatch(null);
+        updateState(1);
     }
 
     private function onClickMoreBtn(e:Event):void {
@@ -108,17 +124,24 @@ public class BattleEventView extends BaseView {
         if (skipSignal)skipSignal.dispatch(null);
     }
 
+    public function updateState(state:int = 0):void {
+        ui.eventInfo.visible = state == 0;
+        ui.eventResult.visible = state == 1;
+    }
+
     override public function dispose():void {
         super.dispose();
         ui.skipBtn.off(Event.CLICK, this, onClickSkipBtn, null);
         ui.moreBtn.off(Event.CLICK, this, onClickMoreBtn, null);
         ui.sureBtn.off(Event.CLICK, this, onClickSureBtn, null);
+        ui.resultSureBtn.off(Event.CLICK, this, onClickResultSureBtn, null);
         if (ui.list.renderHandler)ui.list.renderHandler.clear();
 
         skipSignal.dispose();
         moreSignal.dispose();
         sureSignal.dispose();
         itemSignal.dispose();
+        resultSureSignal.dispose();
     }
 }
 }

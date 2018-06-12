@@ -11,7 +11,6 @@ import com.game.vo.MenuWinType;
 
 import org.puremvc.as3.interfaces.IMediator;
 import org.puremvc.as3.interfaces.INotification;
-import org.puremvc.as3.patterns.observer.Notification;
 
 public class BattleMediator extends BaseMediator implements IMediator {
     public static const NAME:String = "BattleMediator";
@@ -43,7 +42,8 @@ public class BattleMediator extends BaseMediator implements IMediator {
 
     override public function listNotificationInterests():Array {
         return [
-            BattleEvent.BATTLE_STRENGTH_FINISHED
+            BattleEvent.BATTLE_STRENGTH_FINISHED,
+            BattleEvent.BATTLE_EVENT_FINISHED
         ];
     }
 
@@ -56,12 +56,21 @@ public class BattleMediator extends BaseMediator implements IMediator {
                 view.removeStrengthView();
                 eventDisplay();
                 break;
+            case BattleEvent.BATTLE_EVENT_FINISHED:
+                view.removeEventView();
+                fetterDisplay();
+                break;
         }
     }
 
     //特殊事件
     public function eventDisplay():void {
         view.addEventView();
+    }
+
+    //召唤羁绊
+    public function fetterDisplay():void {
+        view.addFetterView();
     }
 }
 }

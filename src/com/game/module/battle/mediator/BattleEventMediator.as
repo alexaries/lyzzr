@@ -3,10 +3,12 @@
  */
 package com.game.module.battle.mediator {
 import com.game.common.mvc.BaseMediator;
+import com.game.module.battle.events.BattleEvent;
 import com.game.module.battle.view.BattleEventView;
 
 import org.puremvc.as3.interfaces.IMediator;
 import org.puremvc.as3.interfaces.INotification;
+import org.puremvc.as3.patterns.observer.Notification;
 
 public class BattleEventMediator extends BaseMediator implements IMediator {
     public static const NAME:String = "BattleEventMediator";
@@ -24,6 +26,11 @@ public class BattleEventMediator extends BaseMediator implements IMediator {
         view.skipSignal.getSignal(this).listen(onSkipClick);
         view.moreSignal.getSignal(this).listen(onMoreClick);
         view.sureSignal.getSignal(this).listen(onSureClick);
+        view.resultSureSignal.getSignal(this).listen(onResultSureClick);
+    }
+
+    private function onResultSureClick():void {
+        dispatch(new Notification(BattleEvent.BATTLE_EVENT_FINISHED));
     }
 
     private function onSureClick():void {

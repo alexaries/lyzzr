@@ -1729,6 +1729,7 @@ public class NotiEvent extends Notification implements INotification {
     public static const GEM_INFO_UPDATE:String = "gem_info_update";
     public static const SHOW_FRAME_MSG:String = "show_frame_msg";
 
+	public static const PLOT_PLAY:String = "plot_play";//播放 剧情 
 
     public static const SHOW_REDPOINT:String = "SHOW_REDPOINT";   //显示或隐藏红点
     public static const INFO_REDPOINT:String = "INFO_REDPOINT";   //分发接受到的红点消息

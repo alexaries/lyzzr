@@ -5,6 +5,7 @@ package com.game.module.battle.view {
 import com.game.common.mvc.BaseMediator;
 import com.game.common.view.BaseView;
 import com.game.module.battle.mediator.BattleFetterMediator;
+import com.game.module.battle.view.items.BattlePlayerItem;
 import com.game.module.copy.view.items.PropertyItem;
 import com.game.module.copy.view.items.PropertyValueItem;
 
@@ -57,14 +58,21 @@ public class BattleFetterView extends BaseView {
 
         ui.needList.itemRender = PropertyItem;
         ui.needList.renderHandler = Handler.create(this, onRenderNeedItem, null, false);
+        ui.needList.spaceX = 20;
+
+        ui.selectedList.itemRender = BattlePlayerItem;
+        ui.selectedList.renderHandler = Handler.create(this, onRenderPlayerItem, null, false);
+        ui.selectedList.spaceX = 40;
 
         ui.propertyList.itemRender = PropertyValueItem;
         ui.propertyList.renderHandler = Handler.create(this, onRenderPropertyItem, null, false);
         ui.propertyList.repeatX = 2;
         ui.propertyList.spaceX = 60;
         ui.propertyList.spaceY = 20;
+    }
 
-        
+    private function onRenderPlayerItem(cell:BattlePlayerItem, index:int):void {
+
     }
 
     private function onRenderPropertyItem(cell:PropertyValueItem, index:int):void {

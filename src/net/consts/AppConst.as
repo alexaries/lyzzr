@@ -8,9 +8,9 @@ public class AppConst {
     public static const height:Number = 1920;
 
     //应用宽度
-    public static var width:Number = 1080;
+    public static var width:Number = 1300;
 
-    public static const fullScreenWidth:Number = 1080;
+    public static const fullScreenWidth:Number = 1300;
     public static const fullScreenHeight:Number = 1920;
     //scaleMode
     //所有适配模式["noscale", "exactfit", "showall", "noborder", "full", "fixedwidth", "fixedheight"];

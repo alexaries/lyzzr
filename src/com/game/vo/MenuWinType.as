@@ -14,6 +14,9 @@ public class MenuWinType {
     public static const OPEN_CHAPTER:String = "open_chapter";//开启新的章节
     public static const ARENA:String = "arena";                //斗剑
 
+	public static const PLOT_VIEW:String = "plot_view";
+	
+	
     public static const HOTEL_INFO:String = "hotelInfo";       //酒馆
     public static const TAVERN_HIRE_VIEW:String = "tavern_hire_view";//招募成功界面
     public static const TAVERN_TU_VIEW:String = "tavern_tu_view";//散仙图鉴

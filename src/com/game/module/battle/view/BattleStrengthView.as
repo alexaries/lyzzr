@@ -5,18 +5,19 @@ package com.game.module.battle.view {
 import com.game.common.mvc.BaseMediator;
 import com.game.common.view.BaseView;
 import com.game.module.battle.mediator.BattleStrengthMediator;
+import com.signal.SignalDispatcher;
 
 import ui.battle.BattleStrengthViewUI;
 
 public class BattleStrengthView extends BaseView {
     private var ui:BattleStrengthViewUI;
+    public var finishSignal:SignalDispatcher;
+    private var delayTime:int = 1000;
 
     public function BattleStrengthView() {
         super([]);
-    }
 
-    override public function dispose():void {
-        super.dispose();
+        finishSignal = new SignalDispatcher();
     }
 
     override public function getMediator():BaseMediator {
@@ -40,7 +41,21 @@ public class BattleStrengthView extends BaseView {
     function __onComplete():void {
         ui = new BattleStrengthViewUI();
         addChild(ui);
+        init();
     }
 
+    private function init():void {
+        timerOnce(delayTime, this, delay);
+    }
+
+    private function delay():void {
+        if (finishSignal)finishSignal.dispatch(null);
+    }
+
+    override public function dispose():void {
+        super.dispose();
+        finishSignal.dispose();
+        clearTimer(this, delay);
+    }
 }
 }

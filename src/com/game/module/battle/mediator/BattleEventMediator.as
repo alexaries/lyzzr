@@ -1,27 +1,41 @@
 /**
- * Created by dingcj on 2018/6/1.
+ * Created by dingcj on 2018/6/11.
  */
 package com.game.module.battle.mediator {
 import com.game.common.mvc.BaseMediator;
-import com.game.module.battle.events.BattleEvent;
-import com.game.module.battle.view.BattleProgressView;
+import com.game.module.battle.view.BattleEventView;
 
 import org.puremvc.as3.interfaces.IMediator;
 import org.puremvc.as3.interfaces.INotification;
 
-public class BattleProgressMediator extends BaseMediator implements IMediator {
-    public static const NAME:String = "BattleProgressMediator";
+public class BattleEventMediator extends BaseMediator implements IMediator {
+    public static const NAME:String = "BattleEventMediator";
 
-    private function get view():BattleProgressView {
-        return getViewComponent() as BattleProgressView;
+    private function get view():BattleEventView {
+        return getViewComponent() as BattleEventView;
     };
-    public function BattleProgressMediator(__viewComponent:Object = null) {
+    public function BattleEventMediator(__viewComponent:Object = null) {
         super(NAME, __viewComponent);
     }
 
     override public function onRegister():void {
         super.onRegister();
         view.onCompleteSignal.getSignal(this).listen(instanceCompleteHander);
+        view.skipSignal.getSignal(this).listen(onSkipClick);
+        view.moreSignal.getSignal(this).listen(onMoreClick);
+        view.sureSignal.getSignal(this).listen(onSureClick);
+    }
+
+    private function onSureClick():void {
+
+    }
+
+    private function onMoreClick():void {
+
+    }
+
+    private function onSkipClick():void {
+
     }
 
     private function instanceCompleteHander():void {
@@ -33,9 +47,7 @@ public class BattleProgressMediator extends BaseMediator implements IMediator {
     }
 
     override public function listNotificationInterests():Array {
-        return [
-            BattleEvent.BATTLE_PROGRESS_UPDATE
-        ];
+        return [];
     }
 
     override public function handleNotification(notification:INotification):void {
@@ -43,15 +55,9 @@ public class BattleProgressMediator extends BaseMediator implements IMediator {
         var body:Object = notification.getBody();
 
         switch (name) {
-            case BattleEvent.BATTLE_PROGRESS_UPDATE:
-                var value:int = body as int;
-                updateProgress(value);
+            case "":
                 break;
         }
-    }
-
-    private function updateProgress(value:int):void {
-        view.updateProgress(value);
     }
 }
 }

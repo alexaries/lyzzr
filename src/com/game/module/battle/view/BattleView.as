@@ -20,6 +20,7 @@ public class BattleView extends BaseWindow {
 
     public var progressView:BattleProgressView;//节目得分
     public var strengthView:BattleStrengthView;//公司实力
+    public var eventView:BattleEventView;//特殊事件
 
     public function BattleView() {
         super([]);
@@ -65,29 +66,55 @@ public class BattleView extends BaseWindow {
         ui.x = (Laya.stage.width - ui.width) / 2;
     }
 
-    private function addProgressView():void {
+    public function addProgressView():void {
         if (!progressView)progressView = new BattleProgressView();
         addChildView(progressView);
         progressView.pos(120, 0);
     }
 
-    private function addStrengthView():void {
+    public function addStrengthView():void {
         if (!strengthView)strengthView = new BattleStrengthView();
         addChildView(strengthView);
         strengthView.pos(0, 550);
     }
 
-    public function addChildView(view:Sprite):void {
+    public function addEventView():void {
+        if (!eventView)eventView = new BattleEventView();
+        addChildView(eventView);
+        eventView.pos(0, 400);
+    }
+
+    private function addChildView(view:Sprite):void {
         if (view && !ui.container.contains(view)) {
             ui.container.addChild(view);
         }
     }
 
-    public function clear():void {
+    public function removeProgressView():void {
         if (progressView) {
             progressView.tryDispose();
             progressView = null;
         }
+    }
+
+    public function removeStrengthView():void {
+        if (strengthView) {
+            strengthView.tryDispose();
+            strengthView = null;
+        }
+    }
+
+    public function removeEventView():void {
+        if (eventView) {
+            eventView.tryDispose();
+            eventView = null;
+        }
+    }
+
+    public function clear():void {
+        removeProgressView();
+        removeStrengthView();
+        removeEventView();
     }
 
     override public function dispose():void {

@@ -4,6 +4,7 @@
 package com.game.module.battle.mediator {
 import com.game.common.events.MenuWindowVO;
 import com.game.common.mvc.BaseMediator;
+import com.game.module.battle.events.BattleEvent;
 import com.game.module.battle.view.BattleView;
 import com.game.module.menu.events.MenuEvent;
 import com.game.vo.MenuWinType;
@@ -40,7 +41,10 @@ public class BattleMediator extends BaseMediator implements IMediator {
     }
 
     override public function listNotificationInterests():Array {
-        return [];
+        return [
+            BattleEvent.BATTLE_STRENGTH_FINISHED,
+            BattleEvent.BATTLE_EVENT_FINISHED
+        ];
     }
 
     override public function handleNotification(notification:INotification):void {
@@ -48,9 +52,25 @@ public class BattleMediator extends BaseMediator implements IMediator {
         var body:Object = notification.getBody();
 
         switch (name) {
-            case "":
+            case BattleEvent.BATTLE_STRENGTH_FINISHED:
+                view.removeStrengthView();
+                eventDisplay();
+                break;
+            case BattleEvent.BATTLE_EVENT_FINISHED:
+                view.removeEventView();
+                fetterDisplay();
                 break;
         }
+    }
+
+    //特殊事件
+    public function eventDisplay():void {
+        view.addEventView();
+    }
+
+    //召唤羁绊
+    public function fetterDisplay():void {
+        view.addFetterView();
     }
 }
 }

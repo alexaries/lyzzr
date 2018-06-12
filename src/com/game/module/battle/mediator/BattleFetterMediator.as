@@ -1,21 +1,21 @@
 /**
- * Created by dingcj on 2018/6/1.
+ * Created by dingcj on 2018/6/12.
  */
 package com.game.module.battle.mediator {
 import com.game.common.mvc.BaseMediator;
-import com.game.module.battle.events.BattleEvent;
-import com.game.module.battle.view.BattleProgressView;
+import com.game.module.battle.view.BattleFetterView;
 
 import org.puremvc.as3.interfaces.IMediator;
 import org.puremvc.as3.interfaces.INotification;
 
-public class BattleProgressMediator extends BaseMediator implements IMediator {
-    public static const NAME:String = "BattleProgressMediator";
+public class BattleFetterMediator extends BaseMediator implements IMediator {
+    public static const NAME:String = "BattleFetterMediator";
 
-    private function get view():BattleProgressView {
-        return getViewComponent() as BattleProgressView;
+    private function get view():BattleFetterView {
+        return getViewComponent() as BattleFetterView;
     };
-    public function BattleProgressMediator(__viewComponent:Object = null) {
+
+    public function BattleFetterMediator(__viewComponent:Object = null) {
         super(NAME, __viewComponent);
     }
 
@@ -33,9 +33,7 @@ public class BattleProgressMediator extends BaseMediator implements IMediator {
     }
 
     override public function listNotificationInterests():Array {
-        return [
-            BattleEvent.BATTLE_PROGRESS_UPDATE
-        ];
+        return [];
     }
 
     override public function handleNotification(notification:INotification):void {
@@ -43,15 +41,9 @@ public class BattleProgressMediator extends BaseMediator implements IMediator {
         var body:Object = notification.getBody();
 
         switch (name) {
-            case BattleEvent.BATTLE_PROGRESS_UPDATE:
-                var value:int = body as int;
-                updateProgress(value);
+            case "":
                 break;
         }
-    }
-
-    private function updateProgress(value:int):void {
-        view.updateProgress(value);
     }
 }
 }

@@ -9,8 +9,19 @@ package com.game.consts
 		public static const STROY_BG:String = "ui/bgImg/";
 		public static const ROLE:String = "ui/role/";
 		
+		public static const BGSOUND:String = "sound/bg/";
+		public static const STROYSOUND:String = "sound/story/";
 		
-		public static const STROYSOUND:String = "";
+		/**
+		 *近回背景音乐 
+		 * @param value
+		 * @return 
+		 * 
+		 */		
+		public static function getBGSound(value:Number):String
+		{
+			return BGSOUND + value.toString() + ".mp3";
+		}
 		
 		/**
 		 *故事背景英语有 

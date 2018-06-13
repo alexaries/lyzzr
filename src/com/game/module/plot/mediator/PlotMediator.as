@@ -2,14 +2,16 @@ package com.game.module.plot.mediator
 {
 	import com.game.common.events.MenuWindowVO;
 	import com.game.common.mvc.BaseMediator;
+	import com.game.consts.ResPath;
 	import com.game.module.menu.events.MenuEvent;
 	import com.game.module.plot.view.PlotView;
-	import com.game.module.plot.vo.PlotVO;
 	import com.game.vo.MenuWinType;
 	
 	import config.ConfigManager;
 	import config.story.Istory;
 	import config.story.IstoryCfg;
+	
+	import laya.media.SoundManager;
 	
 	import org.puremvc.as3.interfaces.IMediator;
 	
@@ -32,24 +34,25 @@ package com.game.module.plot.mediator
 	
 		
 		
-		private var _stroyID:int = 0;
+		
 		override public function onRegister():void {
 			super.onRegister();
 			view.nextSigle.getSignal(this).listen(doNextNode);
 			
 			_v = view;
 			
-			
+			_bgmusic = 0;
 			
 			initStroyCFG();
 			
 			start();
 		}
-		
+		private var _stroyID:int = 0;
 		private var _stroyLen:int = 0;
 		private function initStroyCFG():void
 		{
-			_stroyID = int(_v.data);
+			//trace("_vdata:", _v.data);
+			_stroyID = _v.data as int;
 			_plots = new Vector.<IstoryCfg>;
 			
 			var ist:IstoryCfg = null;
@@ -74,25 +77,49 @@ package com.game.module.plot.mediator
 			for(var i:int = 0; i < _stroyLen; i ++)
 			{
 				ist =_plots[i];
-				if(ist.ID == id)
+				if(ist.port == id)
 					return ist;
 			}
 			return null;
 		}
 		
+		private var _bgmusic:Number = 0;
 		private function start():void
 		{
-			_nowPlotvo = getPlotVoByID(1);
+			_nowPlotvo = getStroyByID(1);
+			_bgmusic = _nowPlotvo.bgMusic
 			doPlotVO(_nowPlotvo);
 		}
 		
 		
+		private function checkPlayBGMusic():void
+		{
+			if(_nowPlotvo.bgMusic > 0)
+			{
+				if(_nowPlotvo.bgMusic != _bgmusic)
+				{
+					_bgmusic = _nowPlotvo.bgMusic;
+					SoundManager.playMusic(ResPath.getBGSound(_nowPlotvo.bgMusic));
+						return;
+						
+				}
+				else
+					return;
+			}
+			if(_bgmusic > 0)
+			{
+				_bgmusic = 0;
+				SoundManager.stopMusic();
+			}
+		}
+		
 		private function doPlotVO(value:IstoryCfg):void
 		{
+			checkPlayBGMusic();
 			_v.play(value);
 		}
 		
-		private function getPlotVoByID(id:int):IstoryCfg
+/*		private function getPlotVoByID(id:int):IstoryCfg
 		{
 			var vo:IstoryCfg = null;
 			var len:int = _plots.length;
@@ -103,7 +130,7 @@ package com.game.module.plot.mediator
 					return vo;
 			}
 			return null;
-		}
+		}*/
 		
 		private function removeMenu():void
 		{
@@ -123,7 +150,7 @@ package com.game.module.plot.mediator
 			}
 			else
 			{
-				_nowPlotvo = getPlotVoByID(_nowPlotvo.nextPort);
+				_nowPlotvo = getStroyByID(_nowPlotvo.nextPort);
 				doPlotVO(_nowPlotvo);
 			}
 		}

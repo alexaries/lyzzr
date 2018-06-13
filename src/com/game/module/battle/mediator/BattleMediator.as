@@ -4,16 +4,23 @@
 package com.game.module.battle.mediator {
 import com.game.common.events.MenuWindowVO;
 import com.game.common.mvc.BaseMediator;
+import com.game.common.view.Alert;
 import com.game.module.battle.events.BattleEvent;
 import com.game.module.battle.view.BattleView;
 import com.game.module.menu.events.MenuEvent;
 import com.game.vo.MenuWinType;
+
+import lang.SystemInfo;
+
+import laya.utils.Handler;
 
 import org.puremvc.as3.interfaces.IMediator;
 import org.puremvc.as3.interfaces.INotification;
 
 public class BattleMediator extends BaseMediator implements IMediator {
     public static const NAME:String = "BattleMediator";
+    private var maxCount = 2;//特殊事件触发最大次数
+    private var curCount = 0;//当前特殊事件触发次数
 
     private function get view():BattleView {
         return getViewComponent() as BattleView;
@@ -33,7 +40,14 @@ public class BattleMediator extends BaseMediator implements IMediator {
     }
 
     private function onCloseClick():void {
-        dispatch(new MenuEvent(MenuEvent.MENU_CLIK, new MenuWindowVO(MenuWinType.BATTLE_VIEW, MenuWindowVO.CLOSE)));
+        Alert.show("体力已经扣除，退出将不保存副本进度，确定要退出?", "退出提示", [SystemInfo.OK, SystemInfo.CANCEL], Handler.create(this, function (type:String) {
+            if (type == "ok") {
+                dispatch(new MenuEvent(MenuEvent.MENU_CLIK, new MenuWindowVO(MenuWinType.BATTLE_VIEW, MenuWindowVO.CLOSE)));
+            }
+            else if (type == "cancel") {
+                return;
+            }
+        }, null, true));
     }
 
     override public function onRemove():void {
@@ -59,7 +73,8 @@ public class BattleMediator extends BaseMediator implements IMediator {
                 break;
             case BattleEvent.BATTLE_EVENT_FINISHED:
                 view.removeEventView();
-                fetterDisplay();
+                if (curCount >= maxCount) fetterDisplay();
+                else eventDisplay();
                 break;
             case BattleEvent.BATTLE_RESULT:
                 view.removeFetterView();
@@ -72,6 +87,7 @@ public class BattleMediator extends BaseMediator implements IMediator {
 
     //特殊事件
     public function eventDisplay():void {
+        curCount++;
         view.addEventView();
     }
 

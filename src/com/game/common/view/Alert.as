@@ -5,7 +5,6 @@ import lang.SystemInfo;
 
 import laya.html.dom.HTMLDivElement;
 import laya.ui.Dialog;
-import laya.ui.DialogManager;
 import laya.utils.Handler;
 
 import org.puremvc.as3.patterns.facade.Facade;

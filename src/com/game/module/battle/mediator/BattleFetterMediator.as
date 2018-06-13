@@ -19,8 +19,8 @@ public class BattleFetterMediator extends BaseMediator implements IMediator {
 
     private var proxy:BattleProxy;
 
-    private var maxCount:int = 3;
-    private var selectList:Array = [];
+    private var maxCount:int = 3;//最大可选角色数量
+    private var selectList:Array = [];//已经选中的列表
 
     private function get view():BattleFetterView {
         return getViewComponent() as BattleFetterView;

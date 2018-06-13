@@ -3,6 +3,9 @@
  */
 package com.game.module.battle.events {
 public class BattleEvent {
+    //战斗开始
+    public static var BATTLE_ENTER = "BATTLE_ENTER";
+
     //area
     public static var BATTLE_PROGRESS_UPDATE = "BATTLE_PROGRESS_UPDATE";
     public static var BATTLE_STRENGTH_FINISHED = "BATTLE_STRENGTH_FINISHED";

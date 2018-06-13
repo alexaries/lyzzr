@@ -65,7 +65,7 @@ public class BattleEventView extends BaseView {
         //info
         ui.skipBtn.on(Event.CLICK, this, onClickSkipBtn, null);
         ui.moreBtn.on(Event.CLICK, this, onClickMoreBtn, null);
-        ui.sureBtn.on(Event.CLICK, this, onClickSureBtn, null);
+        ui.sureBtn.on(Event.CLICK, this, onClickSureBtn, null);//点击确定 出现特殊事件的评分
 
         ui.list.itemRender = PropertyItem;
         ui.list.renderHandler = Handler.create(this, onRenderItem, null, false);
@@ -129,6 +129,10 @@ public class BattleEventView extends BaseView {
     public function updateState(state:int = 0):void {
         ui.eventInfo.visible = state == 0;
         ui.eventResult.visible = state == 1;
+    }
+
+    public function setScore():void {
+
     }
 
     override public function dispose():void {

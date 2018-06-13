@@ -7,25 +7,24 @@ import com.game.common.view.BaseView;
 import com.game.module.battle.mediator.BattleResultMediator;
 import com.game.module.battle.view.items.BattleCommentItem;
 import com.game.module.battle.view.items.BattleStarItem;
+import com.game.module.pack.view.ItemCell;
 import com.signal.SignalDispatcher;
 
 import laya.events.Event;
 import laya.utils.Handler;
 
-import net.data.sendCmd.rank.BattleCheckCmd;
-
 import ui.battle.BattleResultViewUI;
 
 public class BattleResultView extends BaseView {
-
     private var ui:BattleResultViewUI;
-
     public var finishSignal:SignalDispatcher;
+    public var moreSignal:SignalDispatcher;
 
     public function BattleResultView() {
         super([]);
 
         finishSignal = new SignalDispatcher();
+        moreSignal = new SignalDispatcher();
     }
 
     override public function getMediator():BaseMediator {
@@ -57,7 +56,8 @@ public class BattleResultView extends BaseView {
 
         ui.fabuBtn.on(Event.CLICK, this, onClickFaBuBtn);
         ui.commentBox.on(Event.CLICK, this, onClickCommentBox);
-        ui.rewardBox.on(Event.CLICK, this, onClickRewardBox);
+        ui.moreBtn.on(Event.CLICK, this, onClickMoreBtn);
+        ui.finishBtn.on(Event.CLICK, this, onClickFinishBtn);
 
         ui.starList.itemRender = BattleStarItem;
         ui.starList.renderHandler = Handler.create(this, onRenderStarItem, null, false);
@@ -67,6 +67,22 @@ public class BattleResultView extends BaseView {
 
         updateComment();
         updateStar(2);
+
+        ui.rewardList.hScrollBarSkin = "";
+        ui.rewardList.itemRender = ItemCell;
+        ui.rewardList.renderHandler = Handler.create(this, onRenderRewardItem, null, false);
+    }
+
+    private function onClickFinishBtn(e:Event):void {
+        if (finishSignal)finishSignal.dispatch(null);
+    }
+
+    private function onClickMoreBtn(e:Event):void {
+        if (moreSignal)moreSignal.dispatch(null);
+    }
+
+    private function onRenderRewardItem(cell:ItemCell, index:int):void {
+//        cell.showTip = true;
     }
 
     private function updateStar(num:int):void {
@@ -93,10 +109,6 @@ public class BattleResultView extends BaseView {
 
     }
 
-    private function onClickRewardBox(e:Event):void {
-        if (finishSignal)finishSignal.dispatch(null);
-    }
-
     private function onClickCommentBox(e:Event):void {
         updateState(2);
     }
@@ -117,10 +129,14 @@ public class BattleResultView extends BaseView {
 
         ui.fabuBtn.off(Event.CLICK, this, onClickFaBuBtn);
         ui.commentBox.off(Event.CLICK, this, onClickCommentBox);
-        ui.rewardBox.off(Event.CLICK, this, onClickRewardBox);
+        ui.moreBtn.off(Event.CLICK, this, onClickMoreBtn);
+        ui.finishBtn.off(Event.CLICK, this, onClickFinishBtn);
 
         if (finishSignal)finishSignal.dispose();
+        if (moreSignal)moreSignal.dispose();
+        if (ui.starList.renderHandler)ui.starList.renderHandler.clear();
         if (ui.commentList.renderHandler)ui.commentList.renderHandler.clear();
+        if (ui.rewardList.renderHandler)ui.rewardList.renderHandler.clear();
     }
 }
 }

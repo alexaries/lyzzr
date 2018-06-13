@@ -15,6 +15,8 @@ public class BattleStartUpCommand extends BaseCommand implements ICommand {
     override public function execute(notification:INotification):void {
         trace("BattleStartUpCommand");
         facade.registerProxy(new BattleProxy());
+
+        facade.registerCommand(BattleEvent.BATTLE_ENTER, BattleCommand);
         facade.registerCommand(BattleEvent.BATTLE_UPDATE_INFO, BattleCommand);
     }
 }

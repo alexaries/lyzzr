@@ -43,7 +43,8 @@ public class BattleMediator extends BaseMediator implements IMediator {
     override public function listNotificationInterests():Array {
         return [
             BattleEvent.BATTLE_STRENGTH_FINISHED,
-            BattleEvent.BATTLE_EVENT_FINISHED
+            BattleEvent.BATTLE_EVENT_FINISHED,
+            BattleEvent.BATTLE_RESULT
         ];
     }
 
@@ -60,6 +61,12 @@ public class BattleMediator extends BaseMediator implements IMediator {
                 view.removeEventView();
                 fetterDisplay();
                 break;
+            case BattleEvent.BATTLE_RESULT:
+                view.removeFetterView();
+                view.removeProgressView();
+                view.resetView();
+                resultDisplay();
+                break;
         }
     }
 
@@ -71,6 +78,11 @@ public class BattleMediator extends BaseMediator implements IMediator {
     //召唤羁绊
     public function fetterDisplay():void {
         view.addFetterView();
+    }
+
+    //战斗结果
+    public function resultDisplay():void {
+        view.addResultView();
     }
 }
 }

@@ -129,6 +129,10 @@ public class GameMain extends BaseView {
 			trace("menuWinTypeName:", menuWinTypeName);
             switch (menuWinTypeName) {
 				
+				case MenuWinType.PLOT_VIEW:
+					win = new PlotView();
+					break;
+				
                 case MenuWinType.TAVERN_VIEW:
                     win = new TavernView();
                     break;

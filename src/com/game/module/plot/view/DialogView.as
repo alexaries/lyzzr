@@ -2,10 +2,12 @@ package com.game.module.plot.view
 {
 	
 	
-	import com.game.module.plot.vo.PlotVO;
+	import com.game.consts.ResPath;
 	import com.tween.KTJob;
 	import com.tween.KTween;
 	import com.tween.easing.Linear;
+	
+	import config.story.IstoryCfg;
 	
 	import laya.media.SoundChannel;
 	import laya.media.SoundManager;
@@ -33,9 +35,9 @@ package com.game.module.plot.view
 			_decKtJob = null;
 		}
 		
-		private var _vo:PlotVO = null;
+		private var _vo:IstoryCfg = null;
 		private var _bgimgtween:KTJob = null;
-		public function showDialog(vo:PlotVO):void
+		public function showDialog(vo:IstoryCfg):void
 		{
 			_isFinish = false;
 			_vo = vo;
@@ -73,7 +75,7 @@ package com.game.module.plot.view
 				}
 			}
 			
-			decTxt.text = _vo.dialogDec;
+			decTxt.text = _vo.dialogContent;
 			_isFinish = true;
 		}
 		
@@ -94,18 +96,20 @@ package com.game.module.plot.view
 		private function showDec():void
 		{
 			stopSoundChannel();
-			if(_vo.sound != "")
+			if(_vo.sound > 0)
 			{
-				_soundchannel = SoundManager.playSound(_vo.sound);
+				_soundchannel = SoundManager.playSound(ResPath.getStroySound(_vo.sound));
 			}
-			_decLen = _vo.dialogDec.length;
+			
+			
+			_decLen = _vo.dialogContent.length;
 			_decKtJob = KTween.to(this, 1, {decCount:_decLen}, Linear.easeIn);
 		}
 		
 		public function set decCount(value:int):void
 		{
 			_decCount = value;
-			decTxt.text = _vo.dialogDec.slice(0, value);
+			decTxt.text = _vo.dialogContent.slice(0, value);
 			
 			if(value ==  _decLen)
 			{
@@ -126,17 +130,17 @@ package com.game.module.plot.view
 		
 		private function endshowbgimg():void
 		{
-			if(_vo.dialogHead != "")
+			if(_vo.dialogHead > 0)
 			{
 				headImg.visible = true;
-				headImg.skin = _vo.dialogHead;
+				headImg.skin = ResPath.getDialogHead(_vo.dialogHead);
 			}
 			
-			if(_vo.dialogRoleName != "")
+			if(_vo.dialogName != "")
 			{
 				nameBgImg.visible = true;
 				nameTxt.visible = true;
-				nameTxt.text = _vo.dialogRoleName;
+				nameTxt.text = _vo.dialogName;
 			}
 			
 			decTxt.visible = true;

@@ -2,9 +2,11 @@ package com.game.module.plot.view
 {
 	import com.game.common.mvc.BaseMediator;
 	import com.game.common.view.BaseWindow;
+	import com.game.consts.ResPath;
 	import com.game.module.plot.mediator.PlotMediator;
-	import com.game.module.plot.vo.PlotVO;
 	import com.signal.SignalDispatcher;
+	
+	import config.story.IstoryCfg;
 	
 	import laya.events.Event;
 	
@@ -75,13 +77,15 @@ package com.game.module.plot.view
 		
 		
 		
-		private var _vo:PlotVO = new PlotVO();
-		public function play(vo:PlotVO):void
+		private var _vo:IstoryCfg = null;
+		public function play(vo:IstoryCfg):void
 		{
-			_ui.roleImg.skin = vo.role;
-			_ui.bgImg.skin = vo.bg;
-			trace("vo.role:",vo.role);
+			
 			_vo = vo;
+			
+			_ui.roleImg.skin = ResPath.getRole(_vo.role);
+			_ui.bgImg.skin = ResPath.getStroyBG(_vo.bg);
+			trace("vo.role:",vo.role);
 			
 			showDialog();
 			

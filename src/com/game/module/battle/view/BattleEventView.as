@@ -73,6 +73,8 @@ public class BattleEventView extends BaseView {
         ui.playerList.hScrollBarSkin = "";
         ui.playerList.itemRender = BattleSelectionItem;
         ui.playerList.renderHandler = Handler.create(this, onRenderPlayerItem, null, false);
+        ui.playerList.repeatX = 100;
+        ui.playerList.repeatY = 1;
 
         var arr:Array = [];
         for (var i = 0; i < 20; i++) {

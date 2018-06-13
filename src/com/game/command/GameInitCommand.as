@@ -1,5 +1,6 @@
 package com.game.command {
 
+import com.game.module.battle.command.BattleStartUpCommand;
 import com.game.module.copy.command.CopyCommand;
 import com.game.module.map.command.MapStartupCommand;
 import com.game.module.redPoint.command.RedPointStartupCommand;
@@ -19,6 +20,7 @@ public class GameInitCommand extends MacroCommand implements ICommand {
         trace("GameInitCommand");
         addSubCommand(TavernStartUpCommand);
         addSubCommand(CopyCommand);
+        addSubCommand(BattleStartUpCommand);
         return;
         addSubCommand(UserStartupCommand);
         addSubCommand(TaskStartupCommand);

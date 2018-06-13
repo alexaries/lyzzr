@@ -48,7 +48,7 @@ public class BattleSelectionItem extends Box {
         isChecked = isCheck;
         ui.check.visible = isCheck;
         ui.posBox.pos(0, 0);
-        if (isCheck)ui.posBox.pos(0, -30);
+        if (isCheck)ui.posBox.pos(0, -15);
     }
 
     override public function destroy(destroyChild:Boolean = true):void {

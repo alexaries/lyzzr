@@ -4,12 +4,14 @@
 package com.game.module.copy.mediator {
 import com.game.common.events.MenuWindowVO;
 import com.game.common.mvc.BaseMediator;
+import com.game.module.battle.events.BattleEvent;
 import com.game.module.copy.view.CopyInfoView;
 import com.game.module.menu.events.MenuEvent;
 import com.game.vo.MenuWinType;
 
 import org.puremvc.as3.interfaces.IMediator;
 import org.puremvc.as3.interfaces.INotification;
+import org.puremvc.as3.patterns.observer.Notification;
 
 public class CopyInfoMediator extends BaseMediator implements IMediator {
     public static const NAME:String = "CopyInfoMediator";
@@ -39,7 +41,7 @@ public class CopyInfoMediator extends BaseMediator implements IMediator {
     }
 
     private function onStartClick():void {
-        dispatch(new MenuEvent(MenuEvent.MENU_CLIK, new MenuWindowVO(MenuWinType.BATTLE_VIEW, MenuWindowVO.OPEN)));
+        dispatch(new Notification(BattleEvent.BATTLE_ENTER, [2000]));
     }
 
     private function onCloseClick():void {

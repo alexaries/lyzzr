@@ -55,6 +55,9 @@ public class BattleView extends BaseWindow {
     }
 
     private function init():void {
+        var copyId:int = _data as int;
+        trace("...传进来的副本id:" + copyId);
+
         addProgressView();
         addStrengthView();
         ui.closeBtn.on(Event.CLICK, this, onClickCloseBtn);

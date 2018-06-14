@@ -12,9 +12,9 @@ Project configuration:e:\lyzzr/.actionScriptProperties.
 1,0.00,e:/lyzzr/src,0,Collect
 1,0.00,e:/lyzzr/libs/laya/src,0,Collect
 1,2.00,,0,read class message
-7,55.58,e:/lyzzr/src/com/game/module/task/view/TaskKeepView.as,57,TaskHookView This variable is not defined.
-1,89.87,,0,Disable Flash3D e:/lyzzr/src/LayaSample.as
-12,89.87,e:/lyzzr/bin/h5/LayaSample.max.js,3967079,
-11,89.87,e:/lyzzr/bin/h5/LayaSample.max.html,893,
+7,55.57,e:/lyzzr/src/com/game/module/task/view/TaskKeepView.as,57,TaskHookView This variable is not defined.
+1,89.78,,0,Disable Flash3D e:/lyzzr/src/LayaSample.as
+12,89.78,e:/lyzzr/bin/h5/LayaSample.max.js,3970518,
+11,89.78,e:/lyzzr/bin/h5/LayaSample.max.html,893,
 ******************************************************************************
-14,89.87,,0,
+14,89.78,,0,

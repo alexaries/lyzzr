@@ -86,7 +86,7 @@ public class BattleMediator extends BaseMediator implements IMediator {
     }
 
     //特殊事件
-    public function eventDisplay():void {
+    public function eventDisplay(state:int = 0):void {
         curCount++;
         view.addEventView();
     }

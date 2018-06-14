@@ -5,6 +5,7 @@ package com.game.module.battle.view {
 import com.game.common.mvc.BaseMediator;
 import com.game.common.view.BaseView;
 import com.game.module.battle.mediator.BattleEventMediator;
+import com.game.module.battle.view.items.BattleDialogItem;
 import com.game.module.battle.view.items.BattleSelectionItem;
 import com.game.module.copy.view.items.PropertyItem;
 import com.signal.SignalDispatcher;
@@ -23,6 +24,7 @@ public class BattleEventView extends BaseView {
     public var sureSignal:SignalDispatcher;
 
     public var itemSignal:SignalDispatcher;
+    public var dialogSignal:SignalDispatcher;
 
     //result
     public var resultSureSignal:SignalDispatcher;
@@ -33,6 +35,7 @@ public class BattleEventView extends BaseView {
         moreSignal = new SignalDispatcher();
         sureSignal = new SignalDispatcher();
         itemSignal = new SignalDispatcher();
+        dialogSignal = new SignalDispatcher();
         resultSureSignal = new SignalDispatcher();
     }
 
@@ -75,17 +78,27 @@ public class BattleEventView extends BaseView {
         ui.playerList.renderHandler = Handler.create(this, onRenderPlayerItem, null, false);
         ui.playerList.repeatX = 100;
         ui.playerList.repeatY = 1;
+        itemSignal.getSignal(this).listen(onItemClick);
 
+        ui.dialogList.itemRender = BattleDialogItem;
+        ui.dialogList.renderHandler = Handler.create(this, onRenderDialogItem, null, false);
+
+        //result
+        ui.resultSureBtn.on(Event.CLICK, this, onClickResultSureBtn, null);
+
+        updatePlayerList();
+    }
+
+    private function onRenderDialogItem(cell:BattleDialogItem, index:int):void {
+        cell.initInfo(index, dialogSignal);
+    }
+
+    private function updatePlayerList():void {
         var arr:Array = [];
         for (var i = 0; i < 20; i++) {
             arr.push("");
         }
         ui.playerList.array = arr;
-
-        itemSignal.getSignal(this).listen(onItemClick);
-
-        //result
-        ui.resultSureBtn.on(Event.CLICK, this, onClickResultSureBtn, null);
     }
 
     private function onClickResultSureBtn(e:Event):void {
@@ -127,8 +140,9 @@ public class BattleEventView extends BaseView {
     }
 
     public function updateState(state:int = 0):void {
-        ui.eventInfo.visible = state == 0;
-        ui.eventResult.visible = state == 1;
+        ui.eventInfo.visible = state == 0;//特殊事件
+        ui.eventResult.visible = state == 1;//反馈事件界面
+        ui.dialogBox.visible = state == 2;//对话事件界面
     }
 
     public function setScore():void {
@@ -147,6 +161,7 @@ public class BattleEventView extends BaseView {
         moreSignal.dispose();
         sureSignal.dispose();
         itemSignal.dispose();
+        dialogSignal.dispose();
         resultSureSignal.dispose();
     }
 }

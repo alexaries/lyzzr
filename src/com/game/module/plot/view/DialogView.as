@@ -44,6 +44,8 @@ package com.game.module.plot.view
 			init();
 			bgImg.scaleY = 0;
 			
+			
+			
 			_bgimgtween = KTween.to(bgImg, 0.2, {scaleY:1}, Linear.easeIn, Handler.create(this, endBgimgtween));
 		}
 		
@@ -65,6 +67,9 @@ package com.game.module.plot.view
 				_bgimgtween.close();
 				_bgimgtween = null;
 			}
+			
+			bgImg.scaleY = 1;
+			
 			endshowbgimg();
 			if(_decKtJob != null)
 			{

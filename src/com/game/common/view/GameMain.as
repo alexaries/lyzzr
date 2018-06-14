@@ -6,6 +6,7 @@ import com.game.consts.BaseLayer;
 import com.game.module.battle.view.BattleView;
 import com.game.module.copy.view.CopyInfoView;
 import com.game.module.copy.view.CopyView;
+import com.game.module.plot.view.PlotView;
 import com.game.module.tavern.view.HeroDisplayView;
 import com.game.module.tavern.view.TavernHireView;
 import com.game.module.tavern.view.TavernTuView;
@@ -125,7 +126,13 @@ public class GameMain extends BaseView {
             }
         } else {
             var win:BaseWindow = null;
+			trace("menuWinTypeName:", menuWinTypeName);
             switch (menuWinTypeName) {
+				
+				case MenuWinType.PLOT_VIEW:
+					win = new PlotView();
+					break;
+				
                 case MenuWinType.TAVERN_VIEW:
                     win = new TavernView();
                     break;

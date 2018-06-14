@@ -33,6 +33,7 @@ package com.game.module.plot.view
 		
 		public function get data():Object
 		{
+			return 10101;
 			return _data;
 		}
 		

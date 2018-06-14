@@ -13,8 +13,6 @@ import com.game.vo.MenuWinType;
 import com.signal.SignalDispatcher;
 import com.talkingdata.TDManager;
 
-import config.mission.openfunc.IOpenfuncCfg;
-
 import globals.ConfigLocator;
 
 import laya.display.Sprite;
@@ -33,8 +31,8 @@ import ui.main.MyHomeUI;
 
 public class MyHomeView extends BaseWindow {
     public var main:MyHomeUI;
-
     public var build:HomeMap;
+    public var money:MoneyView;
 
     public var outSignal:SignalDispatcher;
 
@@ -104,11 +102,14 @@ public class MyHomeView extends BaseWindow {
         build = new HomeMap();
         main.mapPart.addChild(build);
 
+        money = new MoneyView();
+        main.moneyBox.addChild(money);
+
         main.btnOut.on(Event.CLICK, this, outHandler);
 
         packPoint = new Point(780, 1798);
-        stonePoint = (main.xianshiTxt.parent as Box).localToGlobal(new Point(main.xianshiTxt.x, main.xianshiTxt.y));
-        sliverPoint = (main.sliverTxt.parent as Box).localToGlobal(new Point(main.sliverTxt.x, main.sliverTxt.y));
+//        stonePoint = (main.xianshiTxt.parent as Box).localToGlobal(new Point(main.xianshiTxt.x, main.xianshiTxt.y));
+//        sliverPoint = (main.sliverTxt.parent as Box).localToGlobal(new Point(main.sliverTxt.x, main.sliverTxt.y));
         layoutTop();
         layoutBottom();
         setRightButtonList();
@@ -130,7 +131,7 @@ public class MyHomeView extends BaseWindow {
         main.richangBtn.on(Event.CLICK, this, onClick, [MenuWinType.ACTIVE]);
 //        main.vipTxt.on(Event.CLICK, this, onClick, [MenuWinType.NEWVIP_VIEW]);
 //        main.mapBtn.on(Event.CLICK, this, onClick, [MenuWinType.WORLD_MAP]);
-        main.item0.on(Event.CLICK, this, onClick, [MenuWinType.RECHARGE_WIN]);
+//        main.item0.on(Event.CLICK, this, onClick, [MenuWinType.RECHARGE_WIN]);
         main.btnMusic.toggle = true;
         main.btnMusic.clickHandler = Handler.create(this, musicHandler, null, false);
         main.btnRecharge.on(Event.CLICK, this, onClick, [MenuWinType.RECHARGE_WIN]);
@@ -169,10 +170,6 @@ public class MyHomeView extends BaseWindow {
         closeWindowSignal.dispatch([menuWinTypeName, data])
     }
 
-//    public function showOnekeyEquip(goodsvo:PackVO, powerValue:Number, hero_sk:HeroVO = null):void {
-//        openWindow(MenuWinType.ONEKEY_EQ, [goodsvo, powerValue, hero_sk]);
-//    }
-
     private function onAIconClick():void {
         openWindow(MenuWinType.SEVEN_DAY, null);
     }
@@ -200,8 +197,11 @@ public class MyHomeView extends BaseWindow {
 
     /* 底部自适应 */
     private function layoutBottom():void {
-        main.downPart.x = AppConst.padX;
-        main.chat.x = AppConst.padX;
+//        main.downPart.x = AppConst.padX;
+//        main.chat.x = AppConst.padX;
+
+        main.downPart.x = (Laya.stage.width - main.downPart.width) / 2;
+        main.chat.x = (Laya.stage.width - main.chat.width) / 2;
     }
 
     /* 需要横向居中的显示对象 使用此方法 */
@@ -211,10 +211,12 @@ public class MyHomeView extends BaseWindow {
 
     /* 顶部自适应 */
     private function layoutTop():void {
-        main.upPart.x = AppConst.padX;
-        main.activityIconCollect.x = AppConst.padX;
-        stonePoint = (main.xianshiTxt.parent as Box).localToGlobal(new Point(main.xianshiTxt.x, main.xianshiTxt.y));
-        sliverPoint = (main.sliverTxt.parent as Box).localToGlobal(new Point(main.sliverTxt.x, main.sliverTxt.y));
+//        main.upPart.x = AppConst.padX;
+//        main.activityIconCollect.x = AppConst.padX;
+//        stonePoint = (main.xianshiTxt.parent as Box).localToGlobal(new Point(main.xianshiTxt.x, main.xianshiTxt.y));
+//        sliverPoint = (main.sliverTxt.parent as Box).localToGlobal(new Point(main.sliverTxt.x, main.sliverTxt.y));
+
+        main.upPart.x = (Laya.stage.width - main.upPart.width) / 2;
     }
 
     /* 左边 右边 下边 按钮的自适应 1上 2下 3左 4右*/
@@ -286,7 +288,7 @@ public class MyHomeView extends BaseWindow {
 //            cfg = iconVo.openfunc;
 //            if (cfg && (!cfg.funcid || (cfg.funcid && FuncUtil.check(cfg.funcid)))) {
 //                if (userLevel >= cfg.level) {
-                    btnsAc.push(iconVo);
+            btnsAc.push(iconVo);
 //                }
 //            }
         }

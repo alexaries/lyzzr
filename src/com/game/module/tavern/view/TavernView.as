@@ -10,9 +10,6 @@ import com.game.common.vo.BaseMenuVO;
 import com.game.module.tavern.mediator.TavernMediator;
 import com.signal.SignalDispatcher;
 
-import config.ConfigManager;
-import config.ceshi.ICeShiCfg;
-
 import laya.events.Event;
 
 import ui.tavern.TavernViewUI;

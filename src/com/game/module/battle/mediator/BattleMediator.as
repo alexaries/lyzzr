@@ -36,7 +36,7 @@ public class BattleMediator extends BaseMediator implements IMediator {
     }
 
     private function instanceCompleteHander():void {
-
+        trace( "...:" + view.data);
     }
 
     private function onCloseClick():void {

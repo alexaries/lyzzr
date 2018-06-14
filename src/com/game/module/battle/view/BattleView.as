@@ -6,7 +6,10 @@ import com.game.common.mvc.BaseMediator;
 import com.game.common.view.BaseWindow;
 import com.game.consts.BaseLayer;
 import com.game.module.battle.mediator.BattleMediator;
+import com.game.module.battle.utils.BattleUtil;
 import com.signal.SignalDispatcher;
+
+import config.stage.IstageCfg;
 
 import laya.display.Sprite;
 
@@ -54,9 +57,15 @@ public class BattleView extends BaseWindow {
         init();
     }
 
+    public function get data():int {
+        return _data as int;
+    }
+
     private function init():void {
         var copyId:int = _data as int;
-        trace("...传进来的副本id:" + copyId);
+        var cfg:IstageCfg = BattleUtil.getStageById(copyId);
+
+        trace("...:" + cfg.stageSign);
 
         addProgressView();
         addStrengthView();

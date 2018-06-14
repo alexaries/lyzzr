@@ -1,12 +1,14 @@
 package config {
 import config.ceshi.ICeShi;
+import config.stage.Istage;
 import config.story.Istory;
 
 // IMPORT
 public class ConfigManager extends BaseConfig {
     // CONTENTS
     public var ceshi_ceshi:config.ceshi.ICeShi;
-	public var story_story:config.story.Istory;
+    public var story_story:config.story.Istory;
+    public var stage:config.stage.Istage;//关卡配置
     static var __instance:ConfigManager;
 
     public static function get instance():ConfigManager {
@@ -28,7 +30,8 @@ public class ConfigManager extends BaseConfig {
     function __init() {
         // ATTRIBUTES
         ceshi_ceshi = readAndToClass('CeShi');
-		story_story = readAndToClass("story");
+        story_story = readAndToClass('story');
+        stage = readAndToClass('stage');
     }
 
     override protected function attributeSerialization(version:String):void {

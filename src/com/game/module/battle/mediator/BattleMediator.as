@@ -6,7 +6,12 @@ import com.game.common.events.MenuWindowVO;
 import com.game.common.mvc.BaseMediator;
 import com.game.common.view.Alert;
 import com.game.module.battle.events.BattleEvent;
+import com.game.module.battle.proxy.BattleModel;
+import com.game.module.battle.proxy.BattleProxy;
 import com.game.module.battle.view.BattleView;
+import com.game.module.battle.vo.BaseBattleEventVo;
+import com.game.module.battle.vo.BattleDialogVo;
+import com.game.module.battle.vo.BattleExpertVo;
 import com.game.module.menu.events.MenuEvent;
 import com.game.vo.MenuWinType;
 
@@ -22,6 +27,11 @@ public class BattleMediator extends BaseMediator implements IMediator {
     private var maxCount = 2;//特殊事件触发最大次数
     private var curCount = 0;//当前特殊事件触发次数
 
+    private var proxy:BattleProxy;
+    private var model:BattleModel;
+
+    private var eventArr:Array = [];//对话事件&&特殊事件的列表
+
     private function get view():BattleView {
         return getViewComponent() as BattleView;
     };
@@ -31,12 +41,34 @@ public class BattleMediator extends BaseMediator implements IMediator {
 
     override public function onRegister():void {
         super.onRegister();
+
+        proxy = facade.retrieveProxy(BattleProxy.NAME) as BattleProxy;
+        model = proxy.model;
+
         view.onCompleteSignal.getSignal(this).listen(instanceCompleteHander);
         view.closeSignal.getSignal(this).listen(onCloseClick);
     }
 
     private function instanceCompleteHander():void {
-        trace( "...:" + view.data);
+        model.copyId = view.data;
+        rejectToEventData();
+    }
+
+    private function rejectToEventData():void {
+        eventArr = [];
+        if (isHasDialogEvent) {
+            var vo:BattleDialogVo = BattleDialogVo.create(model.copyCfg.dialogEventIntroduce, model.copyCfg.dialogEventContent, model.copyCfg.dialogEventRule, model.copyCfg.dialogEventFeedback);
+            eventArr.push(vo);
+        }
+        var arr:Array = model.copyCfg.expertEventKeyword.split('|');
+        for (var i = 0; i < arr.length; i++) {
+            var vo:BattleExpertVo = BattleExpertVo.create(model.copyCfg.expertEventIntroduce, parseInt(arr[i]), model.copyCfg.expertEventRule, model.copyCfg.expertEventFeedback);
+            eventArr.push(vo);
+        }
+    }
+
+    private function get isHasDialogEvent():Boolean {
+        return model.copyCfg.dialogEventIntroduce != "";
     }
 
     private function onCloseClick():void {
@@ -68,13 +100,10 @@ public class BattleMediator extends BaseMediator implements IMediator {
 
         switch (name) {
             case BattleEvent.BATTLE_STRENGTH_FINISHED:
-                view.removeStrengthView();
-                eventDisplay();
+                eventHandle();
                 break;
             case BattleEvent.BATTLE_EVENT_FINISHED:
-                view.removeEventView();
-                if (curCount >= maxCount) fetterDisplay();
-                else eventDisplay();
+                eventHandle();
                 break;
             case BattleEvent.BATTLE_RESULT:
                 view.removeFetterView();
@@ -85,10 +114,16 @@ public class BattleMediator extends BaseMediator implements IMediator {
         }
     }
 
-    //特殊事件
-    public function eventDisplay(state:int = 0):void {
-        curCount++;
-        view.addEventView();
+    private function eventHandle():void {
+        view.removeEventView();
+        if (eventArr == null || eventArr.length == 0) {
+            //说明事件结束了 开始羁绊
+            fetterDisplay();
+            return;
+        }
+        var vo:BaseBattleEventVo = eventArr[0];
+        view.addEventView(vo);
+        eventArr.shift();
     }
 
     //召唤羁绊

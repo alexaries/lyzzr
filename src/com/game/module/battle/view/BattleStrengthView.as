@@ -12,7 +12,7 @@ import ui.battle.BattleStrengthViewUI;
 public class BattleStrengthView extends BaseView {
     private var ui:BattleStrengthViewUI;
     public var finishSignal:SignalDispatcher;
-    private var delayTime:int = 1000;
+    private var delayTime:int = 1500;
 
     public function BattleStrengthView() {
         super([]);

@@ -41,7 +41,7 @@ public class CopyInfoMediator extends BaseMediator implements IMediator {
     }
 
     private function onStartClick():void {
-        dispatch(new Notification(BattleEvent.BATTLE_ENTER, [101]));
+        dispatch(new Notification(BattleEvent.BATTLE_ENTER, [102]));
     }
 
     private function onCloseClick():void {

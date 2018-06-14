@@ -14,9 +14,12 @@ import org.puremvc.as3.patterns.observer.Notification;
 public class BattleEventMediator extends BaseMediator implements IMediator {
     public static const NAME:String = "BattleEventMediator";
 
+    private var score:int = 0;
+
     private function get view():BattleEventView {
         return getViewComponent() as BattleEventView;
     };
+
     public function BattleEventMediator(__viewComponent:Object = null) {
         super(NAME, __viewComponent);
     }
@@ -34,6 +37,14 @@ public class BattleEventMediator extends BaseMediator implements IMediator {
 
     private function onDialogClick(item:BattleDialogItem):void {
         trace("选择了第[" + item.getIndex + "]个")
+
+        //通过 item.getDataVo
+        //计算出得分 传出去 然后关闭界面
+
+        score = 0;
+
+        view.updateState(0);
+        view.updateEventResult(item.getDataVo.content);
     }
 
     private function onResultSureClick():void {
@@ -41,7 +52,7 @@ public class BattleEventMediator extends BaseMediator implements IMediator {
     }
 
     private function onSureClick():void {
-
+        //专家事件 选定角色并确认
     }
 
     private function onMoreClick():void {

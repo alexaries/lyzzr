@@ -6,13 +6,10 @@ import com.game.common.mvc.BaseMediator;
 import com.game.common.view.BaseWindow;
 import com.game.consts.BaseLayer;
 import com.game.module.battle.mediator.BattleMediator;
-import com.game.module.battle.utils.BattleUtil;
+import com.game.module.battle.vo.BaseBattleEventVo;
 import com.signal.SignalDispatcher;
 
-import config.stage.IstageCfg;
-
 import laya.display.Sprite;
-
 import laya.events.Event;
 
 import ui.battle.BattleViewUI;
@@ -62,11 +59,6 @@ public class BattleView extends BaseWindow {
     }
 
     private function init():void {
-        var copyId:int = _data as int;
-        var cfg:IstageCfg = BattleUtil.getStageById(copyId);
-
-        trace("...:" + cfg.stageSign);
-
         addProgressView();
         addStrengthView();
         ui.closeBtn.on(Event.CLICK, this, onClickCloseBtn);
@@ -92,8 +84,8 @@ public class BattleView extends BaseWindow {
         strengthView.pos(0, 550);
     }
 
-    public function addEventView():void {
-        if (!eventView)eventView = new BattleEventView();
+    public function addEventView(vo:BaseBattleEventVo):void {
+        if (!eventView)eventView = new BattleEventView(vo);
         addChildView(eventView);
         eventView.pos(0, 400);
     }

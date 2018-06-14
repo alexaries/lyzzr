@@ -85,7 +85,6 @@ public class BattleEventView extends BaseView {
         //info
         ui.skipBtn.on(Event.CLICK, this, onClickSkipBtn, null);
         ui.moreBtn.on(Event.CLICK, this, onClickMoreBtn, null);
-        ui.sureBtn.on(Event.CLICK, this, onClickSureBtn, null);//点击确定 出现专家事件的评分
 
         //result
         ui.resultSureBtn.on(Event.CLICK, this, onClickResultSureBtn, null);
@@ -136,10 +135,12 @@ public class BattleEventView extends BaseView {
             playerArr.push("");
         }
         ui.playerList.array = playerArr;
+
+        ui.sureBtn.on(Event.CLICK, this, onClickSureBtn, [expertVo]);//点击确定 出现专家事件的评分
     }
 
-    private function onClickResultSureBtn(e:Event):void {
-        if (resultSureSignal)resultSureSignal.dispatch(null);
+    private function onClickSureBtn(expertVo:BattleExpertVo):void {
+        if (sureSignal)sureSignal.dispatch([expertVo]);
     }
 
     public function onItemClick(item:BattleSelectionItem, selectIndex:int) {
@@ -163,17 +164,16 @@ public class BattleEventView extends BaseView {
 
     }
 
-    private function onClickSureBtn(e:Event):void {
-        if (sureSignal)sureSignal.dispatch(null);
-        updateState(0);
-    }
-
     private function onClickMoreBtn(e:Event):void {
         if (moreSignal)moreSignal.dispatch(null);
     }
 
     private function onClickSkipBtn(e:Event):void {
         if (skipSignal)skipSignal.dispatch(null);
+    }
+
+    private function onClickResultSureBtn(e:Event):void {
+        if (resultSureSignal)resultSureSignal.dispatch(null);
     }
 
     public function updateState(state:int = 1):void {

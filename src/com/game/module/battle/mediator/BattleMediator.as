@@ -52,8 +52,10 @@ public class BattleMediator extends BaseMediator implements IMediator {
     private function instanceCompleteHander():void {
         model.copyId = view.data;
         rejectToEventData();
+        view.initInfo(model);
     }
 
+    //注入对话事件&专家事件的数据
     private function rejectToEventData():void {
         eventArr = [];
         if (isHasDialogEvent) {

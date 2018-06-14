@@ -12,13 +12,15 @@ import ui.battle.BattleProgressUI;
 
 public class BattleProgressView extends BaseView {
     private var ui:BattleProgressUI;
-    private var curValue:int = 0;
-    private var maxLength:int = 0;
+    private var curValue:Number = 0;
+    private var maxValue:int = 0;
     private var delayTime:int = 400;
     private var oper:Oper;
 
-    public function BattleProgressView() {
+    public function BattleProgressView(maxValue:int) {
         super([]);
+        this.maxValue = maxValue;
+        this.curValue = 0;
     }
 
     override public function getMediator():BaseMediator {
@@ -45,12 +47,12 @@ public class BattleProgressView extends BaseView {
     }
 
     private function init():void {
-        maxLength = ui.progress.bg.width;
+//        maxValue = ui.progress.bg.width;
     }
 
-    public function updateProgress(value):void {
-        curValue += value;
-        var progress:Number = (Number)(curValue) / (Number)(maxLength);
+    public function updateProgress(proValue:Number):void {
+        curValue += proValue;
+        var progress:Number = (Number)(curValue) / (Number)(maxValue);
         progress = progress >= 1 ? 1 : progress;
         if (oper) {
             oper.halt();

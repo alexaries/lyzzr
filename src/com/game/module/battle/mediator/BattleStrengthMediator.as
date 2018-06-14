@@ -12,7 +12,7 @@ import org.puremvc.as3.patterns.observer.Notification;
 
 public class BattleStrengthMediator extends BaseMediator implements IMediator {
     public static const NAME:String = "BattleStrengthMediator";
-
+    private var score:int = 0;
 
     private function get view():BattleStrengthView {
         return getViewComponent() as BattleStrengthView;
@@ -23,12 +23,20 @@ public class BattleStrengthMediator extends BaseMediator implements IMediator {
 
     override public function onRegister():void {
         super.onRegister();
+
+        score = 0;
+
         view.onCompleteSignal.getSignal(this).listen(instanceCompleteHander);
         view.finishSignal.getSignal(this).listen(onFinished);
     }
 
     private function instanceCompleteHander():void {
+        calculateScore();
+    }
 
+    private function calculateScore():void {
+        score = 100;
+        dispatch(new Notification(BattleEvent.BATTLE_PROGRESS_UPDATE, [score]))
     }
 
     private function onFinished():void {

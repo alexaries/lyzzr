@@ -3,9 +3,15 @@
  */
 package com.game.module.battle.mediator {
 import com.game.common.mvc.BaseMediator;
+import com.game.common.view.Alert;
 import com.game.module.battle.events.BattleEvent;
 import com.game.module.battle.view.BattleEventView;
 import com.game.module.battle.view.items.BattleDialogItem;
+import com.game.module.battle.vo.BattleExpertVo;
+
+import lang.SystemInfo;
+
+import laya.utils.Handler;
 
 import org.puremvc.as3.interfaces.IMediator;
 import org.puremvc.as3.interfaces.INotification;
@@ -35,24 +41,32 @@ public class BattleEventMediator extends BaseMediator implements IMediator {
         view.resultSureSignal.getSignal(this).listen(onResultSureClick);
     }
 
+    private function instanceCompleteHander():void {
+
+    }
+
     private function onDialogClick(item:BattleDialogItem):void {
         trace("选择了第[" + item.getIndex + "]个")
 
         //通过 item.getDataVo
         //计算出得分 传出去 然后关闭界面
 
-        score = 0;
+        score = 100;
+        dispatch(new Notification(BattleEvent.BATTLE_PROGRESS_UPDATE, [score]));
 
         view.updateState(0);
-        view.updateEventResult(item.getDataVo.content);
+        view.updateEventResult(item.getDataVo.feedBack);
     }
 
-    private function onResultSureClick():void {
-        dispatch(new Notification(BattleEvent.BATTLE_EVENT_FINISHED));
-    }
-
-    private function onSureClick():void {
+    private function onSureClick(expertVo:BattleExpertVo):void {
         //专家事件 选定角色并确认
+        view.updateState(0);
+
+        //计算出 当前的fail?normal?perfect
+        view.updateEventResult(expertVo.expertEventFeedback);
+
+        score = 100;
+        dispatch(new Notification(BattleEvent.BATTLE_PROGRESS_UPDATE, [score]));
     }
 
     private function onMoreClick():void {
@@ -60,11 +74,20 @@ public class BattleEventMediator extends BaseMediator implements IMediator {
     }
 
     private function onSkipClick():void {
+        Alert.show("是否放弃?放弃的话直接得分为0", "提示", [SystemInfo.OK, SystemInfo.CANCEL], Handler.create(this, function (type:String) {
+            if (type == "ok") {
+                score = 0;//放弃的话
+                view.updateState(0);
+                view.updateEventResult("本轮放弃了");
+            }
+            else if (type == "cancel") {
 
+            }
+        }, null, false));
     }
 
-    private function instanceCompleteHander():void {
-
+    private function onResultSureClick():void {
+        dispatch(new Notification(BattleEvent.BATTLE_EVENT_FINISHED));
     }
 
     override public function onRemove():void {

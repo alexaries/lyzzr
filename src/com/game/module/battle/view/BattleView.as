@@ -6,6 +6,7 @@ import com.game.common.mvc.BaseMediator;
 import com.game.common.view.BaseWindow;
 import com.game.consts.BaseLayer;
 import com.game.module.battle.mediator.BattleMediator;
+import com.game.module.battle.proxy.BattleModel;
 import com.game.module.battle.vo.BaseBattleEventVo;
 import com.signal.SignalDispatcher;
 
@@ -23,6 +24,8 @@ public class BattleView extends BaseWindow {
     public var eventView:BattleEventView;//特殊事件以及事件结果
     public var fetterView:BattleFetterView;//召唤羁绊
     public var resultView:BattleResultView;//结果
+
+    private var model:BattleModel;
 
     public function BattleView() {
         super([]);
@@ -59,8 +62,6 @@ public class BattleView extends BaseWindow {
     }
 
     private function init():void {
-        addProgressView();
-        addStrengthView();
         ui.closeBtn.on(Event.CLICK, this, onClickCloseBtn);
     }
 
@@ -72,8 +73,16 @@ public class BattleView extends BaseWindow {
         ui.x = (Laya.stage.width - ui.width) / 2;
     }
 
-    public function addProgressView():void {
-        if (!progressView)progressView = new BattleProgressView();
+    public function initInfo(model:BattleModel):void {
+        this.model = model;
+
+//        addProgressView(model.copyCfg.star3Score);
+        addProgressView(1000);
+        addStrengthView();
+    }
+
+    public function addProgressView(maxValue:int = 1):void {
+        if (!progressView)progressView = new BattleProgressView(maxValue);
         addChildView(progressView);
         progressView.pos(120, 0);
     }

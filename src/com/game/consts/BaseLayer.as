@@ -7,6 +7,7 @@ public class BaseLayer {
     public static const GUIDE:int = 10;
     public static const SPECIAL:int = 11;
     public static const DISPLAY:int = 12;
+    public static const HIGHER:int = 13;
     public static const RECHARGE:int = 200;
     public static const CHAPTER:int = 20;
     public static const ITEMTWEEN:int = 99;

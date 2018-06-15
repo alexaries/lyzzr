@@ -1,9 +1,5 @@
 package com.game.module.map.vo {
 import config.ConfigManager;
-import config.scene.build.IBuild_config_normal_build;
-import config.scene.build.IBuild_config_tran_build;
-import config.scene.buildLang.IBuildLang_lang;
-import config.scene.city.ICity_config_city;
 
 import laya.utils.Dictionary;
 

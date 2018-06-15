@@ -3,6 +3,7 @@ import com.game.common.events.MenuWindowVO;
 import com.game.common.mediator.GameMainMediator;
 import com.game.common.mvc.BaseMediator;
 import com.game.consts.BaseLayer;
+import com.game.module.battle.view.ExpertView;
 import com.game.module.battle.view.BattleView;
 import com.game.module.copy.view.CopyInfoView;
 import com.game.module.copy.view.CopyView;
@@ -126,13 +127,11 @@ public class GameMain extends BaseView {
             }
         } else {
             var win:BaseWindow = null;
-			trace("menuWinTypeName:", menuWinTypeName);
+            trace("menuWinTypeName:", menuWinTypeName);
             switch (menuWinTypeName) {
-				
-				case MenuWinType.PLOT_VIEW:
-					win = new PlotView();
-					break;
-				
+                case MenuWinType.PLOT_VIEW:
+                    win = new PlotView();
+                    break;
                 case MenuWinType.TAVERN_VIEW:
                     win = new TavernView();
                     break;
@@ -153,6 +152,9 @@ public class GameMain extends BaseView {
                     break;
                 case MenuWinType.BATTLE_VIEW:
                     win = new BattleView();
+                    break;
+                case MenuWinType.EXPERT_VIEW:
+                    win = new ExpertView();
                     break;
                 default :
                     trace("窗口打开失败", menuWinTypeName);

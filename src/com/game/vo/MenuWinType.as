@@ -9,6 +9,7 @@ public class MenuWinType {
     public static const COPY_INFO_VIEW = "COPY_INFO_VIEW";//副本信息
 
     public static const BATTLE_VIEW = "BATTLE_VIEW";//战斗
+    public static const EXPERT_VIEW = "EXPERT_VIEW";//专家界面
 
     public static const WORLD_MAP:String = "worldMap";	       //世界地图
     public static const OPEN_CHAPTER:String = "open_chapter";//开启新的章节

@@ -2,12 +2,15 @@
  * Created by dingcj on 2018/6/11.
  */
 package com.game.module.battle.mediator {
+import com.game.common.events.MenuWindowVO;
 import com.game.common.mvc.BaseMediator;
 import com.game.common.view.Alert;
 import com.game.module.battle.events.BattleEvent;
 import com.game.module.battle.view.BattleEventView;
 import com.game.module.battle.view.items.BattleDialogItem;
 import com.game.module.battle.vo.BattleExpertVo;
+import com.game.module.menu.events.MenuEvent;
+import com.game.vo.MenuWinType;
 
 import lang.SystemInfo;
 
@@ -70,7 +73,7 @@ public class BattleEventMediator extends BaseMediator implements IMediator {
     }
 
     private function onMoreClick():void {
-
+        dispatch(new MenuEvent(MenuEvent.MENU_CLIK, new MenuWindowVO(MenuWinType.EXPERT_VIEW, MenuWindowVO.OPEN)));
     }
 
     private function onSkipClick():void {

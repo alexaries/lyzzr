@@ -91,6 +91,8 @@ public class ExpertView extends BaseWindow {
 
         ui.propertyList.itemRender = PropertyValueItem;
         ui.propertyList.renderHandler = Handler.create(this, onRenderPropertyItem, null, false);
+        ui.propertyList.repeatX = 4;
+        ui.propertyList.repeatY = 1;
 
         ui.closeBtn.on(Event.CLICK, this, onClickCloseBtn);
         ui.selectBtn.on(Event.CLICK, this, onClickSelectBtn);

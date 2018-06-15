@@ -1774,10 +1774,6 @@ public class NotiEvent extends Notification implements INotification {
     public static const INVITE_CITY_TEAM:String = "INVITE_CITY_TEAM"
     public static const CITYWAR_SEND_INVITTEAM:String = "CITYWAR_SEND_INVITTEAM"
 
-    public static const CITYWAR_OPEN_VIEW:String = "CITYWAR_OPEN_VIEW";
-
-
-
     public function NotiEvent(name:String, body:Object = null, type:String = null) {
         super(name, body, type);
     }

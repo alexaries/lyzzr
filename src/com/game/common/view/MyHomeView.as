@@ -171,18 +171,10 @@ public class MyHomeView extends BaseWindow {
     }
 
     private function onAIconClick():void {
-        openWindow(MenuWinType.SEVEN_DAY, null);
+
     }
 
     private function onClick(menuWinTypeName:String) {
-        if (menuWinTypeName == MenuWinType.CLAN_OPERATE
-                || menuWinTypeName == MenuWinType.DAILY_BOSS
-                || menuWinTypeName == MenuWinType.ARENA
-                || menuWinTypeName == MenuWinType.TASK_HOOK_VIEW
-        ) {
-            onOpenWindow.dispatch([menuWinTypeName]);
-            return;
-        }
         openWindow(menuWinTypeName, null);
     }
 
@@ -266,11 +258,6 @@ public class MyHomeView extends BaseWindow {
 
     private function gotoActivityHandler(acVo:ActivityVO):void {
         if (!acVo) {
-            return;
-        }
-
-        if (acVo.openfunc.win == MenuWinType.DAILY_BOSS) {
-            onOpenWindow.dispatch([acVo.openfunc.win]);
             return;
         }
 

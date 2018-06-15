@@ -4,17 +4,11 @@
 package com.game.module.task.command {
 
 import com.game.common.events.MenuWindowVO;
-import com.game.common.events.WindowEvent;
+import com.game.common.mvc.BaseCommand;
 import com.game.events.NotiEvent;
-import com.game.module.bookstore.vo.BookstoreVo;
-import com.game.module.daily.proxy.DailyService;
-import com.game.module.hotel.vo.HotelVo;
 import com.game.module.map.events.MapOperatorEvent;
-import com.game.module.map.events.MapServiceEvent;
 import com.game.module.map.proxy.MapService;
-import com.game.module.map.vo.MapVO;
 import com.game.module.menu.events.MenuEvent;
-import com.game.module.swordfight.proxy.SwordfightEvent;
 import com.game.module.task.events.TaskEvent;
 import com.game.module.task.vo.item.DailyLimitActItemVo;
 import com.game.module.task.vo.item.DailyUnlimitedActItemVo;
@@ -28,9 +22,6 @@ import laya.utils.Dictionary;
 
 import org.puremvc.as3.interfaces.ICommand;
 import org.puremvc.as3.interfaces.INotification;
-
-import com.game.common.mvc.BaseCommand;
-
 import org.puremvc.as3.patterns.observer.Notification;
 
 public class TaskActivityCommand extends BaseCommand implements ICommand {
@@ -124,16 +115,13 @@ public class TaskActivityCommand extends BaseCommand implements ICommand {
             case 2:
                 switch (dVo.index) {
                     case 0:
-                        dispatch(new NotiEvent(NotiEvent.POPUP_WIN, [MenuWinType.HOTEL_INFO]));
                         break;
                     case 1:
-                        dispatch(new NotiEvent(NotiEvent.POPUP_WIN, [MenuWinType.HOOKER_VIEW]));
                         break;
                     case 2:
                         dispatch(new NotiEvent(NotiEvent.POPUP_WIN, [MenuWinType.HEROES_INFO]));
                         break;
                     case 3:
-                        dispatch(new NotiEvent(NotiEvent.POPUP_WIN, [MenuWinType.ENDLESS_TOWER]));
                         break;
 
                     default:
@@ -157,7 +145,6 @@ public class TaskActivityCommand extends BaseCommand implements ICommand {
         var module:Object;
         switch (dVo.buttonType) {
             case 0:
-                FightBoss(dVo);
                 break;
             case 1:
                 switch (dVo.id) {
@@ -193,14 +180,6 @@ public class TaskActivityCommand extends BaseCommand implements ICommand {
     }
 
     private function FightBoss(dVo:DailyUnlimitedActItemVo):void {
-        if (!dVo.isBossing) {
-            dispatch(new Notification(NotiEvent.ROLL_ALERT, "世界Boss暂未开启"));
-        }
-        else {
-            var action:MenuWindowVO = new MenuWindowVO(MenuWinType.DAILY, MenuWindowVO.CLOSE);
-            dispatch(new MenuEvent(MenuEvent.MENU_CLIK, action));
-            dispatch(new MenuEvent(MenuEvent.MENU_CLIK, new MenuWindowVO(MenuWinType.DAILY_BOSS, MenuWindowVO.OPEN)));
-        }
     }
 
     private function FightSword():void {

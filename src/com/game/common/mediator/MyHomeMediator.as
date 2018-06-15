@@ -53,7 +53,7 @@ public class MyHomeMediator extends BaseMediator implements IMediator {
     }
 
     private function instanceCompleteHander():void {
-        view.outSignal.getSignal(this).listen(closeHome);
+        view.outSignal.getSignal(this).listen(outFight);
         view.build.gotoActivitySignal.getSignal(this).listen(gotoActivityHandler);
     }
 
@@ -82,7 +82,7 @@ public class MyHomeMediator extends BaseMediator implements IMediator {
     }
 
 
-    public function closeHome(obj:Array = []):void {
+    public function outFight(obj:Array = []):void {
         dispatch(new MenuEvent(MenuEvent.MENU_CLIK, new MenuWindowVO(MenuWinType.COPY_VIEW, MenuWindowVO.OPEN, new Object())));
     }
 
@@ -130,10 +130,10 @@ public class MyHomeMediator extends BaseMediator implements IMediator {
         for (i = 0; i < icons.length; i++) {
             cell = icons.getCell(i) as BaseFuncIconView;
             vo = icons.array[i];
-            if (cell && vo.openfunc.guide_name == icon_name && cell.isLocked == false) {
-                dispatch(new NotiEvent(NotiEvent.SHOW_REDPOINT, [cell.ui.redCon, flag, 0]));
-                return;
-            }
+//            if (cell && vo.openfunc.guide_name == icon_name && cell.isLocked == false) {
+//                dispatch(new NotiEvent(NotiEvent.SHOW_REDPOINT, [cell.ui.redCon, flag, 0]));
+//                return;
+//            }
         }
 
         //下方按钮
@@ -143,10 +143,10 @@ public class MyHomeMediator extends BaseMediator implements IMediator {
             cell2 = icons_down.getCell(i) as MainIconView;
 
             vo = icons_down.array[i];
-            if (cell2 && vo.openfunc.guide_name == icon_name && cell2.isLocked == false) {
-                dispatch(new NotiEvent(NotiEvent.SHOW_REDPOINT, [cell2.ui.redCon, flag, 0]));
-                return;
-            }
+//            if (cell2 && vo.openfunc.guide_name == icon_name && cell2.isLocked == false) {
+//                dispatch(new NotiEvent(NotiEvent.SHOW_REDPOINT, [cell2.ui.redCon, flag, 0]));
+//                return;
+//            }
         }
 
         //任务和日常 按钮
@@ -176,10 +176,10 @@ public class MyHomeMediator extends BaseMediator implements IMediator {
             cell4 = builds[i] as BuildButtonView;
 
             vo = builds[i]._vo;
-            if (cell4 && vo.openfunc.guide_name == icon_name && cell4.isLocked == false) {
-                dispatch(new NotiEvent(NotiEvent.SHOW_REDPOINT, [cell4.ui.redCon, flag, 0]));
-                return;
-            }
+//            if (cell4 && vo.openfunc.guide_name == icon_name && cell4.isLocked == false) {
+//                dispatch(new NotiEvent(NotiEvent.SHOW_REDPOINT, [cell4.ui.redCon, flag, 0]));
+//                return;
+//            }
         }
     }
 
@@ -210,8 +210,7 @@ public class MyHomeMediator extends BaseMediator implements IMediator {
             NotiEvent.INFO_REDPOINT,
             NotiEvent.USER_LEVEL_UPDATE,
             PopManagerEvent.UPGRADE_REWARD,
-            NotiEvent.REFRESH_POWER,
-            NotiEvent.CITYWAR_OPEN_VIEW
+            NotiEvent.REFRESH_POWER
         ];
     }
 
@@ -268,9 +267,6 @@ public class MyHomeMediator extends BaseMediator implements IMediator {
                 view.showUpdateReward(body);
                 break;
             case NotiEvent.REFRESH_POWER:
-                break;
-            case NotiEvent.CITYWAR_OPEN_VIEW:
-                closeHome(body as Array);
                 break;
         }
     }

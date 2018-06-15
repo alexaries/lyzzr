@@ -207,7 +207,6 @@ public class TaskListChangeCommand extends BaseCommand implements ICommand {
     private function doModelTaskCurListChangeCAMP_SELECT_VIEW( ) : void {
 
         if (service.guideTaskId ==57 &&service.getTaskById(57).state==TaskState.RESOLVED && userProxy.userVO.country == 2) {
-            dispatch(new NotiEvent(NotiEvent.POPUP_DEMO, [MenuWinType.CAMP_SELECT_VIEW, 1]));
         }
         return;
     }

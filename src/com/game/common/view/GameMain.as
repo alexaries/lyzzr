@@ -3,8 +3,8 @@ import com.game.common.events.MenuWindowVO;
 import com.game.common.mediator.GameMainMediator;
 import com.game.common.mvc.BaseMediator;
 import com.game.consts.BaseLayer;
-import com.game.module.battle.view.ExpertView;
 import com.game.module.battle.view.BattleView;
+import com.game.module.battle.view.ExpertView;
 import com.game.module.copy.view.CopyInfoView;
 import com.game.module.copy.view.CopyView;
 import com.game.module.plot.view.PlotView;
@@ -18,7 +18,6 @@ import com.signal.SignalDispatcher;
 import globals.PlatformSDK;
 
 import laya.display.Sprite;
-import laya.events.Event;
 import laya.utils.Dictionary;
 
 import net.consts.AppConst;
@@ -62,7 +61,6 @@ public class GameMain extends BaseView {
         root = new Sprite();
         Laya.stage.addChild(root);
 
-        main.btnHome.on(Event.CLICK, this, openWorldMap);
         openHome();
     }
 
@@ -94,10 +92,6 @@ public class GameMain extends BaseView {
     }
 
     public function closeCityWar():void {
-    }
-
-    public function openWorldMap():void {
-        openWindow(MenuWinType.WORLD_MAP, null);
     }
 
     public function openWindow(menuWinTypeName:String, data:Object) {

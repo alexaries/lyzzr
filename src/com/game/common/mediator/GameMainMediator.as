@@ -170,7 +170,6 @@ public class GameMainMediator extends BaseMediator implements IMediator {
                 var arr:Array = body as Array;
                 if (arr == null || arr.length == 0)return;
                 var taskId:int = arr[0];
-                openWindow(MenuWinType.OPEN_CHAPTER, taskId);
                 //dispatch(new MenuEvent(MenuEvent.MENU_CLIK, new MenuWindowVO(MenuWinType.OPEN_CHAPTER, MenuWindowVO.OPEN)));//打开新章节界面
 
 //                updateTaskHook();
@@ -200,20 +199,6 @@ public class GameMainMediator extends BaseMediator implements IMediator {
     }
 
     public function openWindow(menuWinTypeName:String, data:Object) {
-        if (menuWinTypeName == MenuWinType.TASK_HOOK_VIEW) {
-//            if (!taskHookProxy.isCan) {
-//                facade.notifyObservers(new NotiEvent(NotiEvent.TASK_REQUEST_HOOK, [0, 1]));
-//                return;
-//            }
-//            if (!taskHookProxy.isCanHook) {
-//                !facade.notifyObservers(new Notification(NotiEvent.ROLL_ALERT, "当前据点不可以挂机!"));
-//                return;
-//            }
-        } else if (menuWinTypeName == MenuWinType.ENDLESS_TOWER) {
-            facade.notifyObservers(new ScreenEvent(ScreenEvent.ENDLESS_TOWER, true));
-            return;
-        }
-
         view.openWindow(menuWinTypeName, data);
     }
 

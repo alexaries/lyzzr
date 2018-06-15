@@ -1,22 +1,12 @@
 package com.game.common.view {
 import com.component.MovieClipCustom;
-import com.game.common.operation.Oper;
-import com.game.common.operation.Queue;
-import com.game.common.operation.TimeoutOper;
-import com.game.common.operation.FunctionOper;
-import com.game.common.operation.TweenOper;
 import com.game.vo.ActivityVO;
-import com.game.vo.MenuWinType;
 import com.signal.SignalDispatcher;
-
-import laya.display.Text;
 
 import laya.events.Event;
 import laya.ui.Box;
 
 import ui.main.icons.BaseIconViewUI;
-
-import utils.ArrayUtil;
 
 public class BaseIconView extends Box {
 
@@ -46,36 +36,11 @@ public class BaseIconView extends Box {
         this.gotoActivitySignal = signal;
         ui.txtName.text = _vo.name;
         ui.imgIcon.skin = _vo.imgUrl;
-        if (_vo.openfunc.guide_name) {
-            this.name = _vo.openfunc.guide_name;
-        } else {
-            this.name = "";
-        }
-
-        if (_vo.openfunc.win == MenuWinType.TASK_HOOK_VIEW) {
-            //挂机加特效
-            showNormalEffect("guajiren");
-//            var list:Array = [
-//                new FfTimeoutOper(300),
-//                new FunctionOper(this,createRandomPlus),
-//                new FfTimeoutOper(300),
-//                new FunctionOper(this,createRandomPlus),
-//                new FfTimeoutOper(300),
-//                new FunctionOper(this,createRandomPlus),
-//                new FfTimeoutOper(300),
-//                new FunctionOper(this,createRandomPlus)
-//                // new FfTimeoutOper(300),
-//                // new FunctionOper(this,createRandomPlus),
-//            ];
-//            var q:Queue = new Queue(list);
-//            ques.push(q);
-//            q.execute();
-        } else {
-            removeNormalEffect();
-//            if(!removeAllQueue()){
-//                ques = [];
-//            }
-        }
+//        if (_vo.openfunc.guide_name) {
+//            this.name = _vo.openfunc.guide_name;
+//        } else {
+//            this.name = "";
+//        }
     }
 
     /**

@@ -5,8 +5,11 @@ package com.game.module.battle.view {
 import com.game.common.mvc.BaseMediator;
 import com.game.common.view.BaseView;
 import com.game.module.battle.mediator.ExpertInfoMediator;
+import com.game.module.copy.view.items.PropertyItem;
+import com.game.module.copy.view.items.PropertyValueItem;
 
 import laya.events.Event;
+import laya.utils.Handler;
 
 import ui.battle.ExpertInfoViewUI;
 
@@ -52,6 +55,8 @@ public class ExpertInfoView extends BaseView {
         init();
     }
 
+    private var propertyValueItem:PropertyValueItem;
+
     private function init():void {
         //这个只会在生成的时候初始化一次
         //become visiable 的时候是不会重新调用一次的
@@ -62,6 +67,21 @@ public class ExpertInfoView extends BaseView {
         ui.upBtn.on(Event.CLICK, this, onUpBtn);
 
         updateState();
+
+        ui.propertyList.itemRender = PropertyItem;
+        ui.propertyList.renderHandler = Handler.create(this, onRenderPropertyItem, null, false);
+        ui.propertyList.repeatX = 3;
+        ui.propertyList.spaceX = 50;
+        ui.propertyList.spaceY = 10;
+
+        if (!propertyValueItem) {
+            propertyValueItem = new PropertyValueItem();
+            ui.propertyContainer.addChild(propertyValueItem);
+        }
+    }
+
+    private function onRenderPropertyItem(cell:PropertyItem):void {
+
     }
 
     private function updateState() {
@@ -76,12 +96,10 @@ public class ExpertInfoView extends BaseView {
             ui.freeBtn.pos(316, 91);
             ui.upBtn.pos(722, 1440);
         }
-
-        trace("让我看一下 刷新了几次状态.................");
     }
 
     private function onUpBtn():void {
-        trace("你点击了升级");
+
     }
 
     private function onFreeBtn():void {
@@ -103,6 +121,12 @@ public class ExpertInfoView extends BaseView {
         ui.hireBtn.off(Event.CLICK, this, onHireBtn);
         ui.freeBtn.off(Event.CLICK, this, onFreeBtn);
         ui.upBtn.off(Event.CLICK, this, onUpBtn);
+
+        if (ui.propertyList.renderHandler)ui.propertyList.renderHandler.clear();
+        if (propertyValueItem) {
+            propertyValueItem.destroy();
+            propertyValueItem = null;
+        }
     }
 }
 }

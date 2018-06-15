@@ -36,6 +36,7 @@ public class ExpertInfoView extends BaseView {
 
     override public function show():void {
         super.show();
+        updateState();
     }
 
     override public function onComplete():void {
@@ -52,11 +53,18 @@ public class ExpertInfoView extends BaseView {
     }
 
     private function init():void {
+        //这个只会在生成的时候初始化一次
+        //become visiable 的时候是不会重新调用一次的
+
         ui.bg.on(Event.CLICK, this, onCloseBtn);
         ui.hireBtn.on(Event.CLICK, this, onHireBtn);
         ui.freeBtn.on(Event.CLICK, this, onFreeBtn);
         ui.upBtn.on(Event.CLICK, this, onUpBtn);
 
+        updateState();
+    }
+
+    private function updateState() {
         ui.freeBtn.visible = type == 0 || type == 2;
         ui.hireBtn.visible = type == 1;
         ui.upBtn.visible = type == 2;
@@ -68,6 +76,8 @@ public class ExpertInfoView extends BaseView {
             ui.freeBtn.pos(316, 91);
             ui.upBtn.pos(722, 1440);
         }
+
+        trace("让我看一下 刷新了几次状态.................");
     }
 
     private function onUpBtn():void {

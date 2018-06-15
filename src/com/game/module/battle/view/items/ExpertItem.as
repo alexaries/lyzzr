@@ -33,7 +33,7 @@ public class ExpertItem extends Box {
     }
 
     private function onClick(signal:SignalDispatcher):void {
-        if (signal)signal.dispatch(_type);
+        if (signal)signal.dispatch([_type]);
     }
 
     public function updateInfo():void {

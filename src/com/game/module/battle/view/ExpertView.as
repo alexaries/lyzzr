@@ -110,10 +110,14 @@ public class ExpertView extends BaseWindow {
     }
 
     private function onItemClick(type:int):void {
-        if (infoView)infoView.show();
-        else addInfoView();
-
-        infoView.initInfo(type);
+        if (infoView) {
+            infoView.initInfo(type)
+            infoView.show();
+        }
+        else {
+            addInfoView();
+            infoView.initInfo(type);
+        }
     }
 
     private function onRenderPropertyItem(cell:PropertyValueItem, index:int):void {

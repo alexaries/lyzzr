@@ -3,12 +3,10 @@
  */
 package com.game.module.task.command {
 
-import com.game.common.events.MenuWindowVO;
 import com.game.common.mvc.BaseCommand;
 import com.game.events.NotiEvent;
 import com.game.module.map.events.MapOperatorEvent;
 import com.game.module.map.proxy.MapService;
-import com.game.module.menu.events.MenuEvent;
 import com.game.module.task.events.TaskEvent;
 import com.game.module.task.vo.item.DailyLimitActItemVo;
 import com.game.module.task.vo.item.DailyUnlimitedActItemVo;
@@ -22,7 +20,6 @@ import laya.utils.Dictionary;
 
 import org.puremvc.as3.interfaces.ICommand;
 import org.puremvc.as3.interfaces.INotification;
-import org.puremvc.as3.patterns.observer.Notification;
 
 public class TaskActivityCommand extends BaseCommand implements ICommand {
 
@@ -34,8 +31,8 @@ public class TaskActivityCommand extends BaseCommand implements ICommand {
         return facade.retrieveProxy(MapService.NAME) as MapService;
     }
 
-    function  get  dailyService():DailyService {
-        return facade.retrieveProxy(DailyService.NAME) as DailyService;
+    function  get  dailyService():* {
+        return null;
     }
 
     override public function execute(notification:INotification):void {
@@ -49,23 +46,16 @@ public class TaskActivityCommand extends BaseCommand implements ICommand {
                 doViewLstUnlimitedActOpen(body as DailyUnlimitedActItemVo);
                 break;
             case   NotiEvent.HOTEL_RESPONSE_PUB_LIST:
-                doHotelTime(body as HotelVo);
                 break;
             case  NotiEvent.BOOKSTORE_RESPONSE_LIST:
-                doBookstoreTime(body as BookstoreVo);
                 break;
         }
     }
 
-    private function doBookstoreTime(bookstoreVo:BookstoreVo):void {
-        dailyService.vo.bookstoreTime = bookstoreVo.time;
-        dailyService.timerDailyResponseData()
+    private function doBookstoreTime(bookstoreVo):void {
     }
 
-    private function doHotelTime(hotelVo:HotelVo):void {
-        dailyService.vo.hotelTime = hotelVo.time;
-        dailyService.timerDailyResponseData()
-        //通知更新
+    private function doHotelTime(hotelVo):void {
     }
 
     private function getHookData():MonsterVO {
@@ -183,8 +173,7 @@ public class TaskActivityCommand extends BaseCommand implements ICommand {
     }
 
     private function FightSword():void {
-        //dispatch(new MenuEvent(MenuEvent.MENU_CLIK, new MenuWindowVO(MenuWinType.SWORDFIGHT_JOIN, MenuWindowVO.OPEN)));
-        dispatch(new Notification(SwordfightEvent.CheckSwordFight));
+
     }
 }
 }

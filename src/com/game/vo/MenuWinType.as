@@ -5,6 +5,7 @@ public class MenuWinType {
     public static const DAILY:String = "daily_panel";   	   //日常
     public static const COMMONWINDOW = "common_window";//通用弹窗
 
+    //#region NEW
     public static const COPY_VIEW = "COPY_VIEW";//副本
     public static const COPY_INFO_VIEW = "COPY_INFO_VIEW";//副本信息
 
@@ -17,6 +18,9 @@ public class MenuWinType {
     public static const TAVERN_TU_VIEW:String = "tavern_tu_view";//散仙图鉴
     public static const TAVERN_VIEW = "tavern_view";//酒馆招募
     public static const HEROES_INFO:String = "heros_info";	   //英雄志
+
+    public static const COMPANY_VIEW:String = "COMPANY_VIEW";//公司界面
+    //#endregion
 
     public static const TASK_NPC_VIEW:String = "taskNpcView";
     public static const TASK_GUIDE_VIEW:String = "taskGuideView";

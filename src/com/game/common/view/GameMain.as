@@ -5,6 +5,7 @@ import com.game.common.mvc.BaseMediator;
 import com.game.consts.BaseLayer;
 import com.game.module.battle.view.BattleView;
 import com.game.module.battle.view.ExpertView;
+import com.game.module.company.view.CompanyView;
 import com.game.module.copy.view.CopyInfoView;
 import com.game.module.copy.view.CopyView;
 import com.game.module.plot.view.PlotView;
@@ -149,6 +150,9 @@ public class GameMain extends BaseView {
                     break;
                 case MenuWinType.EXPERT_VIEW:
                     win = new ExpertView();
+                    break;
+                case MenuWinType.COMPANY_VIEW:
+                    win = new CompanyView();
                     break;
                 default :
                     trace("窗口打开失败", menuWinTypeName);

@@ -7,7 +7,6 @@ import com.game.common.operation.Queue;
 import com.game.common.operation.TimeoutOper;
 import com.game.module.task.view.TaskAndActivityTrackView;
 import com.game.module.user.proxy.UserProxy;
-import com.game.utils.FuncUtil;
 import com.game.vo.ActivityVO;
 import com.game.vo.MenuWinType;
 import com.signal.SignalDispatcher;
@@ -22,7 +21,6 @@ import laya.maths.Rectangle;
 import laya.ui.Box;
 import laya.ui.List;
 import laya.utils.Handler;
-import laya.utils.Pool;
 
 import net.consts.AppConst;
 import net.consts.StaticConfig;
@@ -215,15 +213,15 @@ public class MyHomeView extends BaseWindow {
     public function layoutButtons():void {
         updateRightButtonList();
 
-        var icons:Array = ConfigLocator.getInstance().getOpenfuncByPosition(2);
-        var cfg:IOpenfuncCfg;
-        var iconVo:ActivityVO;
-        var btnsAc:Array = [];
-        for each(iconVo in icons) {
-            cfg = iconVo.openfunc;
-            btnsAc.push(iconVo);
-        }
-        main.iconList.array = btnsAc;
+//        var icons:Array = ConfigLocator.getInstance().getOpenfuncByPosition(2);
+//        var cfg:IOpenfuncCfg;
+//        var iconVo:ActivityVO;
+//        var btnsAc:Array = [];
+//        for each(iconVo in icons) {
+//            cfg = iconVo.openfunc;
+//            btnsAc.push(iconVo);
+//        }
+//        main.iconList.array = btnsAc;
     }
 
     private function setDownButtonList():void {
@@ -262,13 +260,13 @@ public class MyHomeView extends BaseWindow {
         }
 
         var vo:MenuWindowVO = new MenuWindowVO(acVo.type, MenuWindowVO.OPEN, new Object());
-        MenuWindowVO.setTabIndex(vo.data, acVo.openfunc.tab);
+//        MenuWindowVO.setTabIndex(vo.data, acVo.openfunc.tab);
         openWindow(acVo.type, vo.data);
     }
 
     public function updateRightButtonList():void {
         var icons:Array = ConfigLocator.getInstance().getOpenfuncByPosition(4);
-        var cfg:IOpenfuncCfg;
+//        var cfg:IOpenfuncCfg;
         var iconVo:ActivityVO;
         var btnsAc:Array = [];
         for each(iconVo in icons) {
@@ -301,22 +299,22 @@ public class MyHomeView extends BaseWindow {
     }
 
     private function addFuncIcon(con:Box, ac:ActivityVO):void {
-        while (con.numChildren > 0) {
-            Pool.recover("BaseFuncIconView", con.removeChildAt(0));
-        }
-        var icon:BaseFuncIconView = Pool.getItemByClass("BaseFuncIconView", BaseFuncIconView);
-        icon.init(ac, userLevel);
-        icon.pos(-34, 0);
-        con.addChild(icon);
-        con.on(Event.CLICK, this, onClick, [ac.openfunc.win]);
-        buttons.push(icon);
-        var cfg:IOpenfuncCfg = icon._vo.openfunc;
-        if (cfg && (!cfg.funcid || (cfg.funcid && FuncUtil.check(cfg.funcid)))) {
-            //需要显示
-            con.visible = true;
-        } else {
-            con.visible = false;
-        }
+//        while (con.numChildren > 0) {
+//            Pool.recover("BaseFuncIconView", con.removeChildAt(0));
+//        }
+//        var icon:BaseFuncIconView = Pool.getItemByClass("BaseFuncIconView", BaseFuncIconView);
+//        icon.init(ac, userLevel);
+//        icon.pos(-34, 0);
+//        con.addChild(icon);
+//        con.on(Event.CLICK, this, onClick, [ac.openfunc.win]);
+//        buttons.push(icon);
+//        var cfg:IOpenfuncCfg = icon._vo.openfunc;
+//        if (cfg && (!cfg.funcid || (cfg.funcid && FuncUtil.check(cfg.funcid)))) {
+//            //需要显示
+//            con.visible = true;
+//        } else {
+//            con.visible = false;
+//        }
     }
 
     public function showIcon(acVo:ActivityVO):void {

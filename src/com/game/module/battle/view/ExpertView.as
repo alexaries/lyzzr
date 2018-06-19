@@ -66,14 +66,18 @@ public class ExpertView extends BaseWindow {
         this.addChild(ui);
 
         init();
+        adapt();
+    }
+
+    private function adapt():void {
+        ui.x = (Laya.stage.width - ui.width) / 2;
     }
 
     private function init():void {
         if (!money) {
             money = new MoneyView();
-            ui.addChild(money);
+            ui.moneyBox.addChild(money);
         }
-        money.pos(300, 5);
 
         ui.panel.vScrollBarSkin = "";
 

@@ -17,13 +17,13 @@ import laya.utils.Handler;
 import ui.company.CompanyViewUI;
 
 public class CompanyView extends BaseFrame {
-
     public var closeSignal:SignalDispatcher;
     public var ruleSignal:SignalDispatcher;
     public var moreSignal:SignalDispatcher;
 
     private var ui:CompanyViewUI;
     private var money:MoneyView;
+    private var editorView:CompanyEditorView;
 
     public function CompanyView() {
         super([]);
@@ -120,7 +120,7 @@ public class CompanyView extends BaseFrame {
     }
 
     private function onClickChangeBtn():void {
-
+        openEditor();
     }
 
     private function onClickTrainBtn():void {
@@ -133,6 +133,21 @@ public class CompanyView extends BaseFrame {
 
     private function onClickCloseBtn():void {
         if (closeSignal)closeSignal.dispatch(null);
+    }
+
+    private function openEditor():void {
+        if (!editorView)editorView = new CompanyEditorView();
+        if (!ui.container.contains(editorView))ui.container.addChild(editorView);
+        editorView.show();
+        editorView.refresh();
+    }
+
+    private function removeEditor():void {
+        if (ui.container.contains(editorView))ui.container.removeChild(editorView);
+        if (editorView) {
+            editorView.tryDispose();
+            editorView = null;
+        }
     }
 
     override public function dispose():void {
@@ -154,6 +169,8 @@ public class CompanyView extends BaseFrame {
         if (ui.propertyList.renderHandler)ui.propertyList.renderHandler.clear();
         if (ui.departList.renderHandler)ui.departList.renderHandler.clear();
         if (ui.expertList.renderHandler)ui.expertList.renderHandler.clear();
+
+        removeEditor();
     }
 }
 }

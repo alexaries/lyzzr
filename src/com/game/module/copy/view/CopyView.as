@@ -4,6 +4,7 @@
 package com.game.module.copy.view {
 import com.component.MemoryManager;
 import com.game.common.mvc.BaseMediator;
+import com.game.common.view.BaseFrame;
 import com.game.common.view.BaseWindow;
 import com.game.module.copy.mediator.CopyMediator;
 import com.game.module.copy.view.items.ComboBoxItem;
@@ -16,7 +17,7 @@ import laya.utils.Handler;
 
 import ui.copy.CopyViewUI;
 
-public class CopyView extends BaseWindow {
+public class CopyView extends BaseFrame {
 
     private var ui:CopyViewUI;
     public var closeSignal:SignalDispatcher;
@@ -41,8 +42,8 @@ public class CopyView extends BaseWindow {
     private function __onComplete():void {
         ui = new CopyViewUI();
         addChild(ui);
-        adapt();
         init();
+        adapt();
     }
 
     private function adapt():void {

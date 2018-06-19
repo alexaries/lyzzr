@@ -112,14 +112,7 @@ public class TavernView extends BaseFrame {
     }
 
     private function adapt():void {
-        setTitle("许愿树");
         setContent(ui);
-        setToolBarItems([new BaseMenuVO("酒馆招募")]);
-        ui.x = (Laya.stage.width - ui.width) / 2;
-    }
-
-    override public function toolBarSelectHandler(index:int):void {
-        super.toolBarSelectHandler(index);
     }
 
     override public function dispose():void {

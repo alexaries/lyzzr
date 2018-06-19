@@ -61,7 +61,6 @@ public class TaskCycView extends BaseFrame {
         ui.btnFree.label = LangTxt.FREE+LangTxt.REFRESH;
         ui.btnAuto.label = LangTxt.AUTO+LangTxt.REFRESH;
         setContent(ui);
-        setTitle("衙门任务");
     }
 
     private function onGoldRefreshClick():void {
@@ -86,7 +85,6 @@ public class TaskCycView extends BaseFrame {
 
     public function refresh():void {
         var title:String = LangArrayTxt.TASK_VIEW_18[vo.cyc];
-        setTitle(title + "任务");
         ui.txtTaskType.text = "今日已完成" + title + "任务:";
         ui.labNum1.text = vo.finishCount + "/" + [dailyVo.cycTask4Max, dailyVo.cycTask5Max][vo.cyc];
         ui.labNum2.text = (TOTAL_NUM - vo.leftCount).toString();

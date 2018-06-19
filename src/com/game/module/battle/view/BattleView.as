@@ -3,7 +3,7 @@
  */
 package com.game.module.battle.view {
 import com.game.common.mvc.BaseMediator;
-import com.game.common.view.BaseWindow;
+import com.game.common.view.BaseFrame;
 import com.game.consts.BaseLayer;
 import com.game.module.battle.mediator.BattleMediator;
 import com.game.module.battle.proxy.BattleModel;
@@ -15,7 +15,7 @@ import laya.events.Event;
 
 import ui.battle.BattleViewUI;
 
-public class BattleView extends BaseWindow {
+public class BattleView extends BaseFrame {
     private var ui:BattleViewUI;
     public var closeSignal:SignalDispatcher;
 

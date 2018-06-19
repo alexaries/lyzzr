@@ -3,7 +3,7 @@
  */
 package com.game.module.company.view {
 import com.game.common.mvc.BaseMediator;
-import com.game.common.view.BaseWindow;
+import com.game.common.view.BaseFrame;
 import com.game.common.view.MoneyView;
 import com.game.module.company.mediator.CompanyMediator;
 import com.game.module.company.view.items.CompanyDepartItem;
@@ -16,7 +16,7 @@ import laya.utils.Handler;
 
 import ui.company.CompanyViewUI;
 
-public class CompanyView extends BaseWindow {
+public class CompanyView extends BaseFrame {
 
     public var closeSignal:SignalDispatcher;
     public var ruleSignal:SignalDispatcher;
@@ -64,7 +64,7 @@ public class CompanyView extends BaseWindow {
     }
 
     private function adapt():void {
-        ui.x = (Laya.stage.width - ui.width) / 2;
+        setContent(ui);
     }
 
     private function init():void {

@@ -34,7 +34,6 @@ public class AppConst {
     public static const isFPS:Boolean = false;
     public static var width_max:Number = 1300;
 
-
     public static var topBannerHeight:Number = 100;
     public static var bottomHeight:Number = 245;
     public static var padX:Number

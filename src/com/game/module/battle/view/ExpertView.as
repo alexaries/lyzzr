@@ -3,7 +3,7 @@
  */
 package com.game.module.battle.view {
 import com.game.common.mvc.BaseMediator;
-import com.game.common.view.BaseWindow;
+import com.game.common.view.BaseFrame;
 import com.game.common.view.MoneyView;
 import com.game.consts.BaseLayer;
 import com.game.module.battle.mediator.ExpertMediator;
@@ -12,13 +12,12 @@ import com.game.module.copy.view.items.PropertyValueItem;
 import com.signal.SignalDispatcher;
 
 import laya.display.Sprite;
-
 import laya.events.Event;
 import laya.utils.Handler;
 
 import ui.battle.ExpertViewUI;
 
-public class ExpertView extends BaseWindow {
+public class ExpertView extends BaseFrame {
     private var ui:ExpertViewUI;
     private var money:MoneyView;
 
@@ -70,7 +69,7 @@ public class ExpertView extends BaseWindow {
     }
 
     private function adapt():void {
-        ui.x = (Laya.stage.width - ui.width) / 2;
+        setContent(ui);
     }
 
     private function init():void {

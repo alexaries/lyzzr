@@ -77,7 +77,6 @@ public class GameMain extends BaseView {
             homeView.refresh();
         }
         goHomeSignal.dispatch([]);
-        closeCityWar();
     }
 
     public function closeHome():void {
@@ -85,18 +84,9 @@ public class GameMain extends BaseView {
             main.homeWin.removeChild(homeView);
             homeView.hide();
         }
-
-        openCityWar();
-    }
-
-    public function openCityWar():void {
-    }
-
-    public function closeCityWar():void {
     }
 
     public function openWindow(menuWinTypeName:String, data:Object) {
-
         var index:int = MenuWindowVO.getTabIndex(data);
 //        var openfuncCfg:IOpenfuncCfg = ConfigLocator.getInstance().getOpenfunc(menuWinTypeName, index);
 //        if (openfuncCfg != null && userLevel < openfuncCfg.level) {

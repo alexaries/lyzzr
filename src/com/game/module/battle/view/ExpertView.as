@@ -71,7 +71,7 @@ public class ExpertView extends BaseWindow {
     private function init():void {
         if (!money) {
             money = new MoneyView();
-            ui.containerBox.addChild(money);
+            ui.addChild(money);
         }
         money.pos(300, 5);
 

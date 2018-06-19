@@ -5,22 +5,16 @@ package com.game.module.task.proxy {
 import com.game.common.mvc.BaseProxy;
 import com.game.common.view.Alert;
 import com.game.events.NotiEvent;
-import com.game.module.guide.proxy.GuideService;
 import com.game.module.task.vo.TaskState;
-import com.game.module.task.vo.TaskType;
 import com.game.module.task.vo.TaskVO;
 import com.game.module.task.vo.item.TaskTrackItemVo;
 import com.game.module.user.proxy.UserProxy;
 import com.game.utils.ShellUtils;
-import com.game.vo.TaskCfg;
 import com.game.vo.UserData;
 import com.talkingdata.TDItem;
 import com.talkingdata.TDManager;
 
 import config.ConfigManager;
-import config.mission.task.ITask_tasks_item;
-
-import globals.ConfigLocator;
 
 import net.data.recvMsg.task.CurrAvailableTaskMsg;
 import net.data.recvMsg.task.CurrTaskListMsg;
@@ -104,7 +98,6 @@ public class TaskService extends BaseProxy implements IProxy {
         ] ;
         body.tips="日常";
         dispatch(new NotiEvent(NotiEvent.TASK_REFRESH, body));
-        dispatch(new NotiEvent(NotiEvent.TASK_TIP_HIDE))
         //使用 活跃度
         return null;
 
@@ -118,7 +111,6 @@ public class TaskService extends BaseProxy implements IProxy {
             ] ;
             body.tips="日常";
             dispatch(new NotiEvent(NotiEvent.TASK_REFRESH, body));
-            dispatch(new NotiEvent(NotiEvent.TASK_TIP_HIDE))
             //使用 活跃度
             return null;
         }
@@ -243,20 +235,6 @@ public class TaskService extends BaseProxy implements IProxy {
             case 1:
             case 2:
             case 3:
-                tasks=tasks.filter(function(vo:TaskVO){
-                    return vo.taskId!=msg.taskId;
-                });
-                if (gotoTaskId == msg.taskId) {
-                    gotoTaskId = 0;
-                    //试 取下一个任务
-                    var nextTasks:Array = ArrayUtil.filter(ConfigManager.instance.mission_task.tasks.item, function (task_tasks_item:ITask_tasks_item) {
-                        return task_tasks_item.preTaskId == msg.taskId;
-                    });
-                    if (nextTasks.length > 0) {
-                        ArrayUtil.sortOn(nextTasks, ["type", "id"]);
-                        gotoTaskId = nextTasks[0].id;
-                    }
-                }
                 break;
         }
         this.dispatch(new NotiEvent(NotiEvent.DAILY_REQUEST_DATA, []));
@@ -416,36 +394,12 @@ public class TaskService extends BaseProxy implements IProxy {
         return;
     }
 
-    public function checkGuide(taskID:int):Boolean {
-        if (guideService.testState)return true;
-        var cg = taskDialogProxy.checkGuide(taskID) || taskGuideProxy.checkGuide(taskID);
-        return cg;
-    }
-
     private function get taskDialogProxy():TaskDialogProxy {
         return facade.retrieveProxy(TaskDialogProxy.NAME) as TaskDialogProxy;
     }
 
     private function get taskGuideProxy():TaskGuideProxy {
         return facade.retrieveProxy(TaskGuideProxy.NAME) as TaskGuideProxy;
-    }
-
-    private function get guideService():GuideService {
-        return facade.retrieveProxy(GuideService.NAME) as GuideService;
-    }
-
-    public function hasTaskbyId(id:uint):Boolean {
-        var taskVO:TaskVO = ArrayUtil.find(tasks, function (t:TaskVO) {
-            return t.taskId == id;
-        });
-        return taskVO != null;
-    }
-
-    public function hasTaskbyMonster(id:uint):Boolean {
-        var taskVO:TaskVO = ArrayUtil.find(tasks, function (t:TaskVO) {
-            return t.monsters == id && t.state == TaskState.RESOLVED;
-        });
-        return taskVO != null;
     }
 }
 }

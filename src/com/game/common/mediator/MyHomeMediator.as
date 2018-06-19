@@ -203,8 +203,6 @@ public class MyHomeMediator extends BaseMediator implements IMediator {
             NotiEvent.HERO_INFO_UPDATE,
             NotiEvent.HERO_DATA_UPDATE,
             NotiEvent.NEWVIP_INFO,
-            NotiEvent.TASK_TIP_HIDE,
-//            MapServiceEvent.MAP_ARRIVED_BUILD,
             NotiEvent.CHAT_GET_INFO,
             NotiEvent.CHAT_GET_ERROR,
             NotiEvent.INFO_REDPOINT,
@@ -235,9 +233,6 @@ public class MyHomeMediator extends BaseMediator implements IMediator {
             case  NotiEvent.HERO_DATA_UPDATE:
                 break;
             case  NotiEvent.NEWVIP_INFO:
-                break;
-            case NotiEvent.TASK_TIP_HIDE:
-                view.hideTaskTip();
                 break;
 //            case  MapServiceEvent.MAP_ARRIVED_BUILD:
 //                view.updateMapInfo(body[0]);

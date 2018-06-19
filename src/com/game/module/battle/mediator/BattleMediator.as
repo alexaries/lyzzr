@@ -24,8 +24,6 @@ import org.puremvc.as3.interfaces.INotification;
 
 public class BattleMediator extends BaseMediator implements IMediator {
     public static const NAME:String = "BattleMediator";
-    private var maxCount = 2;//特殊事件触发最大次数
-    private var curCount = 0;//当前特殊事件触发次数
 
     private var proxy:BattleProxy;
     private var model:BattleModel;

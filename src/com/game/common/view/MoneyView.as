@@ -37,6 +37,10 @@ public class MoneyView extends BaseView {
         super.show();
     }
 
+    public function refresh():void {
+
+    }
+
     override public function onComplete():void {
         __onComplete();
         super.onComplete();

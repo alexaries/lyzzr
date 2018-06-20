@@ -34,6 +34,10 @@ public class ExpertView extends BaseFrame {
 
     private var isInBattle:Boolean = true;
 
+    public function get isBattle():Boolean {
+        return isInBattle;
+    }
+
     public function ExpertView() {
         super([]);
         layer = BaseLayer.HIGHER;

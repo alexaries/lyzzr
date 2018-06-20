@@ -16,6 +16,7 @@ import net.data.structs.chat.ChatStruct;
 
 import org.puremvc.as3.interfaces.IMediator;
 import org.puremvc.as3.interfaces.INotification;
+import org.puremvc.as3.patterns.observer.Notification;
 
 import ui.main.MyHomeUI;
 
@@ -76,6 +77,7 @@ public class MyHomeMediator extends BaseMediator implements IMediator {
 
     public function outFight():void {
         dispatch(new MenuEvent(MenuEvent.MENU_CLIK, new MenuWindowVO(MenuWinType.COPY_VIEW, MenuWindowVO.OPEN, new Object())));
+        dispatch(new Notification(NotiEvent.CLOSE_MONEY));
     }
 
     /** 接收网络信息 **/

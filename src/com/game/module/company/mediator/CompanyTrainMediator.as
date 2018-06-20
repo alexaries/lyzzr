@@ -21,6 +21,11 @@ public class CompanyTrainMediator extends BaseMediator implements IMediator {
     override public function onRegister():void {
         super.onRegister();
         view.onCompleteSignal.getSignal(this).listen(instanceCompleteHander);
+        view.oneKeySignal.getSignal(this).listen(oneKeyClick);
+    }
+
+    private function oneKeyClick():void {
+        
     }
 
     private function instanceCompleteHander():void {

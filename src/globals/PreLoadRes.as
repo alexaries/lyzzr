@@ -36,7 +36,12 @@ public class PreLoadRes {
     public var commonResArray:Array = [
         {url: AppConst.atlasPath + "common/button.json", type: Loader.ATLAS},
         {url: AppConst.atlasPath + "common/icon.json", type: Loader.ATLAS},
-        {url: AppConst.atlasPath + "common/surface.json", type: Loader.ATLAS}];
+        {url: AppConst.atlasPath + "common/surface.json", type: Loader.ATLAS},
+
+        {url: AppConst.atlasPath + "button.json", type: Loader.ATLAS},
+        {url: AppConst.atlasPath + "surface.json", type: Loader.ATLAS},
+        {url: AppConst.atlasPath + "icon.json", type: Loader.ATLAS}
+    ];
 
     private var _endHandler:Handler;
 

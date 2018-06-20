@@ -29,7 +29,7 @@ public class GoodsItemTweenPack extends BaseWindow {
 
     public function GoodsItemTweenPack() {
         super([]);
-        onlyHide=true;
+        onlyHide = true;
         layer = BaseLayer.ITEMTWEEN;
     }
 
@@ -59,19 +59,21 @@ public class GoodsItemTweenPack extends BaseWindow {
         ui = new ItemTweenToPackUI();
         addChild(ui);
 
-        point = MyHomeView.packPoint//( mainui.downBtn4.parent as Box).localToGlobal(new Point(mainui.downBtn4.x,mainui.downBtn4.y))
-        stonePoint = MyHomeView.stonePoint;
-        sliverPoint = MyHomeView.sliverPoint;
+//        point = MyHomeView.packPoint//( mainui.downBtn4.parent as Box).localToGlobal(new Point(mainui.downBtn4.x,mainui.downBtn4.y))
+//        stonePoint = MyHomeView.stonePoint;
+//        sliverPoint = MyHomeView.sliverPoint;
         doTween(content);
     }
+
     private var point:Point
     public var animCount:int;
     private var content:String;
-    function doTween(content:String):void{
+
+    function doTween(content:String):void {
         var goods:GoodsVO;
         var reg = /\[(.+?)\]/g;
-        var str : String = content;
-        var args : Array;
+        var str:String = content;
+        var args:Array;
         var bmp:Image;
         if (str && content.indexOf("x") > -1) {
             str = (reg.exec(content) as Array).join(",");
@@ -89,56 +91,58 @@ public class GoodsItemTweenPack extends BaseWindow {
                 var pos:Point;
                 pos = new Point(point.x - ui.container.x, point.y - ui.container.y);
                 bmp.alpha = 0;
-                var list:Array=[
+                var list:Array = [
                     new TimeoutOper(animCount * 200),
-                    new TweenOper(bmp,100,{alpha:1},Linear.easeIn),
-                    new TweenOper(bmp,1100,{x:pos.x,y:pos.y,alpha:0.3,scaleX:0.5,scaleY:0.5},Linear.easeIn),
-                    new FunctionOper(this,tweenComplete,[bmp])
+                    new TweenOper(bmp, 100, {alpha: 1}, Linear.easeIn),
+                    new TweenOper(bmp, 1100, {x: pos.x, y: pos.y, alpha: 0.3, scaleX: 0.5, scaleY: 0.5}, Linear.easeIn),
+                    new FunctionOper(this, tweenComplete, [bmp])
                 ]
-                var que:Queue =new Queue(list);
+                var que:Queue = new Queue(list);
                 que.execute();
                 animCount++;
             }
-        }else{
+        } else {
             var skinURL:String = "";
             var pos:Point;
             var flag:Boolean = false
-            if(str.indexOf("获得") != -1 && str.indexOf("仙石") != -1 ){
+            if (str.indexOf("获得") != -1 && str.indexOf("仙石") != -1) {
                 skinURL = "main/stone.png"
                 pos = new Point(stonePoint.x - ui.container.x, stonePoint.y - ui.container.y);
                 flag = true
-            }else if(str.indexOf("获得") != -1 && str.indexOf("银币") != -1 ){
+            } else if (str.indexOf("获得") != -1 && str.indexOf("银币") != -1) {
                 skinURL = "main/shushanMoney.png"
                 pos = new Point(sliverPoint.x - ui.container.x, sliverPoint.y - ui.container.y);
                 flag = true
             }
-            if(!flag)return;
+            if (!flag)return;
             bmp = new Image();
             bmp.skin = skinURL;
             ui.container.addChild(bmp);
             bmp.alpha = 0;
-            var list:Array=[
+            var list:Array = [
                 new TimeoutOper(animCount * 200),
-                new TweenOper(bmp,100,{alpha:1},Linear.easeIn),
-                new TweenOper(bmp,1200,{x:pos.x,y:pos.y,alpha:0.3,scaleX:0.5,scaleY:0.5},Linear.easeIn),
-                new FunctionOper(this,tweenComplete,[bmp])
+                new TweenOper(bmp, 100, {alpha: 1}, Linear.easeIn),
+                new TweenOper(bmp, 1200, {x: pos.x, y: pos.y, alpha: 0.3, scaleX: 0.5, scaleY: 0.5}, Linear.easeIn),
+                new FunctionOper(this, tweenComplete, [bmp])
             ];
-            var que:Queue =new Queue(list);
+            var que:Queue = new Queue(list);
             que.execute();
             animCount++;
         }
     }
-    override  public function setData(obj:Object):void {
+
+    override public function setData(obj:Object):void {
         var arr:Array = obj as Array;
         content = arr[0] as String;
-        if(!ui)return;
+        if (!ui)return;
         doTween(content);
 
     }
-    private function tweenComplete(img:Image) : void {
-            animCount--;
-            img.skin = "";
-            img = null;
+
+    private function tweenComplete(img:Image):void {
+        animCount--;
+        img.skin = "";
+        img = null;
     }
 }
 }

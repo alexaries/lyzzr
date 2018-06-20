@@ -2,20 +2,12 @@ package com.game.common.mediator {
 import com.game.common.events.MenuWindowVO;
 import com.game.common.events.PopManagerEvent;
 import com.game.common.mvc.BaseMediator;
-import com.game.common.view.BaseFuncIconView;
-import com.game.common.view.BuildButtonView;
-import com.game.common.view.MainIconView;
 import com.game.common.view.MyHomeView;
 import com.game.events.NotiEvent;
 import com.game.module.menu.events.MenuEvent;
-import com.game.module.redPoint.proxy.RedPointProxy;
 import com.game.module.user.proxy.UserProxy;
-import com.game.utils.FuncUtil;
 import com.game.vo.ActivityVO;
 import com.game.vo.MenuWinType;
-
-import laya.ui.Image;
-import laya.ui.List;
 
 import net.consts.StaticConfig;
 import net.data.recvMsg.chat.ChatMsg;
@@ -33,7 +25,6 @@ public class MyHomeMediator extends BaseMediator implements IMediator {
     public static const NAME:String = "MyHomeMediator";
 
     private var userProxy:UserProxy;
-    private var redProxy:RedPointProxy;
 
     private function get view():MyHomeView {
         return getViewComponent() as MyHomeView;
@@ -45,16 +36,17 @@ public class MyHomeMediator extends BaseMediator implements IMediator {
 
     override public function onRegister():void {
         super.onRegister();
-        view.instanceSignal.getSignal(this).listen(instanceCompleteHander);
+        view.onCompleteSignal.getSignal(this).listen(instanceCompleteHander);
+        view.outSignal.getSignal(this).listen(outFight);
+        view.build.gotoActivitySignal.getSignal(this).listen(gotoActivityHandler);
     }
 
     private function get main():MyHomeUI {
-        return view.main;
+        return view.ui;
     }
 
     private function instanceCompleteHander():void {
-        view.outSignal.getSignal(this).listen(outFight);
-        view.build.gotoActivitySignal.getSignal(this).listen(gotoActivityHandler);
+
     }
 
     private function gotoActivityHandler(acVo:ActivityVO):void {
@@ -82,19 +74,8 @@ public class MyHomeMediator extends BaseMediator implements IMediator {
         StaticConfig.welcome = true;
     }
 
-
-    public function outFight(obj:Array = []):void {
+    public function outFight():void {
         dispatch(new MenuEvent(MenuEvent.MENU_CLIK, new MenuWindowVO(MenuWinType.COPY_VIEW, MenuWindowVO.OPEN, new Object())));
-    }
-
-    /**
-     * 每秒刷新一次
-     * @param icon
-     */
-    private function refreshRightIconHandler(icon:BaseFuncIconView):void {
-    }
-
-    private function refreshRightIconOnceHandler(icon:BaseFuncIconView):void {
     }
 
     /** 接收网络信息 **/
@@ -120,68 +101,7 @@ public class MyHomeMediator extends BaseMediator implements IMediator {
 
     /**右侧按钮 参数【按钮名字，是否红点，编号id（选填）】*/
     public function redPointOnRightBtn(arr:Array):void {
-        var icon_name:String = arr[0];
-        var flag:uint = arr[1];
 
-        //右方按钮
-        var icons:List = view.getRightBtnList();
-        var cell:BaseFuncIconView;
-        var vo:ActivityVO;
-        var i:int;
-        for (i = 0; i < icons.length; i++) {
-            cell = icons.getCell(i) as BaseFuncIconView;
-            vo = icons.array[i];
-//            if (cell && vo.openfunc.guide_name == icon_name && cell.isLocked == false) {
-//                dispatch(new NotiEvent(NotiEvent.SHOW_REDPOINT, [cell.ui.redCon, flag, 0]));
-//                return;
-//            }
-        }
-
-        //下方按钮
-        var cell2:MainIconView;
-        var icons_down:List = view.getBottomBtnList();
-        for (i = 0; i < icons_down.length; i++) {
-            cell2 = icons_down.getCell(i) as MainIconView;
-
-            vo = icons_down.array[i];
-//            if (cell2 && vo.openfunc.guide_name == icon_name && cell2.isLocked == false) {
-//                dispatch(new NotiEvent(NotiEvent.SHOW_REDPOINT, [cell2.ui.redCon, flag, 0]));
-//                return;
-//            }
-        }
-
-        //任务和日常 按钮
-        var icons_special:Array = [main.richangBtn];
-        var cell3:Image;
-        for (i = 0; i < icons_special.length; i++) {
-            cell3 = icons_special[i];
-            if (cell3 && cell3.name == icon_name) {
-                if (icon_name == "zhujiemian_richang") {
-                    if (FuncUtil.isOpen(76)) {
-                        redProxy.redpointDic.set(1000, flag);
-                        dispatch(new NotiEvent(NotiEvent.SHOW_REDPOINT, [cell3, flag]));
-                    }
-                    else {
-                        redProxy.redpointDic.set(1000, false);
-                        dispatch(new NotiEvent(NotiEvent.SHOW_REDPOINT, [cell3, false]));
-                    }
-                }
-                break;
-            }
-        }
-
-        //建筑按钮
-        var cell4:BuildButtonView;
-        var builds:Vector.<BuildButtonView> = view.build.builds;
-        for (i = 0; i < builds.length; i++) {
-            cell4 = builds[i] as BuildButtonView;
-
-            vo = builds[i]._vo;
-//            if (cell4 && vo.openfunc.guide_name == icon_name && cell4.isLocked == false) {
-//                dispatch(new NotiEvent(NotiEvent.SHOW_REDPOINT, [cell4.ui.redCon, flag, 0]));
-//                return;
-//            }
-        }
     }
 
     private function closeWindow(name:String, body:Object):void {
@@ -222,10 +142,8 @@ public class MyHomeMediator extends BaseMediator implements IMediator {
                 view.updateRightButtonList();
                 break;
             case NotiEvent.SHOW_ACTIVITY_ICON:
-                view.showIcon(body as ActivityVO);
                 break;
             case NotiEvent.REMOVE_ACTIVITY_ICON:
-                view.removeIcon(body as ActivityVO);
                 break;
             case  NotiEvent.USER_INFO_UPDATE:
                 break;
@@ -260,7 +178,6 @@ public class MyHomeMediator extends BaseMediator implements IMediator {
                 //view.updateUserLevel(userProxy.userVO.level, userProxy.getMainHero());
                 break;
             case PopManagerEvent.UPGRADE_REWARD:
-                view.showUpdateReward(body);
                 break;
             case NotiEvent.REFRESH_POWER:
                 break;

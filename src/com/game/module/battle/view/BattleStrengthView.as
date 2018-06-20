@@ -5,14 +5,17 @@ package com.game.module.battle.view {
 import com.game.common.mvc.BaseMediator;
 import com.game.common.view.BaseView;
 import com.game.module.battle.mediator.BattleStrengthMediator;
+import com.game.module.copy.view.items.PropertyValueItem;
 import com.signal.SignalDispatcher;
+
+import laya.utils.Handler;
 
 import ui.battle.BattleStrengthViewUI;
 
 public class BattleStrengthView extends BaseView {
     private var ui:BattleStrengthViewUI;
     public var finishSignal:SignalDispatcher;
-    private var delayTime:int = 1000;
+    private var delayTime:int = 2000;
 
     public function BattleStrengthView() {
         super([]);
@@ -46,6 +49,19 @@ public class BattleStrengthView extends BaseView {
 
     private function init():void {
         timerOnce(delayTime, this, delay);
+
+        ui.list.itemRender = PropertyValueItem;
+        ui.list.renderHandler = Handler.create(this, onRenderPropertyValueItem, null, false);
+
+        ui.list.repeatX = 2;
+        ui.list.repeatY = 2;
+
+        ui.list.spaceX = 100;
+        ui.list.spaceY = 40;
+    }
+
+    private function onRenderPropertyValueItem(cell:PropertyValueItem, index:int):void {
+
     }
 
     private function delay():void {

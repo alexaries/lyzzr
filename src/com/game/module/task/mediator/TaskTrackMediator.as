@@ -5,8 +5,6 @@ package com.game.module.task.mediator {
 import com.game.common.events.MenuWindowVO;
 import com.game.common.mvc.BaseMediator;
 import com.game.events.NotiEvent;
-import com.game.module.daily.proxy.DailyService;
-import com.game.module.daily.vo.DailyVo;
 import com.game.module.map.proxy.MapService;
 import com.game.module.menu.events.MenuEvent;
 import com.game.module.task.proxy.TaskService;
@@ -35,11 +33,6 @@ public class TaskTrackMediator extends BaseMediator implements IMediator {
     //todo
     private function get view():TaskTrackView {
         return getViewComponent() as TaskTrackView;
-    }
-
-    private function get dailyVo():DailyVo {
-        var __vo:DailyService = facade.retrieveProxy(DailyService.NAME) as DailyService;
-        return __vo.vo;
     }
 
     private function get vo():TaskTrackVo {
@@ -77,6 +70,7 @@ public class TaskTrackMediator extends BaseMediator implements IMediator {
 
         taskService.trackAutoTask();
     }
+
     override public function onRemove():void {
         super.onRemove();
     }
@@ -101,15 +95,13 @@ public class TaskTrackMediator extends BaseMediator implements IMediator {
         if (evt_text && evt_text.task) {
             taskService.gotoTaskId = evt_text.task.taskId;
             dispatch(new NotiEvent(NotiEvent.TASK_GUIDE_LINK_DO, evt_text));
-        }else{
+        } else {
             taskService.trackAutoTask();
         }
 
 
         return;
     }
-
-
 
 
     override public function handleNotification(notification:INotification):void {
@@ -168,13 +160,7 @@ public class TaskTrackMediator extends BaseMediator implements IMediator {
 
     }
 
-    public function showTips(tipsVO:TaskTrackItemVo ):void {
-            if (tipsVO.task && tipsVO.task.cfg && tipsVO.task.cfg.describe && tipsVO.task.cfg.describe != "") {
-                dispatch(new NotiEvent(NotiEvent.TASK_TIP_SHOW, tipsVO.task.cfg.describe))
-            }
-            else {
-                dispatch(new NotiEvent(NotiEvent.TASK_TIP_HIDE))
-            }
+    public function showTips(tipsVO:TaskTrackItemVo):void {
     }
 
     public function refreshList(taskTrackItemVo:TaskTrackItemVo):void {

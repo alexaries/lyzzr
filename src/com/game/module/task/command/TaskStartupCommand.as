@@ -3,8 +3,8 @@
  */
 package com.game.module.task.command {
 
+import com.game.common.mvc.BaseCommand;
 import com.game.events.NotiEvent;
-import com.game.module.task.command.TaskShellCommand;
 import com.game.module.task.events.TaskEvent;
 import com.game.module.task.proxy.TaskCycProxy;
 import com.game.module.task.proxy.TaskDialogProxy;
@@ -17,7 +17,6 @@ import net.events.MsgEvent;
 
 import org.puremvc.as3.interfaces.ICommand;
 import org.puremvc.as3.interfaces.INotification;
-import com.game.common.mvc.BaseCommand;
 
 public class TaskStartupCommand extends BaseCommand implements ICommand {
 

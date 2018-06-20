@@ -45,13 +45,6 @@ public class SimplePlayersView extends BaseFrame {
         //getContent().addChild()
         //setToolBarItems([new BaseMenuVO("任务"), new BaseMenuVO("日常")]);
         //setViewStackItems([new TaskView(), new TaskActivityView()]);
-        setToolBarSelect(toolBarSelectedIndex);
     }
-
-
-    override public function toolBarSelectHandler(index:int):void {
-        super.toolBarSelectHandler(index);
-    }
-
 }
 }

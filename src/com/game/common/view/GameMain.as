@@ -4,6 +4,8 @@ import com.game.common.mediator.GameMainMediator;
 import com.game.common.mvc.BaseMediator;
 import com.game.consts.BaseLayer;
 import com.game.module.battle.view.BattleView;
+import com.game.module.battle.view.ExpertView;
+import com.game.module.company.view.CompanyView;
 import com.game.module.copy.view.CopyInfoView;
 import com.game.module.copy.view.CopyView;
 import com.game.module.plot.view.PlotView;
@@ -17,7 +19,6 @@ import com.signal.SignalDispatcher;
 import globals.PlatformSDK;
 
 import laya.display.Sprite;
-import laya.events.Event;
 import laya.utils.Dictionary;
 
 import net.consts.AppConst;
@@ -61,7 +62,6 @@ public class GameMain extends BaseView {
         root = new Sprite();
         Laya.stage.addChild(root);
 
-        main.btnHome.on(Event.CLICK, this, openWorldMap);
         openHome();
     }
 
@@ -77,7 +77,6 @@ public class GameMain extends BaseView {
             homeView.refresh();
         }
         goHomeSignal.dispatch([]);
-        closeCityWar();
     }
 
     public function closeHome():void {
@@ -85,22 +84,9 @@ public class GameMain extends BaseView {
             main.homeWin.removeChild(homeView);
             homeView.hide();
         }
-
-        openCityWar();
-    }
-
-    public function openCityWar():void {
-    }
-
-    public function closeCityWar():void {
-    }
-
-    public function openWorldMap():void {
-        openWindow(MenuWinType.WORLD_MAP, null);
     }
 
     public function openWindow(menuWinTypeName:String, data:Object) {
-
         var index:int = MenuWindowVO.getTabIndex(data);
 //        var openfuncCfg:IOpenfuncCfg = ConfigLocator.getInstance().getOpenfunc(menuWinTypeName, index);
 //        if (openfuncCfg != null && userLevel < openfuncCfg.level) {
@@ -126,13 +112,11 @@ public class GameMain extends BaseView {
             }
         } else {
             var win:BaseWindow = null;
-			trace("menuWinTypeName:", menuWinTypeName);
+            trace("menuWinTypeName:", menuWinTypeName);
             switch (menuWinTypeName) {
-				
-				case MenuWinType.PLOT_VIEW:
-					win = new PlotView();
-					break;
-				
+                case MenuWinType.PLOT_VIEW:
+                    win = new PlotView();
+                    break;
                 case MenuWinType.TAVERN_VIEW:
                     win = new TavernView();
                     break;
@@ -153,6 +137,12 @@ public class GameMain extends BaseView {
                     break;
                 case MenuWinType.BATTLE_VIEW:
                     win = new BattleView();
+                    break;
+                case MenuWinType.EXPERT_VIEW:
+                    win = new ExpertView();
+                    break;
+                case MenuWinType.COMPANY_VIEW:
+                    win = new CompanyView();
                     break;
                 default :
                     trace("窗口打开失败", menuWinTypeName);

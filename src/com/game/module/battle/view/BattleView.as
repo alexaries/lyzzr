@@ -3,18 +3,19 @@
  */
 package com.game.module.battle.view {
 import com.game.common.mvc.BaseMediator;
-import com.game.common.view.BaseWindow;
+import com.game.common.view.BaseFrame;
 import com.game.consts.BaseLayer;
 import com.game.module.battle.mediator.BattleMediator;
+import com.game.module.battle.proxy.BattleModel;
+import com.game.module.battle.vo.BaseBattleEventVo;
 import com.signal.SignalDispatcher;
 
 import laya.display.Sprite;
-
 import laya.events.Event;
 
 import ui.battle.BattleViewUI;
 
-public class BattleView extends BaseWindow {
+public class BattleView extends BaseFrame {
     private var ui:BattleViewUI;
     public var closeSignal:SignalDispatcher;
 
@@ -23,6 +24,8 @@ public class BattleView extends BaseWindow {
     public var eventView:BattleEventView;//特殊事件以及事件结果
     public var fetterView:BattleFetterView;//召唤羁绊
     public var resultView:BattleResultView;//结果
+
+    private var model:BattleModel;
 
     public function BattleView() {
         super([]);
@@ -54,12 +57,11 @@ public class BattleView extends BaseWindow {
         init();
     }
 
-    private function init():void {
-        var copyId:int = _data as int;
-        trace("...传进来的副本id:" + copyId);
+    public function get data():int {
+        return _data as int;
+    }
 
-        addProgressView();
-        addStrengthView();
+    private function init():void {
         ui.closeBtn.on(Event.CLICK, this, onClickCloseBtn);
     }
 
@@ -71,8 +73,16 @@ public class BattleView extends BaseWindow {
         ui.x = (Laya.stage.width - ui.width) / 2;
     }
 
-    public function addProgressView():void {
-        if (!progressView)progressView = new BattleProgressView();
+    public function initInfo(model:BattleModel):void {
+        this.model = model;
+
+//        addProgressView(model.copyCfg.star3Score);
+        addProgressView(1000);
+        addStrengthView();
+    }
+
+    public function addProgressView(maxValue:int = 1):void {
+        if (!progressView)progressView = new BattleProgressView(maxValue);
         addChildView(progressView);
         progressView.pos(120, 0);
     }
@@ -83,8 +93,8 @@ public class BattleView extends BaseWindow {
         strengthView.pos(0, 550);
     }
 
-    public function addEventView():void {
-        if (!eventView)eventView = new BattleEventView();
+    public function addEventView(vo:BaseBattleEventVo):void {
+        if (!eventView)eventView = new BattleEventView(vo);
         addChildView(eventView);
         eventView.pos(0, 400);
     }

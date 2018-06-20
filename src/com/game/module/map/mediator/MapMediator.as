@@ -98,7 +98,6 @@ public class MapMediator extends BaseMediator implements IMediator {
             NotiEvent.REQUEST_OPEN_FORTH,
             NotiEvent.REQUEST_OPEN_FORTH_GIFT,
             NotiEvent.MODEL_MAP_ICONS_CHANGE,
-            NotiEvent.FIGHT_REQUEST_NPC,
             MapConstConfig.MAP_ENABLED,
             MapConstConfig.MAP_VISIBLE,
 
@@ -158,9 +157,6 @@ public class MapMediator extends BaseMediator implements IMediator {
             case NotiEvent.REQUEST_OPEN_FORTH_GIFT:
                 view.forthGiftClick();
                 break;
-            case NotiEvent.FIGHT_REQUEST_NPC:
-                fighRequestNpc(notification.getBody());
-                break;
             case NotiEvent.MODEL_MAP_ICONS_CHANGE:
                 view.setTaskData(userProxy.userData.curMapBuildsIcon);
                 break;
@@ -186,8 +182,6 @@ public class MapMediator extends BaseMediator implements IMediator {
             case NotiEvent.CITYWAR_CHANGEMAP_C:
                 onMapChangeByCitywar(body as int);
                 break;
-
-
         }
     }
 

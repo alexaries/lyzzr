@@ -44,7 +44,7 @@ public class BattleProgressMediator extends BaseMediator implements IMediator {
 
         switch (name) {
             case BattleEvent.BATTLE_PROGRESS_UPDATE:
-                var value:int = body as int;
+                var value:int = body[0] as int;
                 updateProgress(value);
                 break;
         }

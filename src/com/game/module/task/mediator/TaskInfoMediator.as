@@ -37,7 +37,6 @@ public class TaskInfoMediator extends BaseMediator implements IMediator {
 
         switch (name) {
             case NotiEvent.SHOW_FRAME_MSG:
-                view.setMsg(body as String);
                 break;
         }
     }

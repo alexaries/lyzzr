@@ -4,7 +4,6 @@ import com.game.module.share.proxy.ShareProxy;
 import com.game.module.user.proxy.UserProxy;
 
 import config.ConfigManager;
-import config.mission.openfunc.IOpenfuncCfg;
 
 import globals.PlatformSDK;
 
@@ -116,10 +115,10 @@ public class FuncUtil {
 
     /* 到达开启等级 */
     public static function isOpen(id:int) {
-        var cfg:IOpenfuncCfg = ArrayUtil.find(ConfigManager.instance.mission_openfunc.openfuncCfg, function (item:IOpenfuncCfg) {
-            return item.id == id;
-        });
-        if (cfg)return userProxy.userVO.level >= cfg.level;
+//        var cfg:IOpenfuncCfg = ArrayUtil.find(ConfigManager.instance.mission_openfunc.openfuncCfg, function (item:IOpenfuncCfg) {
+//            return item.id == id;
+//        });
+//        if (cfg)return userProxy.userVO.level >= cfg.level;
         return false;
     }
 }

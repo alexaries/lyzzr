@@ -31,7 +31,7 @@ public class BattleResultMediator extends BaseMediator implements IMediator {
     }
 
     private function onMoreClick():void {
-        dispatch(new Notification(BattleEvent.BATTLE_ENTER, [1000]));
+        dispatch(new Notification(BattleEvent.BATTLE_ENTER, [102]));
     }
 
     private function onFinishClick():void {

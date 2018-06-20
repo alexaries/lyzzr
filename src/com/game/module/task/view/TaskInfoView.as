@@ -47,25 +47,7 @@ public class TaskInfoView extends BaseFrame {
     }
 
     function __onComplete():void {
-        setBgType(1);
-        //  getContent().addChild()
-        setToolBarItems([new BaseMenuVO("任务") ]);
-        setViewStackItems([new TaskView()]);
-        setToolBarSelect(toolBarSelectedIndex);
     }
 
-
-    override public function toolBarSelectHandler(index:int):void {
-        if (index == 1) {
-            //每日点开日常任务次数统计
-            TDManager.addEvent(TDItem.meiridiankairichangrenwucishu, {count: 1}, "日常任务");
-
-            //每日点开日常任务的人数统计
-            TDManager.addEvent(TDItem.meiridiankairichangrenwurenshu, null, "日常任务");
-        }
-
-        super.toolBarSelectHandler(index);
-//        setMsg("");
-    }
 }
 }

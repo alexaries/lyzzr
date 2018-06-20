@@ -18,6 +18,7 @@ public class BattleFetterMediator extends BaseMediator implements IMediator {
     public static const NAME:String = "BattleFetterMediator";
 
     private var proxy:BattleProxy;
+    private var score:int;
 
     private var maxCount:int = 3;//最大可选角色数量
     private var selectList:Array = [];//已经选中的列表
@@ -42,6 +43,10 @@ public class BattleFetterMediator extends BaseMediator implements IMediator {
     }
 
     private function onSureClick():void {
+        //计算羁绊所得分数
+        score = 100;
+        dispatch(new Notification(BattleEvent.BATTLE_PROGRESS_UPDATE, [score]));
+
         dispatch(new Notification(BattleEvent.BATTLE_RESULT));
     }
 

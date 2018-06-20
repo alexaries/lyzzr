@@ -98,7 +98,6 @@ public class TaskGuideLinkCommand extends BaseCommand implements ICommand {
                         case 14:
                         case 201:
                         case 202:
-                            dispatch(new NotiEvent(NotiEvent.POPUP_WIN, [MenuWinType.HOTEL_INFO]));
                             break;
                         case 200:
                             mwav = new MenuWindowVO(MenuWinType.DAILY,MenuWindowVO.OPEN, 5);
@@ -179,7 +178,6 @@ public class TaskGuideLinkCommand extends BaseCommand implements ICommand {
                         case 20:
                             if (userProxy.userVO.country == 2) {
                                 dispatch(new MapOperatorEvent(MapOperatorEvent.STOP_AUTO_RUN));
-                                dispatch(new NotiEvent(NotiEvent.POPUP_DEMO, [MenuWinType.CAMP_SELECT_VIEW, 1]));
                                 return;
                             }
                             break;

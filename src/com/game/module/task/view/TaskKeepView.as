@@ -52,8 +52,6 @@ public class TaskKeepView extends BaseFrame {
 
     private function adapt():void {
         setContent(ui);
-        setToolBarItems([]);
-        setTitle("离线收益");
         if (!hook) {
             hook = new TaskHookView();
             ui.tcontainer.addChild(hook);
@@ -62,11 +60,6 @@ public class TaskKeepView extends BaseFrame {
             practice = new PracticeView();
             ui.pcontainer.addChild(practice);
         }
-        setViewStackItems([hook, practice]);
-    }
-
-    override public function toolBarSelectHandler(index:int):void {
-        super.toolBarSelectHandler(index);
     }
 
     override public function tryClose():void {

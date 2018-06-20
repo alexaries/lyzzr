@@ -8,9 +8,11 @@ import org.puremvc.as3.interfaces.IProxy;
 
 public class BattleProxy extends BaseProxy implements IProxy {
     public static const NAME:String = "BattleProxy";
+    public var model:BattleModel;
 
     public function BattleProxy() {
         super(NAME);
+        model = new BattleModel();
     }
 }
 }

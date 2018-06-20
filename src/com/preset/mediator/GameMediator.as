@@ -1,12 +1,13 @@
 package com.preset.mediator {
 import com.game.command.GameStartupCommand;
-import com.game.events.NotiEvent;
 import com.preset.events.DataEvent;
 import com.preset.login.vo.Server;
 import com.preset.view.GameView;
 import com.talkingdata.TDManager;
 
+import globals.PlatformSDK;
 import globals.PreLoadRes;
+import globals.vo.PlatformRoleInfo;
 
 import laya.utils.Handler;
 
@@ -15,8 +16,9 @@ import net.mediator.SocketConnectionMediator;
 
 import org.puremvc.as3.interfaces.IMediator;
 import org.puremvc.as3.interfaces.INotification;
-import org.puremvc.as3.patterns.facade.Facade;
 import org.puremvc.as3.patterns.mediator.Mediator;
+
+import utils.PlatformUtil;
 
 public class GameMediator extends Mediator implements IMediator {
     public static const NAME:String = "GameMediator";
@@ -43,11 +45,7 @@ public class GameMediator extends Mediator implements IMediator {
         return [
             DataEvent.CREATE_ROLE,
             DataEvent.ILLEGAL_LOGIN,
-//            DataEvent.BACK_LOGIN,
-            DataEvent.LOGIN_SUCCESS,
-            NotiEvent.FIGHT_POPUP,
-            NotiEvent.FIGHT_REQUEST_EXIT,
-            NotiEvent.FIGHT_PREV_POPUP
+            DataEvent.LOGIN_SUCCESS
         ];
     }
 
@@ -56,23 +54,7 @@ public class GameMediator extends Mediator implements IMediator {
         var body:Object = notification.getBody();
 
         switch (name) {
-            case     NotiEvent.FIGHT_PREV_POPUP:
-                gameView.createBattle();
-                Facade.getInstance().notifyObservers(new NotiEvent(NotiEvent.FIGHT_POPUP, body));
-                break;
-            case     NotiEvent.FIGHT_POPUP:
-                gameView.startBattle();
-                break;
-            case     NotiEvent.FIGHT_REQUEST_EXIT:
-                gameView.endBattle()
-                break;
-
-//            case DataEvent.BACK_LOGIN:
-
-//                login();
-                break;
             case DataEvent.CREATE_ROLE:
-
                 keepLiveSocketConnectionMediator();
                 createRole();
                 break;
@@ -80,14 +62,8 @@ public class GameMediator extends Mediator implements IMediator {
                 illegalLogin();
                 break;
             case DataEvent.LOGIN_SUCCESS:
-
                 keepLiveSocketConnectionMediator();
                 loginSuccess();
-
-                //记录登录服
-//                if (PlatformSDK.getInstance().checkIsTest() == false) {
-//                    TDManager.setGameServer(Server.currServerVo.serverName);
-//                }
                 break;
         }
     }
@@ -105,22 +81,22 @@ public class GameMediator extends Mediator implements IMediator {
         StaticConfig.loginSuccess = true;
         trace("login success!!!");
         trace("Server==" + JSON.stringify(Server.currServerVo) + "==UserName==" + StaticConfig.createRoleName + "==ROLE_type==" + StaticConfig.createRoleType + "==UserId==" + StaticConfig.userId);
-//        if (StaticConfig.createRoleName != "" && Server.currServerVo) {
-//            //刚刚发送过创角的协议
-//            var roleInfo:PlatformRoleInfo = new PlatformRoleInfo();
-//            roleInfo.roleId = StaticConfig.platform + "-" + StaticConfig.createRoleType + "-" + StaticConfig.userId;
-//            roleInfo.role_name = StaticConfig.createRoleName;
-//            roleInfo.role_type = StaticConfig.createRoleType;
-//            roleInfo.server = Server.currServerVo.serverId;
-//            roleInfo.server_name = Server.currServerVo.serverName;
-//            roleInfo.uid = StaticConfig.userId;
-//            roleInfo.app_district = Server.currServerVo.serverNumber;
-//
-//            var platformRole:Object = PlatformUtil.createRoleInfo(roleInfo);
-//            if (platformRole) {
-//                PlatformSDK.getInstance().createRole(platformRole);//告诉平台 新创建了角色
-//            }
-//        }
+        if (StaticConfig.createRoleName != "" && Server.currServerVo) {
+            //刚刚发送过创角的协议
+            var roleInfo:PlatformRoleInfo = new PlatformRoleInfo();
+            roleInfo.roleId = StaticConfig.platform + "-" + StaticConfig.createRoleType + "-" + StaticConfig.userId;
+            roleInfo.role_name = StaticConfig.createRoleName;
+            roleInfo.role_type = StaticConfig.createRoleType;
+            roleInfo.server = Server.currServerVo.serverId;
+            roleInfo.server_name = Server.currServerVo.serverName;
+            roleInfo.uid = StaticConfig.userId;
+            roleInfo.app_district = Server.currServerVo.serverNumber;
+
+            var platformRole:Object = PlatformUtil.createRoleInfo(roleInfo);
+            if (platformRole) {
+                PlatformSDK.getInstance().createRole(platformRole);//告诉平台 新创建了角色
+            }
+        }
 
         //登录成功统计
         TDManager.trackingLoginIn();

@@ -202,7 +202,6 @@ public class MapService extends BaseProxy implements IProxy {
         if (userProxy.userVO.level >= 40 && userProxy.userVO.country == 2) {
 
             dispatch(new MapOperatorEvent(MapOperatorEvent.STOP_AUTO_RUN));
-            dispatch(new NotiEvent(NotiEvent.POPUP_DEMO, [MenuWinType.CAMP_SELECT_VIEW, 1]));
         }
 
     }

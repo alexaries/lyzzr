@@ -7,13 +7,10 @@ import com.game.common.operation.Queue;
 import com.game.common.operation.TimeoutOper;
 import com.game.module.task.view.TaskAndActivityTrackView;
 import com.game.module.user.proxy.UserProxy;
-import com.game.utils.FuncUtil;
 import com.game.vo.ActivityVO;
 import com.game.vo.MenuWinType;
 import com.signal.SignalDispatcher;
 import com.talkingdata.TDManager;
-
-import config.mission.openfunc.IOpenfuncCfg;
 
 import globals.ConfigLocator;
 
@@ -24,7 +21,6 @@ import laya.maths.Rectangle;
 import laya.ui.Box;
 import laya.ui.List;
 import laya.utils.Handler;
-import laya.utils.Pool;
 
 import net.consts.AppConst;
 import net.consts.StaticConfig;
@@ -33,8 +29,8 @@ import ui.main.MyHomeUI;
 
 public class MyHomeView extends BaseWindow {
     public var main:MyHomeUI;
-
     public var build:HomeMap;
+    public var money:MoneyView;
 
     public var outSignal:SignalDispatcher;
 
@@ -104,11 +100,14 @@ public class MyHomeView extends BaseWindow {
         build = new HomeMap();
         main.mapPart.addChild(build);
 
+        money = new MoneyView();
+        main.moneyBox.addChild(money);
+
         main.btnOut.on(Event.CLICK, this, outHandler);
 
         packPoint = new Point(780, 1798);
-        stonePoint = (main.xianshiTxt.parent as Box).localToGlobal(new Point(main.xianshiTxt.x, main.xianshiTxt.y));
-        sliverPoint = (main.sliverTxt.parent as Box).localToGlobal(new Point(main.sliverTxt.x, main.sliverTxt.y));
+//        stonePoint = (main.xianshiTxt.parent as Box).localToGlobal(new Point(main.xianshiTxt.x, main.xianshiTxt.y));
+//        sliverPoint = (main.sliverTxt.parent as Box).localToGlobal(new Point(main.sliverTxt.x, main.sliverTxt.y));
         layoutTop();
         layoutBottom();
         setRightButtonList();
@@ -130,7 +129,7 @@ public class MyHomeView extends BaseWindow {
         main.richangBtn.on(Event.CLICK, this, onClick, [MenuWinType.ACTIVE]);
 //        main.vipTxt.on(Event.CLICK, this, onClick, [MenuWinType.NEWVIP_VIEW]);
 //        main.mapBtn.on(Event.CLICK, this, onClick, [MenuWinType.WORLD_MAP]);
-        main.item0.on(Event.CLICK, this, onClick, [MenuWinType.RECHARGE_WIN]);
+//        main.item0.on(Event.CLICK, this, onClick, [MenuWinType.RECHARGE_WIN]);
         main.btnMusic.toggle = true;
         main.btnMusic.clickHandler = Handler.create(this, musicHandler, null, false);
         main.btnRecharge.on(Event.CLICK, this, onClick, [MenuWinType.RECHARGE_WIN]);
@@ -169,23 +168,11 @@ public class MyHomeView extends BaseWindow {
         closeWindowSignal.dispatch([menuWinTypeName, data])
     }
 
-//    public function showOnekeyEquip(goodsvo:PackVO, powerValue:Number, hero_sk:HeroVO = null):void {
-//        openWindow(MenuWinType.ONEKEY_EQ, [goodsvo, powerValue, hero_sk]);
-//    }
-
     private function onAIconClick():void {
-        openWindow(MenuWinType.SEVEN_DAY, null);
+
     }
 
     private function onClick(menuWinTypeName:String) {
-        if (menuWinTypeName == MenuWinType.CLAN_OPERATE
-                || menuWinTypeName == MenuWinType.DAILY_BOSS
-                || menuWinTypeName == MenuWinType.ARENA
-                || menuWinTypeName == MenuWinType.TASK_HOOK_VIEW
-        ) {
-            onOpenWindow.dispatch([menuWinTypeName]);
-            return;
-        }
         openWindow(menuWinTypeName, null);
     }
 
@@ -200,8 +187,11 @@ public class MyHomeView extends BaseWindow {
 
     /* 底部自适应 */
     private function layoutBottom():void {
-        main.downPart.x = AppConst.padX;
-        main.chat.x = AppConst.padX;
+//        main.downPart.x = AppConst.padX;
+//        main.chat.x = AppConst.padX;
+
+        main.downPart.x = (Laya.stage.width - main.downPart.width) / 2;
+        main.chat.x = (Laya.stage.width - main.chat.width) / 2;
     }
 
     /* 需要横向居中的显示对象 使用此方法 */
@@ -211,25 +201,27 @@ public class MyHomeView extends BaseWindow {
 
     /* 顶部自适应 */
     private function layoutTop():void {
-        main.upPart.x = AppConst.padX;
-        main.activityIconCollect.x = AppConst.padX;
-        stonePoint = (main.xianshiTxt.parent as Box).localToGlobal(new Point(main.xianshiTxt.x, main.xianshiTxt.y));
-        sliverPoint = (main.sliverTxt.parent as Box).localToGlobal(new Point(main.sliverTxt.x, main.sliverTxt.y));
+//        main.upPart.x = AppConst.padX;
+//        main.activityIconCollect.x = AppConst.padX;
+//        stonePoint = (main.xianshiTxt.parent as Box).localToGlobal(new Point(main.xianshiTxt.x, main.xianshiTxt.y));
+//        sliverPoint = (main.sliverTxt.parent as Box).localToGlobal(new Point(main.sliverTxt.x, main.sliverTxt.y));
+
+        main.upPart.x = (Laya.stage.width - main.upPart.width) / 2;
     }
 
     /* 左边 右边 下边 按钮的自适应 1上 2下 3左 4右*/
     public function layoutButtons():void {
         updateRightButtonList();
 
-        var icons:Array = ConfigLocator.getInstance().getOpenfuncByPosition(2);
-        var cfg:IOpenfuncCfg;
-        var iconVo:ActivityVO;
-        var btnsAc:Array = [];
-        for each(iconVo in icons) {
-            cfg = iconVo.openfunc;
-            btnsAc.push(iconVo);
-        }
-        main.iconList.array = btnsAc;
+//        var icons:Array = ConfigLocator.getInstance().getOpenfuncByPosition(2);
+//        var cfg:IOpenfuncCfg;
+//        var iconVo:ActivityVO;
+//        var btnsAc:Array = [];
+//        for each(iconVo in icons) {
+//            cfg = iconVo.openfunc;
+//            btnsAc.push(iconVo);
+//        }
+//        main.iconList.array = btnsAc;
     }
 
     private function setDownButtonList():void {
@@ -267,26 +259,21 @@ public class MyHomeView extends BaseWindow {
             return;
         }
 
-        if (acVo.openfunc.win == MenuWinType.DAILY_BOSS) {
-            onOpenWindow.dispatch([acVo.openfunc.win]);
-            return;
-        }
-
         var vo:MenuWindowVO = new MenuWindowVO(acVo.type, MenuWindowVO.OPEN, new Object());
-        MenuWindowVO.setTabIndex(vo.data, acVo.openfunc.tab);
+//        MenuWindowVO.setTabIndex(vo.data, acVo.openfunc.tab);
         openWindow(acVo.type, vo.data);
     }
 
     public function updateRightButtonList():void {
         var icons:Array = ConfigLocator.getInstance().getOpenfuncByPosition(4);
-        var cfg:IOpenfuncCfg;
+//        var cfg:IOpenfuncCfg;
         var iconVo:ActivityVO;
         var btnsAc:Array = [];
         for each(iconVo in icons) {
 //            cfg = iconVo.openfunc;
 //            if (cfg && (!cfg.funcid || (cfg.funcid && FuncUtil.check(cfg.funcid)))) {
 //                if (userLevel >= cfg.level) {
-                    btnsAc.push(iconVo);
+            btnsAc.push(iconVo);
 //                }
 //            }
         }
@@ -312,22 +299,22 @@ public class MyHomeView extends BaseWindow {
     }
 
     private function addFuncIcon(con:Box, ac:ActivityVO):void {
-        while (con.numChildren > 0) {
-            Pool.recover("BaseFuncIconView", con.removeChildAt(0));
-        }
-        var icon:BaseFuncIconView = Pool.getItemByClass("BaseFuncIconView", BaseFuncIconView);
-        icon.init(ac, userLevel);
-        icon.pos(-34, 0);
-        con.addChild(icon);
-        con.on(Event.CLICK, this, onClick, [ac.openfunc.win]);
-        buttons.push(icon);
-        var cfg:IOpenfuncCfg = icon._vo.openfunc;
-        if (cfg && (!cfg.funcid || (cfg.funcid && FuncUtil.check(cfg.funcid)))) {
-            //需要显示
-            con.visible = true;
-        } else {
-            con.visible = false;
-        }
+//        while (con.numChildren > 0) {
+//            Pool.recover("BaseFuncIconView", con.removeChildAt(0));
+//        }
+//        var icon:BaseFuncIconView = Pool.getItemByClass("BaseFuncIconView", BaseFuncIconView);
+//        icon.init(ac, userLevel);
+//        icon.pos(-34, 0);
+//        con.addChild(icon);
+//        con.on(Event.CLICK, this, onClick, [ac.openfunc.win]);
+//        buttons.push(icon);
+//        var cfg:IOpenfuncCfg = icon._vo.openfunc;
+//        if (cfg && (!cfg.funcid || (cfg.funcid && FuncUtil.check(cfg.funcid)))) {
+//            //需要显示
+//            con.visible = true;
+//        } else {
+//            con.visible = false;
+//        }
     }
 
     public function showIcon(acVo:ActivityVO):void {

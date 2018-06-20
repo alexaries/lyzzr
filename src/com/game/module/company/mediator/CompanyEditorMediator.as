@@ -3,7 +3,12 @@
  */
 package com.game.module.company.mediator {
 import com.game.common.mvc.BaseMediator;
+import com.game.common.view.Alert;
 import com.game.module.company.view.CompanyEditorView;
+
+import lang.SystemInfo;
+
+import laya.utils.Handler;
 
 import org.puremvc.as3.interfaces.IMediator;
 import org.puremvc.as3.interfaces.INotification;
@@ -21,6 +26,18 @@ public class CompanyEditorMediator extends BaseMediator implements IMediator {
     override public function onRegister():void {
         super.onRegister();
         view.onCompleteSignal.getSignal(this).listen(instanceCompleteHander);
+        view.sureSignal.getSignal(this).listen(onSureClick);
+    }
+
+    private function onSureClick():void {
+        Alert.show("确定修改？确认后不能随意修改公司名", "提示", [SystemInfo.OK, SystemInfo.CANCEL], Handler.create(this, function (type:String) {
+            if (type == "ok") {
+                view.hide();
+            }
+            else if (type == "cancel") {
+                view.hide();
+            }
+        }, null, false));
     }
 
     private function instanceCompleteHander():void {

@@ -73,7 +73,7 @@ public class BattleEventMediator extends BaseMediator implements IMediator {
     }
 
     private function onMoreClick():void {
-        dispatch(new MenuEvent(MenuEvent.MENU_CLIK, new MenuWindowVO(MenuWinType.EXPERT_VIEW, MenuWindowVO.OPEN)));
+        dispatch(new MenuEvent(MenuEvent.MENU_CLIK, new MenuWindowVO(MenuWinType.EXPERT_VIEW, MenuWindowVO.OPEN, true)));
     }
 
     private function onSkipClick():void {

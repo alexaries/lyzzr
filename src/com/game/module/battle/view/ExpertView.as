@@ -34,6 +34,8 @@ public class ExpertView extends BaseFrame {
 
     private var infoView:ExpertInfoView;
 
+    private var isInBattle:Boolean = true;
+
     public function ExpertView() {
         super([]);
         layer = BaseLayer.HIGHER;
@@ -53,6 +55,10 @@ public class ExpertView extends BaseFrame {
 
     override public function show():void {
         super.show();
+    }
+
+    public function get data():Boolean {
+        return _data as Boolean;
     }
 
     override public function onComplete():void {
@@ -108,6 +114,8 @@ public class ExpertView extends BaseFrame {
 
         itemSignal.getSignal(this).listen(onItemClick);
         selectSignal.getSignal(this).listen(onSelectClick);
+
+        isInBattle = data;
     }
 
     private function onSelectClick():void {
@@ -116,12 +124,12 @@ public class ExpertView extends BaseFrame {
 
     private function onItemClick(type:int):void {
         if (infoView) {
-            infoView.initInfo(type)
+            infoView.refresh(type, isInBattle);
             infoView.show();
         }
         else {
             addInfoView();
-            infoView.initInfo(type);
+            infoView.refresh(type, isInBattle);
         }
     }
 

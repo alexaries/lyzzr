@@ -17,12 +17,14 @@ public class ExpertInfoView extends BaseView {
 
     private var ui:ExpertInfoViewUI;
     private var type:int;
+    private var isInBattle:Boolean;
 
-    //type==0 休假 战斗界面
-    //type==1 雇佣
-    //type==2 休假+升级 战斗界面
-    public function initInfo(type:int):void {
+    //type==0 休假
+    //type==1 特聘
+    //isInBattle==true ui.upBtn.visiable=false
+    public function refresh(type:int, isInBattle:Boolean):void {
         this.type = type;
+        this.isInBattle = isInBattle;
     }
 
     public function ExpertInfoView() {
@@ -85,16 +87,18 @@ public class ExpertInfoView extends BaseView {
     }
 
     private function updateState() {
-        ui.freeBtn.visible = type == 0 || type == 2;
+        ui.freeBtn.visible = type == 0;
         ui.hireBtn.visible = type == 1;
-        ui.upBtn.visible = type == 2;
+        ui.upBtn.visible = isInBattle == false;
 
-        if (type == 0) {
-            ui.freeBtn.pos(492, 1440);
+        if (isInBattle) {
+            ui.freeBtn.pos(389, 1480);
+            ui.hireBtn.pos(389, 1480);
         }
-        else if (type == 2) {
-            ui.freeBtn.pos(316, 91);
-            ui.upBtn.pos(722, 1440);
+        else {
+            ui.freeBtn.pos(149, 1480);
+            ui.hireBtn.pos(149, 1480);
+            ui.upBtn.pos(619, 1480);
         }
     }
 

@@ -14,11 +14,11 @@ import ui.company.CompanyEditorViewUI;
 public class CompanyEditorView extends BaseView {
 
     private var ui:CompanyEditorViewUI;
-    public var closeSignal:SignalDispatcher;
+    public var sureSignal:SignalDispatcher;
 
     public function CompanyEditorView() {
         super([]);
-        closeSignal = new SignalDispatcher();
+        sureSignal = new SignalDispatcher();
     }
 
     override public function getMediator():BaseMediator {
@@ -52,16 +52,28 @@ public class CompanyEditorView extends BaseView {
 
     private function init():void {
         ui.bg.on(Event.CLICK, this, onClickBgBtn);
+        ui.cancelBtn.on(Event.CLICK, this, onClickCancelBtn);
+        ui.sureBtn.on(Event.CLICK, this, onClickSureBtn);
+    }
+
+    private function onClickSureBtn():void {
+        if (sureSignal)sureSignal.dispatch(null);
+    }
+
+    private function onClickCancelBtn():void {
+        this.hide();
     }
 
     private function onClickBgBtn():void {
-
+        this.hide();
     }
 
     override public function dispose():void {
         super.dispose();
-        if (closeSignal)closeSignal.dispose();
+        if (sureSignal)sureSignal.dispose();
         ui.bg.off(Event.CLICK, this, onClickBgBtn);
+        ui.cancelBtn.off(Event.CLICK, this, onClickCancelBtn);
+        ui.sureBtn.off(Event.CLICK, this, onClickSureBtn);
     }
 }
 }

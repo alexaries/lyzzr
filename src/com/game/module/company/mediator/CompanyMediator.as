@@ -30,7 +30,7 @@ public class CompanyMediator extends BaseMediator implements IMediator {
     }
 
     private function onMoreClick():void {
-        
+        dispatch(new MenuEvent(MenuEvent.MENU_CLIK, new MenuWindowVO(MenuWinType.EXPERT_VIEW, MenuWindowVO.OPEN, false)));
     }
 
     private function onRuleClick():void {

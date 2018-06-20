@@ -4,7 +4,6 @@
 package com.game.module.battle.view {
 import com.game.common.mvc.BaseMediator;
 import com.game.common.view.BaseFrame;
-import com.game.common.view.MoneyView;
 import com.game.consts.BaseLayer;
 import com.game.module.battle.mediator.ExpertMediator;
 import com.game.module.battle.view.items.ExpertItem;
@@ -19,7 +18,6 @@ import ui.battle.ExpertViewUI;
 
 public class ExpertView extends BaseFrame {
     private var ui:ExpertViewUI;
-    private var money:MoneyView;
 
     public var closeSignal:SignalDispatcher;
     public var itemSignal:SignalDispatcher;
@@ -79,10 +77,6 @@ public class ExpertView extends BaseFrame {
     }
 
     private function init():void {
-        if (!money) {
-            money = new MoneyView();
-            ui.moneyBox.addChild(money);
-        }
 
         ui.panel.vScrollBarSkin = "";
 
@@ -193,10 +187,6 @@ public class ExpertView extends BaseFrame {
 
     override public function dispose():void {
         super.dispose();
-        if (money) {
-            money.tryDispose();
-            money = null;
-        }
 
         if (infoView) {
             infoView.tryDispose();

@@ -4,7 +4,6 @@
 package com.game.module.company.view {
 import com.game.common.mvc.BaseMediator;
 import com.game.common.view.BaseFrame;
-import com.game.common.view.MoneyView;
 import com.game.module.company.mediator.CompanyMediator;
 import com.game.module.company.view.items.CompanyDepartItem;
 import com.game.module.company.view.items.CompanyExpertItem;
@@ -23,7 +22,6 @@ public class CompanyView extends BaseFrame {
     public var moreSignal:SignalDispatcher;
 
     private var ui:CompanyViewUI;
-    private var money:MoneyView;
 
     private var editorView:CompanyEditorView;
     private var trainView:CompanyTrainView;
@@ -56,11 +54,6 @@ public class CompanyView extends BaseFrame {
     function __onComplete():void {
         ui = new CompanyViewUI();
         this.addChild(ui);
-
-        if (!money) {
-            money = new MoneyView();
-            ui.moneyBox.addChild(money);
-        }
 
         init();
         adapt();
@@ -174,10 +167,6 @@ public class CompanyView extends BaseFrame {
 
     override public function dispose():void {
         super.dispose();
-        if (money) {
-            money.tryDispose();
-            money = null;
-        }
         if (closeSignal)closeSignal.dispose();
         if (ruleSignal)ruleSignal.dispose();
         if (moreSignal)moreSignal.dispose();

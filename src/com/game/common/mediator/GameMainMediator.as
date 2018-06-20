@@ -61,7 +61,9 @@ public class GameMainMediator extends BaseMediator implements IMediator {
             NotiEvent.NEWVIP_INFO,
             NotiEvent.MENU_STATE_CHANGE,
             NotiEvent.OPEN_HOME,
-            NotiEvent.CLOSE_HOME
+            NotiEvent.CLOSE_HOME,
+            NotiEvent.OPEN_MONEY,
+            NotiEvent.CLOSE_MONEY
         ];
     }
 
@@ -129,6 +131,12 @@ public class GameMainMediator extends BaseMediator implements IMediator {
                 break;
             case NotiEvent.CLOSE_HOME:
                 view.closeHome();
+                break;
+            case NotiEvent.OPEN_MONEY:
+                view.openMoney();
+                break;
+            case NotiEvent.CLOSE_MONEY:
+                view.closeMoney();
                 break;
         }
     }

@@ -27,12 +27,14 @@ import ui.main.GameMainUI;
 
 public class GameMain extends BaseView {
 
-    public var main:GameMainUI;
+    public var ui:GameMainUI;
     public var root:Sprite;
 
     public var viewLists:Dictionary = new Dictionary();
     public var goHomeSignal:SignalDispatcher;
+
     private var homeView:MyHomeView;
+    private var moneyView:MoneyView;
 
     public function GameMain() {
         super();
@@ -52,17 +54,18 @@ public class GameMain extends BaseView {
         PlatformSDK.getInstance().removeSerial();
 
         //主界面菜单
-        main = new GameMainUI();
-        addChild(main);
-        main.width = AppConst.width;
+        ui = new GameMainUI();
+        addChild(ui);
+        ui.width = AppConst.width;
 
-        main.battle.visible = false;
-        main.battle.name = "noguide";
+        ui.battle.visible = false;
+        ui.battle.name = "noguide";
 
         root = new Sprite();
         Laya.stage.addChild(root);
 
         openHome();
+        openMoney();
     }
 
     public function openHome():void {
@@ -71,8 +74,8 @@ public class GameMain extends BaseView {
         }
 
         homeView.userlevel = userLevel;
-        if (!main.homeWin.contains(homeView)) {
-            main.homeWin.addChild(homeView);
+        if (!ui.homeWin.contains(homeView)) {
+            ui.homeWin.addChild(homeView);
             homeView.show();
             homeView.refresh();
         }
@@ -80,10 +83,25 @@ public class GameMain extends BaseView {
     }
 
     public function closeHome():void {
-        if (homeView && main.homeWin.contains(homeView)) {
-            main.homeWin.removeChild(homeView);
+        if (homeView && ui.homeWin.contains(homeView)) {
+            ui.homeWin.removeChild(homeView);
             homeView.hide();
         }
+    }
+
+    public function openMoney():void {
+        ui.money.visible = true;
+        if (!moneyView)moneyView = new MoneyView();
+        if (!ui.money.contains(moneyView)) {
+            ui.money.addChild(moneyView);
+        }
+
+        moneyView.show();
+        moneyView.refresh();
+    }
+
+    public function closeMoney():void {
+        ui.money.visible = false;
     }
 
     public function openWindow(menuWinTypeName:String, data:Object) {
@@ -103,8 +121,8 @@ public class GameMain extends BaseView {
             }
             __win.show();
 
-            if (!main.win.contains(__win)) {
-                main.win.addChild(__win);
+            if (!ui.win.contains(__win)) {
+                ui.win.addChild(__win);
             }
             __win.toolBarSelectedIndex = index;
             if (__win is BaseFrame) {
@@ -162,8 +180,8 @@ public class GameMain extends BaseView {
 
             //data
             var tmp:Array = [];
-            for (var i:int = 0; i < main.win.numChildren; i++) {
-                var object:BaseWindow = main.win.getChildAt(i) as BaseWindow;
+            for (var i:int = 0; i < ui.win.numChildren; i++) {
+                var object:BaseWindow = ui.win.getChildAt(i) as BaseWindow;
                 if (object.menuWinTypeName != win.menuWinTypeName && object.layer == win.layer) {
                     tmp.push(object);
                 }
@@ -172,8 +190,8 @@ public class GameMain extends BaseView {
                 var object1:BaseWindow = tmp[j] as BaseWindow;
                 closeWindow(object1.menuWinTypeName);
             }
-            if (!main.win.contains(win)) {
-                main.win.addChild(win);
+            if (!ui.win.contains(win)) {
+                ui.win.addChild(win);
                 if (viewLists.get(menuWinTypeName) == null) {
                     win.onDisposeSignal.getSignal(this).listen(__closeWindow);
                     viewLists.set(menuWinTypeName, win);

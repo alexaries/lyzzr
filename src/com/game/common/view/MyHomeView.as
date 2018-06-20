@@ -17,7 +17,6 @@ import ui.main.MyHomeUI;
 public class MyHomeView extends BaseWindow {
     public var ui:MyHomeUI;
     public var build:HomeMap;
-    public var money:MoneyView;
 
     public var outSignal:SignalDispatcher;
     public var musicSignal:SignalDispatcher;
@@ -61,9 +60,6 @@ public class MyHomeView extends BaseWindow {
 
         build = new HomeMap();
         ui.mapPart.addChild(build);
-
-        money = new MoneyView();
-        ui.moneyBox.addChild(money);
 
         ui.upPart.x = (Laya.stage.width - ui.upPart.width) / 2;//适应顶部
         ui.downPart.x = (Laya.stage.width - ui.downPart.width) / 2;//适应底部
@@ -172,11 +168,6 @@ public class MyHomeView extends BaseWindow {
 
         if (ui.rightBtnList.renderHandler)ui.rightBtnList.renderHandler.clear();
         if (ui.leftBtnList.renderHandler)ui.leftBtnList.renderHandler.clear();
-
-        if (money) {
-            money.tryDispose();
-            money = null;
-        }
 
         if (build) {
             build.destroy();

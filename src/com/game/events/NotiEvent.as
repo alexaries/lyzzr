@@ -250,6 +250,9 @@ public class NotiEvent extends Notification implements INotification {
 
     public static const CITYWAR_CHANGEMAP_C:String = "CITYWAR_CHANGEMAP_C";//
 
+    public static var OPEN_MONEY = "OPEN_MONEY";
+    public static var CLOSE_MONEY = "CLOSE_MONEY";
+
     public function NotiEvent(name:String, body:Object = null, type:String = null) {
         super(name, body, type);
     }

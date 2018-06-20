@@ -8,6 +8,7 @@ import com.game.module.battle.view.ExpertView;
 import com.game.module.company.view.CompanyView;
 import com.game.module.copy.view.CopyInfoView;
 import com.game.module.copy.view.CopyView;
+import com.game.module.jiban.view.JibanView;
 import com.game.module.plot.view.PlotView;
 import com.game.module.tavern.view.HeroDisplayView;
 import com.game.module.tavern.view.TavernHireView;
@@ -132,6 +133,9 @@ public class GameMain extends BaseView {
             var win:BaseWindow = null;
             trace("menuWinTypeName:", menuWinTypeName);
             switch (menuWinTypeName) {
+				case MenuWinType.JIBAN_VIEW:
+					win = new JibanView();
+					break;
                 case MenuWinType.PLOT_VIEW:
                     win = new PlotView();
                     break;

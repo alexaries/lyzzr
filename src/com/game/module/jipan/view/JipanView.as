@@ -8,7 +8,7 @@ package com.game.module.jipan.view
 	
 	import laya.events.Event;
 	
-	import ui.jipan.JipanUI;
+	import ui.jiban.JipanUI;
 
 	/**
 	 *羁绊 

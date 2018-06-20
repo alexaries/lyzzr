@@ -32,7 +32,7 @@ public class AppConst {
     public static const commonPath:String = "common/";
     //是否显示FPS
     public static const isFPS:Boolean = false;
-    public static var width_max:Number = 1300;
+    public static var width_max:Number = 1080;
 
     public static var topBannerHeight:Number = 100;
     public static var bottomHeight:Number = 245;

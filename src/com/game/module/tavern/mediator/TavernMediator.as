@@ -27,6 +27,11 @@ public class TavernMediator extends BaseMediator implements IMediator {
         view.tuSignal.getSignal(this).listen(tuClick);
         view.oneSignal.getSignal(this).listen(oneClick);
         view.tenSignal.getSignal(this).listen(tenClick);
+        view.closeSignal.getSignal(this).listen(closeClick);
+    }
+
+    private function closeClick():void {
+        dispatch(new MenuEvent(MenuEvent.MENU_CLIK, new MenuWindowVO(MenuWinType.TAVERN_VIEW, MenuWindowVO.CLOSE)));
     }
 
     private function tuClick():void {

@@ -22,7 +22,6 @@ public class MyHomeView extends BaseWindow {
     public var musicSignal:SignalDispatcher;
     public var openWindowSignal:SignalDispatcher;
     public var closeWindowSignal:SignalDispatcher;
-    public var onOpenWindow:SignalDispatcher;
 
     private var _userLevel:int;
 
@@ -31,7 +30,6 @@ public class MyHomeView extends BaseWindow {
         musicSignal = new SignalDispatcher();
         closeWindowSignal = new SignalDispatcher();
         openWindowSignal = new SignalDispatcher();
-        onOpenWindow = new SignalDispatcher();
 
         super([]);
     }
@@ -164,7 +162,6 @@ public class MyHomeView extends BaseWindow {
         if (musicSignal)musicSignal.dispose();
         if (closeWindowSignal)closeWindowSignal.dispose();
         if (openWindowSignal)openWindowSignal.dispose();
-        if (onOpenWindow)onOpenWindow.dispose();
 
         if (ui.rightBtnList.renderHandler)ui.rightBtnList.renderHandler.clear();
         if (ui.leftBtnList.renderHandler)ui.leftBtnList.renderHandler.clear();

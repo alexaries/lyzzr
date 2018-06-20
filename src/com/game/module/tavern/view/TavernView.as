@@ -32,12 +32,16 @@ public class TavernView extends BaseFrame {
     public var oneSignal:SignalDispatcher;
     public var tenSignal:SignalDispatcher;
 
+    public var closeSignal:SignalDispatcher;
+
     public function TavernView() {
         super([resArr]);
 
         tuSignal = new SignalDispatcher();
         oneSignal = new SignalDispatcher();
         tenSignal = new SignalDispatcher();
+
+        closeSignal = new SignalDispatcher();
     }
 
     override public function getMediator():BaseMediator {
@@ -65,8 +69,13 @@ public class TavernView extends BaseFrame {
         ui.rightBtn.on(Event.CLICK, this, onClickRightBtn);
         ui.oneBtn.on(Event.CLICK, this, onClickOneBtn);
         ui.tenBtn.on(Event.CLICK, this, onClickTenBtn);
+        ui.closeBtn.on(Event.CLICK, this, onClickCloseBtn);
 
         ui.panel.mouseEnabled = false;
+    }
+
+    private function onClickCloseBtn():void {
+        closeSignal.dispatch(null);
     }
 
     private function onClickTuBtn(e:Event):void {
@@ -128,10 +137,12 @@ public class TavernView extends BaseFrame {
         ui.rightBtn.off(Event.CLICK, this, onClickRightBtn);
         ui.oneBtn.off(Event.CLICK, this, onClickOneBtn);
         ui.tenBtn.off(Event.CLICK, this, onClickTenBtn);
+        ui.closeBtn.off(Event.CLICK, this, onClickCloseBtn);
 
         tuSignal.dispose();
         oneSignal.dispose();
         tenSignal.dispose();
+        closeSignal.dispose();
     }
 }
 }

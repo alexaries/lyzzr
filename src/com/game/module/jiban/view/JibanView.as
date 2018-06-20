@@ -1,26 +1,28 @@
-package com.game.module.jipan.view
+package com.game.module.jiban.view
 {
 	import com.game.common.mvc.BaseMediator;
+	import com.game.common.view.BaseFrame;
 	import com.game.common.view.BaseWindow;
 	import com.game.consts.BaseLayer;
-	import com.game.module.jipan.mediator.JipanMediator;
+	import com.game.module.jiban.mediator.JibanMediator;
 	import com.signal.SignalDispatcher;
 	
 	import laya.events.Event;
 	
-	import ui.jiban.JipanUI;
+	import ui.jiban.JibanUI;
+	
 
 	/**
 	 *羁绊 
 	 * @author svn
 	 * 
 	 */	
-	public class JipanView extends BaseWindow
+	public class JibanView extends BaseFrame
 	{
-		private var _ui:JipanUI = null;
+		private var _ui:JibanUI = null;
 		
 		public var clickBackSignal:SignalDispatcher = null;
-		public function JipanView(resArray:Array=null)
+		public function JibanView(resArray:Array=null)
 		{
 			super(resArray);
 			layer = BaseLayer.SPECIAL;
@@ -30,7 +32,7 @@ package com.game.module.jipan.view
 		
 		
 		override public function getMediator():BaseMediator {
-			return new JipanMediator(this);
+			return new JibanMediator(this);
 		}
 		
 		override public function onComplete():void {
@@ -40,7 +42,7 @@ package com.game.module.jipan.view
 		
 		
 		private function __onComplete():void {
-			_ui = new JipanUI();
+			_ui = new JibanUI();
 			addChild(_ui);
 			
 			_ui.back.on(Event.CLICK, this, clickback);

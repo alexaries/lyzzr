@@ -5,6 +5,7 @@ package com.game.module.jiban.view
 	import com.game.common.view.BaseWindow;
 	import com.game.consts.BaseLayer;
 	import com.game.module.jiban.mediator.JibanMediator;
+	import com.game.module.jiban.view.cell.JibanItemCell;
 	import com.signal.SignalDispatcher;
 	
 	import laya.events.Event;
@@ -25,7 +26,6 @@ package com.game.module.jiban.view
 		public function JibanView(resArray:Array=null)
 		{
 			super(resArray);
-			layer = BaseLayer.SPECIAL;
 			clickBackSignal = new SignalDispatcher();
 			
 		}
@@ -46,8 +46,31 @@ package com.game.module.jiban.view
 			addChild(_ui);
 			
 			_ui.back.on(Event.CLICK, this, clickback);
+			
+			_ui.list.itemRender = JibanItemCell;
+			//_ui.list.
 			init();
 		}
+		
+		
+		public function showMyJiban(arr:Array):void
+		{
+			_ui.liushibtn.visible = true;
+			_ui.list.visible = true;
+			
+		}
+		
+		
+		public function showJibansuipian(arr:Array):void
+		{
+			
+		}
+		
+		public function showLiushi(arr:Array):void
+		{
+			
+		}
+	
 		
 		private function clickback(e:Event):void
 		{

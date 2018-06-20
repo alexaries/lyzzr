@@ -127,7 +127,7 @@ public class CompanyView extends BaseFrame {
     }
 
     private function onClickTrainBtn():void {
-
+        openTrain();
     }
 
     private function onClickRuleBtn():void {
@@ -160,7 +160,10 @@ public class CompanyView extends BaseFrame {
     }
 
     private function removeTrain():void {
-
+        if (trainView) {
+            trainView.tryDispose();
+            trainView = null;
+        }
     }
 
     private function addChildView(view:Sprite):void {
@@ -190,6 +193,7 @@ public class CompanyView extends BaseFrame {
         if (ui.expertList.renderHandler)ui.expertList.renderHandler.clear();
 
         removeEditor();
+        removeTrain();
     }
 }
 }

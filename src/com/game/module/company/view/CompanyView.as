@@ -5,7 +5,6 @@ package com.game.module.company.view {
 import com.game.common.mvc.BaseMediator;
 import com.game.common.view.BaseFrame;
 import com.game.common.view.MoneyView;
-import com.game.module.battle.view.ExpertView;
 import com.game.module.company.mediator.CompanyMediator;
 import com.game.module.company.view.items.CompanyDepartItem;
 import com.game.module.company.view.items.CompanyExpertItem;
@@ -13,7 +12,6 @@ import com.game.module.copy.view.items.PropertyValueItem;
 import com.signal.SignalDispatcher;
 
 import laya.display.Sprite;
-
 import laya.events.Event;
 import laya.utils.Handler;
 
@@ -28,6 +26,7 @@ public class CompanyView extends BaseFrame {
     private var money:MoneyView;
 
     private var editorView:CompanyEditorView;
+    private var trainView:CompanyTrainView;
 
     public function CompanyView() {
         super([]);
@@ -151,6 +150,17 @@ public class CompanyView extends BaseFrame {
             editorView.tryDispose();
             editorView = null;
         }
+    }
+
+    private function openTrain():void {
+        if (!trainView)trainView = new CompanyTrainView();
+        addChildView(trainView);
+        trainView.show();
+        trainView.refresh();
+    }
+
+    private function removeTrain():void {
+
     }
 
     private function addChildView(view:Sprite):void {

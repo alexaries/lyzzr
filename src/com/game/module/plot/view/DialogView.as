@@ -55,6 +55,8 @@ package com.game.module.plot.view
 		}
 		
 		
+	
+		
 		private var _isFinish:Boolean = false;
 		
 		public function finish():void

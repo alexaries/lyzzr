@@ -4,12 +4,14 @@
 package com.game.module.battle.mediator {
 import com.game.common.events.MenuWindowVO;
 import com.game.common.mvc.BaseMediator;
+import com.game.events.NotiEvent;
 import com.game.module.battle.view.ExpertView;
 import com.game.module.menu.events.MenuEvent;
 import com.game.vo.MenuWinType;
 
 import org.puremvc.as3.interfaces.IMediator;
 import org.puremvc.as3.interfaces.INotification;
+import org.puremvc.as3.patterns.observer.Notification;
 
 public class ExpertMediator extends BaseMediator implements IMediator {
     public static const NAME:String = "ExpertMediator";
@@ -29,9 +31,14 @@ public class ExpertMediator extends BaseMediator implements IMediator {
 
     private function onCloseClick():void {
         dispatch(new MenuEvent(MenuEvent.MENU_CLIK, new MenuWindowVO(MenuWinType.EXPERT_VIEW, MenuWindowVO.CLOSE)));
+
+        if (view.isBattle) {
+            dispatch(new Notification(NotiEvent.CLOSE_MONEY));
+        }
     }
 
     private function instanceCompleteHander():void {
+        dispatch(new Notification(NotiEvent.OPEN_MONEY));
     }
 
     override public function onRemove():void {

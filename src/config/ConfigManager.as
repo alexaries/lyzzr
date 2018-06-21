@@ -1,5 +1,6 @@
 package config {
 import config.ceshi.ICeShi;
+import config.functionopen.IfunctionOpen;
 import config.stage.Istage;
 import config.story.Istory;
 
@@ -9,6 +10,8 @@ public class ConfigManager extends BaseConfig {
     public var ceshi_ceshi:config.ceshi.ICeShi;
     public var story_story:config.story.Istory;
     public var stage:config.stage.Istage;//关卡配置
+    public var functionOpen:config.functionopen.IfunctionOpen;//功能主界面配置
+
     static var __instance:ConfigManager;
 
     public static function get instance():ConfigManager {
@@ -32,6 +35,7 @@ public class ConfigManager extends BaseConfig {
         ceshi_ceshi = readAndToClass('CeShi');
         story_story = readAndToClass('story');
         stage = readAndToClass('stage');
+        functionOpen = readAndToClass('functionOpen');
     }
 
     override protected function attributeSerialization(version:String):void {

@@ -18,7 +18,7 @@ package com.game.module.jiban.vo
 		/**
 		 *星级 
 		 */		
-		public var startLevel:int = 0;
+		public var starLevel:int = 0;
 		/**
 		 *经验 
 		 */		

@@ -42,6 +42,7 @@ public class BattleMediator extends BaseMediator implements IMediator {
 
         proxy = facade.retrieveProxy(BattleProxy.NAME) as BattleProxy;
         model = proxy.model;
+        proxy.isInBattle = true;
 
         view.onCompleteSignal.getSignal(this).listen(instanceCompleteHander);
         view.closeSignal.getSignal(this).listen(onCloseClick);
@@ -50,6 +51,7 @@ public class BattleMediator extends BaseMediator implements IMediator {
     private function instanceCompleteHander():void {
         model.copyId = view.data;
         rejectToEventData();
+        rejectToFighterData();
         view.initInfo(model);
     }
 
@@ -64,6 +66,14 @@ public class BattleMediator extends BaseMediator implements IMediator {
         for (var i = 0; i < arr.length; i++) {
             var vo:BattleExpertVo = BattleExpertVo.create(model.copyCfg.expertEventIntroduce, parseInt(arr[i]), model.copyCfg.expertEventRule, model.copyCfg.expertEventFeedback);
             eventArr.push(vo);
+        }
+    }
+
+    //注入羁绊展示的数据
+    private function rejectToFighterData():void {
+        proxy.fighters = [];
+        for (var i = 0; i < 3; i++) {
+            proxy.fighters.push("");
         }
     }
 
@@ -84,13 +94,15 @@ public class BattleMediator extends BaseMediator implements IMediator {
 
     override public function onRemove():void {
         super.onRemove();
+        proxy.isInBattle = false;
+        proxy.fighters = [];
     }
 
     override public function listNotificationInterests():Array {
         return [
             BattleEvent.BATTLE_STRENGTH_FINISHED,
             BattleEvent.BATTLE_EVENT_FINISHED,
-            BattleEvent.BATTLE_RESULT
+            BattleEvent.BATTLE_DISPLAY
         ];
     }
 
@@ -100,22 +112,20 @@ public class BattleMediator extends BaseMediator implements IMediator {
 
         switch (name) {
             case BattleEvent.BATTLE_STRENGTH_FINISHED:
+                view.removeStrengthView();//-------------------------移除公司潜力
                 eventHandle();
                 break;
             case BattleEvent.BATTLE_EVENT_FINISHED:
                 eventHandle();
                 break;
-            case BattleEvent.BATTLE_RESULT:
-                view.removeFetterView();
-                view.removeProgressView();
-                view.resetView();
-                resultDisplay();
+            case BattleEvent.BATTLE_DISPLAY:
+                displayHandle();
                 break;
         }
     }
 
     private function eventHandle():void {
-        view.removeEventView();
+        view.hideEventView();
         if (eventArr == null || eventArr.length == 0) {
             //说明事件结束了 开始羁绊
             fetterDisplay();
@@ -128,11 +138,28 @@ public class BattleMediator extends BaseMediator implements IMediator {
 
     //召唤羁绊
     public function fetterDisplay():void {
+        view.removeEventView();//-------------------------移除特殊事件
         view.addFetterView();
     }
 
-    //战斗结果
-    public function resultDisplay():void {
+    //展示羁绊
+    private function displayHandle():void {
+        view.removeFetterView();//-------------------------移除羁绊
+        view.hideDisplayView();
+        if (proxy.fighters == null || proxy.fighters.length == 0) {
+            //说明展示结束了 开始出结果
+            resultHandle();
+            return;
+        }
+        var fighter:Object = proxy.fighters[0];
+        view.addDisplayView(fighter);
+        proxy.fighters.shift();
+    }
+
+    private function resultHandle():void {
+        view.removeProgressView();//-------------------------移除进度条
+        view.removeDisplayView();//-------------------------移除羁绊展示
+        view.resetView();
         view.addResultView();
     }
 }

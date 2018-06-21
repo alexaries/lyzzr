@@ -35,9 +35,8 @@ public class BattleEventView extends BaseView {
 
     public var vo:BaseBattleEventVo;
 
-    public function BattleEventView(vo:BaseBattleEventVo) {
+    public function BattleEventView() {
         super([]);
-        this.vo = vo;
 
         skipSignal = new SignalDispatcher();
         moreSignal = new SignalDispatcher();
@@ -57,6 +56,11 @@ public class BattleEventView extends BaseView {
 
     override public function show():void {
         super.show();
+        handleEvent();
+    }
+
+    public function refresh(vo:BaseBattleEventVo):void {
+        this.vo = vo;
     }
 
     override public function onComplete():void {
@@ -68,9 +72,19 @@ public class BattleEventView extends BaseView {
         ui = new BattleEventViewUI();
         addChild(ui);
         init();
+        handleEvent();
     }
 
     private function init():void {
+        //info
+        ui.skipBtn.on(Event.CLICK, this, onClickSkipBtn, null);
+        ui.moreBtn.on(Event.CLICK, this, onClickMoreBtn, null);
+
+        //result
+        ui.resultSureBtn.on(Event.CLICK, this, onClickResultSureBtn, null);
+    }
+
+    private function handleEvent():void {
         if (vo.type == 1) {
             //对话事件
             var dialogVo:BattleDialogVo = vo as BattleDialogVo;
@@ -81,13 +95,6 @@ public class BattleEventView extends BaseView {
             var expertVo:BattleExpertVo = vo as BattleExpertVo;
             expertDisplay(expertVo);
         }
-
-        //info
-        ui.skipBtn.on(Event.CLICK, this, onClickSkipBtn, null);
-        ui.moreBtn.on(Event.CLICK, this, onClickMoreBtn, null);
-
-        //result
-        ui.resultSureBtn.on(Event.CLICK, this, onClickResultSureBtn, null);
     }
 
     private function dialogDisplay(dialogVo:BattleDialogVo):void {

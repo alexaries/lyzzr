@@ -23,6 +23,7 @@ public class BattleView extends BaseFrame {
     public var strengthView:BattleStrengthView;//公司实力
     public var eventView:BattleEventView;//特殊事件以及事件结果
     public var fetterView:BattleFetterView;//召唤羁绊
+    public var displayView:BattleDisplayView;//展示界面
     public var resultView:BattleResultView;//结果
 
     private var model:BattleModel;
@@ -30,7 +31,7 @@ public class BattleView extends BaseFrame {
     public function BattleView() {
         super([]);
         closeSignal = new SignalDispatcher();
-        layer = BaseLayer.DISPLAY;
+        layer = BaseLayer.POP_FRAME;
     }
 
     override public function getMediator():BaseMediator {
@@ -70,7 +71,7 @@ public class BattleView extends BaseFrame {
     }
 
     private function adapt():void {
-        ui.x = (Laya.stage.width - ui.width) / 2;
+        setContent(ui);
     }
 
     public function initInfo(model:BattleModel):void {
@@ -82,8 +83,9 @@ public class BattleView extends BaseFrame {
     }
 
     public function addProgressView(maxValue:int = 1):void {
-        if (!progressView)progressView = new BattleProgressView(maxValue);
+        if (!progressView)progressView = new BattleProgressView();
         addChildView(progressView);
+        progressView.refresh(maxValue);
         progressView.pos(120, 0);
     }
 
@@ -94,15 +96,34 @@ public class BattleView extends BaseFrame {
     }
 
     public function addEventView(vo:BaseBattleEventVo):void {
-        if (!eventView)eventView = new BattleEventView(vo);
-        addChildView(eventView);
-        eventView.pos(0, 400);
+        if (!eventView) {
+            eventView = new BattleEventView();
+            addChildView(eventView);
+            eventView.refresh(vo);
+            eventView.pos(0, 400);
+        }
+        else {
+            eventView.refresh(vo);
+            eventView.show();
+        }
     }
 
     public function addFetterView():void {
         if (!fetterView)fetterView = new BattleFetterView();
         addChildView(fetterView);
         fetterView.pos(0, 200);
+    }
+
+    public function addDisplayView(fighter:Object):void {
+        if (!displayView) {
+            displayView = new BattleDisplayView();
+            addChildView(displayView);
+            displayView.refresh(fighter);
+        }
+        else {
+            displayView.refresh(fighter);
+            displayView.show();
+        }
     }
 
     public function addResultView():void {
@@ -131,6 +152,12 @@ public class BattleView extends BaseFrame {
         }
     }
 
+    public function hideEventView():void {
+        if (eventView) {
+            eventView.hide();
+        }
+    }
+
     public function removeEventView():void {
         if (eventView) {
             eventView.tryDispose();
@@ -142,6 +169,19 @@ public class BattleView extends BaseFrame {
         if (fetterView) {
             fetterView.tryDispose();
             fetterView = null;
+        }
+    }
+
+    public function hideDisplayView():void {
+        if (displayView) {
+            displayView.hide();
+        }
+    }
+
+    public function removeDisplayView():void {
+        if (displayView) {
+            displayView.tryDispose();
+            displayView = null;
         }
     }
 
@@ -157,6 +197,7 @@ public class BattleView extends BaseFrame {
         removeStrengthView();
         removeEventView();
         removeFetterView();
+        removeDisplayView();
         removeResultView();
     }
 

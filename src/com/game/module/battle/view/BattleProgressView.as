@@ -14,13 +14,11 @@ public class BattleProgressView extends BaseView {
     private var ui:BattleProgressUI;
     private var curValue:Number = 0;
     private var maxValue:int = 0;
-    private var delayTime:int = 400;
+    private var intervalTime:int = 400;
     private var oper:Oper;
 
-    public function BattleProgressView(maxValue:int) {
+    public function BattleProgressView() {
         super([]);
-        this.maxValue = maxValue;
-        this.curValue = 0;
     }
 
     override public function getMediator():BaseMediator {
@@ -33,6 +31,11 @@ public class BattleProgressView extends BaseView {
 
     override public function show():void {
         super.show();
+    }
+
+    public function refresh(maxValue:int):void {
+        this.maxValue = maxValue;
+        this.curValue = 0;
     }
 
     override public function onComplete():void {
@@ -58,11 +61,9 @@ public class BattleProgressView extends BaseView {
             oper.halt();
             oper = null;
         }
-        oper = new Oper();
-        oper.add(new TweenOper(ui.progress, delayTime, {value: progress}));
-        oper.list.forEach(function (item:Oper) {
-            item.do_execute();
-        });
+
+        oper = new TweenOper(ui.progress, intervalTime, {value: progress});
+        oper.do_execute();
     }
 
     override public function dispose():void {

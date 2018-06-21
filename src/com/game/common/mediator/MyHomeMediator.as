@@ -41,8 +41,8 @@ public class MyHomeMediator extends BaseMediator implements IMediator {
     }
 
     private function gotoActivityHandler(acVo:ActivityVO):void {
-        dispatch(new MenuEvent(MenuEvent.MENU_CLIK, new MenuWindowVO(MenuWinType.TAVERN_VIEW, MenuWindowVO.OPEN)));
-//        dispatch(new MenuEvent(MenuEvent.MENU_CLIK, new MenuWindowVO(MenuWinType.COMPANY_VIEW, MenuWindowVO.OPEN)));
+//        dispatch(new MenuEvent(MenuEvent.MENU_CLIK, new MenuWindowVO(MenuWinType.TAVERN_VIEW, MenuWindowVO.OPEN)));
+        dispatch(new MenuEvent(MenuEvent.MENU_CLIK, new MenuWindowVO(MenuWinType.COMPANY_VIEW, MenuWindowVO.OPEN)));
     }
 
     private function closeWin(menuWinTypeName:String, data:Object = null):void {

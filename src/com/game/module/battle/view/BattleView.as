@@ -23,6 +23,7 @@ public class BattleView extends BaseFrame {
     public var strengthView:BattleStrengthView;//公司实力
     public var eventView:BattleEventView;//特殊事件以及事件结果
     public var fetterView:BattleFetterView;//召唤羁绊
+    public var displayView:BattleDisplayView;//展示界面
     public var resultView:BattleResultView;//结果
 
     private var model:BattleModel;
@@ -30,7 +31,7 @@ public class BattleView extends BaseFrame {
     public function BattleView() {
         super([]);
         closeSignal = new SignalDispatcher();
-        layer = BaseLayer.DISPLAY;
+        layer = BaseLayer.POP_FRAME;
     }
 
     override public function getMediator():BaseMediator {
@@ -105,6 +106,11 @@ public class BattleView extends BaseFrame {
         fetterView.pos(0, 200);
     }
 
+    public function addDisplayView():void {
+        if (!displayView)displayView = new BattleDisplayView();
+
+    }
+
     public function addResultView():void {
         if (!resultView)resultView = new BattleResultView();
         addChildView(resultView);
@@ -144,6 +150,7 @@ public class BattleView extends BaseFrame {
             fetterView = null;
         }
     }
+
 
     public function removeResultView():void {
         if (resultView) {

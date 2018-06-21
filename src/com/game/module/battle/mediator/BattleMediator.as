@@ -42,6 +42,7 @@ public class BattleMediator extends BaseMediator implements IMediator {
 
         proxy = facade.retrieveProxy(BattleProxy.NAME) as BattleProxy;
         model = proxy.model;
+        proxy.isInBattle = true;
 
         view.onCompleteSignal.getSignal(this).listen(instanceCompleteHander);
         view.closeSignal.getSignal(this).listen(onCloseClick);
@@ -84,6 +85,7 @@ public class BattleMediator extends BaseMediator implements IMediator {
 
     override public function onRemove():void {
         super.onRemove();
+        proxy.isInBattle = false;
     }
 
     override public function listNotificationInterests():Array {

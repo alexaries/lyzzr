@@ -40,8 +40,6 @@ public class LoginView extends PresetBaseView {
     public var loginClick:SignalDispatcher;
     public var changeClick:SignalDispatcher;
 
-    private var speed:int = 1;
-    private var edge:int = 0;
     private var server:LoginServerView;
     private var onListBackClick:Handler;
 

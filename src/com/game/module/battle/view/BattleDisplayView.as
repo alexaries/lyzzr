@@ -18,6 +18,7 @@ public class BattleDisplayView extends BaseView {
     private var ui:BattleDisplayViewUI;
     private var oper:Oper;
 
+    public var finishSignal:SignalDispatcher;
     public var clickSignal:SignalDispatcher;
 
     private var fromscaleX:Number = 5;
@@ -31,6 +32,7 @@ public class BattleDisplayView extends BaseView {
 
     public function BattleDisplayView() {
         super([]);
+        finishSignal = new SignalDispatcher();
         clickSignal = new SignalDispatcher();
     }
 
@@ -88,6 +90,7 @@ public class BattleDisplayView extends BaseView {
 
     private function onFinish():void {
         isFinished = true;
+        finishSignal.dispatch(null);
     }
 
     override public function dispose():void {
@@ -99,6 +102,7 @@ public class BattleDisplayView extends BaseView {
         }
 
         this.ui.off(Event.CLICK, this, onClick);
+        finishSignal.dispose();
         clickSignal.dispose();
     }
 }

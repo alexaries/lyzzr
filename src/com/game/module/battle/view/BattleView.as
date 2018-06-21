@@ -71,7 +71,7 @@ public class BattleView extends BaseFrame {
     }
 
     private function adapt():void {
-        ui.x = (Laya.stage.width - ui.width) / 2;
+        setContent(ui);
     }
 
     public function initInfo(model:BattleModel):void {
@@ -83,8 +83,9 @@ public class BattleView extends BaseFrame {
     }
 
     public function addProgressView(maxValue:int = 1):void {
-        if (!progressView)progressView = new BattleProgressView(maxValue);
+        if (!progressView)progressView = new BattleProgressView();
         addChildView(progressView);
+        progressView.refresh(maxValue);
         progressView.pos(120, 0);
     }
 

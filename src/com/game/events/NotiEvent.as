@@ -253,6 +253,9 @@ public class NotiEvent extends Notification implements INotification {
     public static var OPEN_MONEY = "OPEN_MONEY";
     public static var CLOSE_MONEY = "CLOSE_MONEY";
 
+    public static var OPEN_COPY = "OPEN_COPY";
+    public static var CLOSE_COPY = "CLOSE_COPY";
+
     public function NotiEvent(name:String, body:Object = null, type:String = null) {
         super(name, body, type);
     }

@@ -6,6 +6,8 @@ import com.game.common.view.CalculatorView;
 import com.game.common.view.GameMain;
 import com.game.events.NotiEvent;
 import com.game.module.menu.events.MenuEvent;
+import com.game.vo.ActivityVO;
+import com.game.vo.MenuWinType;
 
 import laya.display.Sprite;
 
@@ -21,7 +23,6 @@ public class GameMainMediator extends BaseMediator implements IMediator {
         return getViewComponent() as GameMain;
     };
 
-
     public function GameMainMediator(viewComponent:Object = null) {
         super(NAME, viewComponent);
     }
@@ -29,6 +30,11 @@ public class GameMainMediator extends BaseMediator implements IMediator {
     override public function onRegister():void {
         super.onRegister();
         view.onCompleteSignal.getSignal(this).listen(onInstanceComplete);
+        view.build.gotoActivitySignal.getSignal(this).listen(gotoActivityHandler)
+    }
+
+    private function gotoActivityHandler(acVo:ActivityVO):void {
+        openWindow(MenuWinType.TAVERN_VIEW, null);
     }
 
     private function onInstanceComplete():void {
@@ -63,7 +69,9 @@ public class GameMainMediator extends BaseMediator implements IMediator {
             NotiEvent.OPEN_HOME,
             NotiEvent.CLOSE_HOME,
             NotiEvent.OPEN_MONEY,
-            NotiEvent.CLOSE_MONEY
+            NotiEvent.CLOSE_MONEY,
+            NotiEvent.OPEN_COPY,
+            NotiEvent.CLOSE_COPY
         ];
     }
 
@@ -127,16 +135,22 @@ public class GameMainMediator extends BaseMediator implements IMediator {
                 levelUpdate();
                 break;
             case NotiEvent.OPEN_HOME:
-                view.openHome();
+
                 break;
             case NotiEvent.CLOSE_HOME:
-                view.closeHome();
+
                 break;
             case NotiEvent.OPEN_MONEY:
                 view.openMoney();
                 break;
             case NotiEvent.CLOSE_MONEY:
                 view.closeMoney();
+                break;
+            case NotiEvent.OPEN_COPY:
+                view.openCopy();
+                break;
+            case NotiEvent.CLOSE_COPY:
+                view.closeCopy();
                 break;
         }
     }
@@ -159,13 +173,6 @@ public class GameMainMediator extends BaseMediator implements IMediator {
 
     private function openWin(body:MenuWindowVO):void {
         view.openWin(body);
-    }
-
-    public function rootAddNode(node:Sprite):void {
-        if (node && !view.root.contains(node)) {
-            node.pos((AppConst.width - node.width) / 2, (AppConst.height - node.height) / 2);
-            view.root.addChild(node);
-        }
     }
 
     public function showCalculatorDlg():void {

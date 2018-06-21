@@ -6,7 +6,6 @@ public class MenuWinType {
     public static const COMMONWINDOW = "common_window";//通用弹窗
 
     //#region NEW
-    public static const COPY_VIEW = "COPY_VIEW";//副本
     public static const COPY_INFO_VIEW = "COPY_INFO_VIEW";//副本信息
 
     public static const BATTLE_VIEW = "BATTLE_VIEW";//战斗

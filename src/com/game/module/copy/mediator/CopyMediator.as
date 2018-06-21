@@ -34,8 +34,7 @@ public class CopyMediator extends BaseMediator implements IMediator {
     }
 
     private function closeClick():void {
-        dispatch(new MenuEvent(MenuEvent.MENU_CLIK, new MenuWindowVO(MenuWinType.COPY_VIEW, MenuWindowVO.CLOSE)));
-        dispatch(new Notification(NotiEvent.OPEN_MONEY));
+        dispatch(new Notification(NotiEvent.CLOSE_COPY));
     }
 
     override public function onRemove():void {

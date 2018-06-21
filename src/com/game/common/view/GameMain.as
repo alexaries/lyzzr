@@ -14,13 +14,15 @@ import com.game.module.tavern.view.HeroDisplayView;
 import com.game.module.tavern.view.TavernHireView;
 import com.game.module.tavern.view.TavernTuView;
 import com.game.module.tavern.view.TavernView;
+import com.game.vo.ActivityVO;
 import com.game.vo.MenuWinType;
-import com.signal.SignalDispatcher;
 
 import globals.PlatformSDK;
 
-import laya.display.Sprite;
+import laya.events.Event;
+
 import laya.utils.Dictionary;
+import laya.utils.Handler;
 
 import net.consts.AppConst;
 
@@ -29,17 +31,17 @@ import ui.main.GameMainUI;
 public class GameMain extends BaseView {
 
     public var ui:GameMainUI;
-    public var root:Sprite;
 
     public var viewLists:Dictionary = new Dictionary();
-    public var goHomeSignal:SignalDispatcher;
 
-    private var homeView:MyHomeView;
-    private var moneyView:MoneyView;
+    public var build:HomeMap;
+    private var copy:CopyView;
+    private var money:MoneyView;
+
+    private var _userLevel:int;
 
     public function GameMain() {
         super();
-        goHomeSignal = new SignalDispatcher();
     }
 
     override public function getMediator():BaseMediator {
@@ -53,68 +55,15 @@ public class GameMain extends BaseView {
 
     private function __onComplete():void {
         PlatformSDK.getInstance().removeSerial();
-
         //主界面菜单
         ui = new GameMainUI();
         addChild(ui);
-        ui.width = AppConst.width;
-
-        ui.battle.visible = false;
-        ui.battle.name = "noguide";
-
-        root = new Sprite();
-        Laya.stage.addChild(root);
-
-        openHome();
-        openMoney();
-    }
-
-    public function openHome():void {
-        if (!homeView) {
-            homeView = new MyHomeView();
-        }
-
-        homeView.userlevel = userLevel;
-        if (!ui.homeWin.contains(homeView)) {
-            ui.homeWin.addChild(homeView);
-            homeView.show();
-            homeView.refresh();
-        }
-        goHomeSignal.dispatch([]);
-    }
-
-    public function closeHome():void {
-        if (homeView && ui.homeWin.contains(homeView)) {
-            ui.homeWin.removeChild(homeView);
-            homeView.hide();
-        }
-    }
-
-    public function openMoney():void {
-        ui.money.visible = true;
-        if (!moneyView)moneyView = new MoneyView();
-        if (!ui.money.contains(moneyView)) {
-            ui.money.addChild(moneyView);
-        }
-
-        moneyView.show();
-        moneyView.refresh();
-    }
-
-    public function closeMoney():void {
-        ui.money.visible = false;
+        layout();
+        init();
     }
 
     public function openWindow(menuWinTypeName:String, data:Object) {
         var index:int = MenuWindowVO.getTabIndex(data);
-//        var openfuncCfg:IOpenfuncCfg = ConfigLocator.getInstance().getOpenfunc(menuWinTypeName, index);
-//        if (openfuncCfg != null && userLevel < openfuncCfg.level) {
-//            Alert.roll(" 等级达到" + openfuncCfg.level + "可以开启" + openfuncCfg.name);
-//            return;
-//        }
-        if (menuWinTypeName == MenuWinType.USER_INFO) {
-            menuWinTypeName = MenuWinType.HEROES_INFO;
-        }
         if (viewLists.indexOf(menuWinTypeName) != -1) {
             var __win:BaseWindow = viewLists.get(menuWinTypeName) as BaseWindow;
             if (data != null) {
@@ -127,15 +76,14 @@ public class GameMain extends BaseView {
             }
             __win.toolBarSelectedIndex = index;
             if (__win is BaseFrame) {
-                //    (__win as BaseFrame).setToolBarSelect(index);
             }
         } else {
             var win:BaseWindow = null;
             trace("menuWinTypeName:", menuWinTypeName);
             switch (menuWinTypeName) {
-				case MenuWinType.JIBAN_VIEW:
-					win = new JibanView();
-					break;
+                case MenuWinType.JIBAN_VIEW:
+                    win = new JibanView();
+                    break;
                 case MenuWinType.PLOT_VIEW:
                     win = new PlotView();
                     break;
@@ -150,9 +98,6 @@ public class GameMain extends BaseView {
                     break;
                 case MenuWinType.HERO_DISPLAY_VIEW:
                     win = new HeroDisplayView();
-                    break;
-                case MenuWinType.COPY_VIEW:
-                    win = new CopyView();
                     break;
                 case MenuWinType.COPY_INFO_VIEW:
                     win = new CopyInfoView();
@@ -206,8 +151,6 @@ public class GameMain extends BaseView {
         }
     }
 
-    private var _userLevel:int;
-
     public function get userLevel():int {
         return _userLevel;
     }
@@ -215,7 +158,6 @@ public class GameMain extends BaseView {
     public function openWin(body:MenuWindowVO):void {
         openWindow(body.menuWinTypeName, body.data);
     }
-
 
     public function closeWin(body:MenuWindowVO):void {
         closeWindow(body.menuWinTypeName, body.data)
@@ -246,6 +188,108 @@ public class GameMain extends BaseView {
             if (object1.layer != BaseLayer.GUIDE && object1.layer != BaseLayer.CHAPTER)
                 closeWindow(object1.menuWinTypeName);
         }
+    }
+
+    private function init():void {
+        build = new HomeMap();
+        ui.map.addChild(build);
+
+        ui.rightBtnList.itemRender = BaseFuncIconView;
+        ui.rightBtnList.renderHandler = Handler.create(this, renderRightIconHandler, null, false);
+        ui.rightBtnList.array = [];
+
+        ui.leftBtnList.itemRender = BaseFuncIconView;
+        ui.leftBtnList.renderHandler = Handler.create(this, renderLeftIconHandler, null, false);
+        ui.leftBtnList.array = [];
+
+        updateLeftButtonList();
+        updateRightButtonList();
+
+        ui.btnOut.on(Event.CLICK, this, onOutClick);
+    }
+
+    private function onOutClick():void {
+        openCopy();
+    }
+
+    private function renderLeftIconHandler(cell:BaseFuncIconView, index:int):void {
+        var ac:ActivityVO = ui.leftBtnList.array[index];
+        cell.init(ac, userLevel);
+        cell.on(Event.CLICK, this, onClickFuncIcon, [ac]);
+    }
+
+    private function renderRightIconHandler(cell:BaseFuncIconView, index:int):void {
+        var ac:ActivityVO = ui.rightBtnList.array[index];
+        cell.init(ac, userLevel);
+        cell.on(Event.CLICK, this, onClickFuncIcon, [ac]);
+    }
+
+    private function onClickFuncIcon(acVo:ActivityVO):void {
+        if (!acVo)return;
+
+        var vo:MenuWindowVO = new MenuWindowVO(acVo.type, MenuWindowVO.OPEN, new Object());
+        openWindow(acVo.type, vo.data);
+    }
+
+    public function updateRightButtonList():void {
+        var btnsAc:Array = [];
+
+        for (var i = 0; i < 5; i++) {
+            btnsAc.push("");
+        }
+
+        ui.rightBtnList.width = 196;
+        ui.rightBtnList.height = btnsAc.length * 180;
+        ui.rightBtnList.x = AppConst.width - ui.rightBtnList.width;
+        ui.rightBtnList.array = btnsAc;
+    }
+
+    public function updateLeftButtonList():void {
+        var btnsAc:Array = [];
+
+        for (var i = 0; i < 3; i++) {
+            btnsAc.push("");
+        }
+
+        ui.leftBtnList.width = 196;
+        ui.leftBtnList.height = btnsAc.length * 180;
+        ui.leftBtnList.x = 0;
+        ui.leftBtnList.array = btnsAc;
+    }
+
+    public function openCopy():void {
+        if (!copy)copy = new CopyView();
+        if (copy && !ui.copy.contains(copy))ui.copy.addChild(copy);
+        closeMoney();
+        ui.btnOut.visible = false;
+    }
+
+    public function closeCopy():void {
+        if (copy && ui.copy.contains(copy)) {
+            ui.copy.removeChild(copy);
+            copy.dispose();
+            copy = null;
+        }
+        openMoney();
+        ui.btnOut.visible = true;
+    }
+
+    public function openMoney():void {
+        if (!money)money = new MoneyView();
+        if (money && !ui.money.contains(money))ui.money.addChild(money);
+        money.show();
+    }
+
+    public function closeMoney():void {
+        if (money)money.hide();
+    }
+
+    private function layout():void {
+        ui.width = AppConst.width;
+
+        ui.money.width = 832;
+        ui.money.x = AppConst.width - ui.money.width;
+        ui.btnOut.x = AppConst.width - ui.btnOut.width;
     }
 }
 }

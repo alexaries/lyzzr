@@ -43,6 +43,10 @@ public class MoneyMediator extends BaseMediator implements IMediator {
     }
 
     private function instanceCompleteHander():void {
+        updateMoney();
+    }
+
+    private function updateMoney():void {
 
     }
 

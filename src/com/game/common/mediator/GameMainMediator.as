@@ -30,7 +30,6 @@ public class GameMainMediator extends BaseMediator implements IMediator {
     override public function onRegister():void {
         super.onRegister();
         view.onCompleteSignal.getSignal(this).listen(onInstanceComplete);
-//        view.build.gotoActivitySignal.getSignal(this).listen(gotoActivityHandler)
         view.goSignal.getSignal(this).listen(gotoActivityHandler);
     }
 

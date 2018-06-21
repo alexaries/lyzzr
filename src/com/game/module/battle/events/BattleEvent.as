@@ -6,13 +6,13 @@ public class BattleEvent {
     //战斗开始
     public static var BATTLE_ENTER = "BATTLE_ENTER";
 
-    //area
+    //client
     public static var BATTLE_PROGRESS_UPDATE = "BATTLE_PROGRESS_UPDATE";
     public static var BATTLE_STRENGTH_FINISHED = "BATTLE_STRENGTH_FINISHED";
     public static var BATTLE_EVENT_FINISHED = "BATTLE_EVENT_FINISHED";
-    public static var BATTLE_RESULT = "BATTLE_RESULT";
+    public static var BATTLE_DISPLAY = "BATTLE_DISPLAY";
 
-    //remote
+    //protocol
     public static var BATTLE_UPDATE_INFO = "BATTLE_UPDATE_INFO";
 }
 }

@@ -95,9 +95,16 @@ public class BattleView extends BaseFrame {
     }
 
     public function addEventView(vo:BaseBattleEventVo):void {
-        if (!eventView)eventView = new BattleEventView(vo);
-        addChildView(eventView);
-        eventView.pos(0, 400);
+        if (!eventView) {
+            eventView = new BattleEventView();
+            addChildView(eventView);
+            eventView.refresh(vo);
+            eventView.pos(0, 400);
+        }
+        else {
+            eventView.refresh(vo);
+            eventView.show();
+        }
     }
 
     public function addFetterView():void {
@@ -106,9 +113,16 @@ public class BattleView extends BaseFrame {
         fetterView.pos(0, 200);
     }
 
-    public function addDisplayView():void {
-        if (!displayView)displayView = new BattleDisplayView();
-
+    public function addDisplayView(fighter:Object):void {
+        if (!displayView) {
+            displayView = new BattleDisplayView();
+            addChildView(displayView);
+            displayView.refresh(fighter);
+        }
+        else {
+            displayView.refresh(fighter);
+            displayView.show();
+        }
     }
 
     public function addResultView():void {
@@ -137,6 +151,12 @@ public class BattleView extends BaseFrame {
         }
     }
 
+    public function hideEventView():void {
+        if (eventView) {
+            eventView.hide();
+        }
+    }
+
     public function removeEventView():void {
         if (eventView) {
             eventView.tryDispose();
@@ -151,6 +171,18 @@ public class BattleView extends BaseFrame {
         }
     }
 
+    public function hideDisplayView():void {
+        if (displayView) {
+            displayView.hide();
+        }
+    }
+
+    public function removeDisplayView():void {
+        if (displayView) {
+            displayView.tryDispose();
+            displayView = null;
+        }
+    }
 
     public function removeResultView():void {
         if (resultView) {
@@ -164,6 +196,7 @@ public class BattleView extends BaseFrame {
         removeStrengthView();
         removeEventView();
         removeFetterView();
+        removeDisplayView();
         removeResultView();
     }
 

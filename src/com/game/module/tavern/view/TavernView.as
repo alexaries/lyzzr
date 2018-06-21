@@ -6,7 +6,6 @@ import com.game.common.mvc.BaseMediator;
 import com.game.common.operation.Oper;
 import com.game.common.operation.TweenOper;
 import com.game.common.view.BaseFrame;
-import com.game.common.vo.BaseMenuVO;
 import com.game.module.tavern.mediator.TavernMediator;
 import com.signal.SignalDispatcher;
 
@@ -62,7 +61,7 @@ public class TavernView extends BaseFrame {
 
     private function init():void {
         dir = 1;
-        refresh();
+        onRefresh();
 
         ui.tuBtn.on(Event.CLICK, this, onClickTuBtn);
         ui.leftBtn.on(Event.CLICK, this, onClickLeftBtn);
@@ -106,16 +105,12 @@ public class TavernView extends BaseFrame {
             oper = null;
         }
 
-        oper = new Oper();
-        oper.add(new TweenOper(ui.panel.hScrollBar, 400, {value: dirPos}, null));
-        oper.list.forEach(function (item:Oper) {
-            item.do_execute();
-        });
-
-        timerOnce(300, this, refresh);
+        oper = new TweenOper(ui.panel.hScrollBar, 400, {value: dirPos}, null);
+        oper.onCompleteSignal.getSignal(this).listen(onRefresh);
+        oper.do_execute();
     }
 
-    public function refresh():void {
+    public function onRefresh():void {
         ui.leftBtn.visible = dir == -1;
         ui.rightBtn.visible = dir == 1;
     }

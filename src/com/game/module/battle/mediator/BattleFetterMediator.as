@@ -46,8 +46,7 @@ public class BattleFetterMediator extends BaseMediator implements IMediator {
         //计算羁绊所得分数
         score = 100;
         dispatch(new Notification(BattleEvent.BATTLE_PROGRESS_UPDATE, [score]));
-
-        dispatch(new Notification(BattleEvent.BATTLE_RESULT));
+        dispatch(new Notification(BattleEvent.BATTLE_DISPLAY));
     }
 
     private function instanceCompleteHander():void {

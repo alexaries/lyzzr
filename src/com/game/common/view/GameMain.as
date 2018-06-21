@@ -191,8 +191,11 @@ public class GameMain extends BaseView {
     }
 
     private function init():void {
-        build = new HomeMap();
-        ui.map.addChild(build);
+        if (!build)build = new HomeMap();
+        if (build && !ui.map.contains(build))ui.map.addChild(build);
+
+        if (!money)money = new MoneyView();
+        if (money && !ui.money.contains(money))ui.money.addChild(money);
 
         ui.rightBtnList.itemRender = BaseFuncIconView;
         ui.rightBtnList.renderHandler = Handler.create(this, renderRightIconHandler, null, false);
@@ -275,8 +278,6 @@ public class GameMain extends BaseView {
     }
 
     public function openMoney():void {
-        if (!money)money = new MoneyView();
-        if (money && !ui.money.contains(money))ui.money.addChild(money);
         money.show();
     }
 
@@ -288,7 +289,7 @@ public class GameMain extends BaseView {
         ui.width = AppConst.width;
 
         ui.money.width = 832;
-        ui.money.x = AppConst.width - ui.money.width;
+        ui.money.x = AppConst.width - ui.money.width - 20;
         ui.btnOut.x = AppConst.width - ui.btnOut.width;
     }
 }

@@ -3,15 +3,19 @@ import com.game.common.vo.AcConfigRequest;
 import com.game.module.share.proxy.ShareProxy;
 import com.game.module.user.proxy.UserProxy;
 
-import config.ConfigManager;
-
 import globals.PlatformSDK;
 
 import org.puremvc.as3.patterns.facade.Facade;
 
-import utils.ArrayUtil;
-
 public class FuncUtil {
+
+    public static var BUILD_INDEX:int = 1;//建筑按钮区域
+    public static var LEFT_DOWN_INDEX:int = 5;//左下角按钮列表
+    public static var RIGHT_UP_INDEX:int = 6;//右上角按钮列表
+    public static var LEFT_UP_INDEX:int = 0;
+    public static var TOP_INDEX:int = 0;
+
+
     private static var userProxy:UserProxy = Facade.getInstance().retrieveProxy(UserProxy.NAME) as UserProxy;
 //    private static var activity:ActivityService = Facade.getInstance().retrieveProxy(ActivityService.NAME) as ActivityService;
     private static var shareProxy:ShareProxy = Facade.getInstance().retrieveProxy(ShareProxy.NAME) as ShareProxy;

@@ -1,5 +1,5 @@
 package com.game.common.view {
-import com.game.vo.ActivityVO;
+import com.game.vo.FuncOpenVO;
 import com.signal.SignalDispatcher;
 
 import laya.events.Event;
@@ -9,25 +9,19 @@ import ui.main.icons.BuildButtonUI;
 
 public class BuildButtonView extends Box {
     public var ui:BuildButtonUI;
-    public var gotoActivitySignal:SignalDispatcher;
+    public var signal:SignalDispatcher;
 
-    public var _vo:ActivityVO;
+    public var _vo:FuncOpenVO;
     public var isLocked:Boolean = false;  //是否锁住了
     private function gotoActivityHandler():void {
         if (isLocked) {
-//            if (_vo && _vo.openfunc.level) {
-//                Alert.roll("等级达到" + _vo.openfunc.level + "级开放！");
-//                return;
-//            }
-//            Alert.roll("该建筑暂未开放！");
-//            return;
+            return;
         }
-        gotoActivitySignal.dispatch([_vo]);
+        signal.dispatch([_vo]);
     }
 
     public function BuildButtonView() {
         super();
-        gotoActivitySignal = new SignalDispatcher();
     }
 
     override protected function createChildren():void {
@@ -41,41 +35,16 @@ public class BuildButtonView extends Box {
 
     override public function destroy(b:Boolean = true):void {
         super.destroy(b);
-        gotoActivitySignal.dispose();
-        gotoActivitySignal = null;
     }
 
-    public function init(vo:ActivityVO, level:int):void {
-        _vo = vo;
-//        ui.nameClose.innerHTML = "<span style='width:45px;margin: 0 auto;line-height:50px;font-size:40px;color:#373737;font-family:微软雅黑;align:center;'>" + _vo.name + "</span>";
-//        update(level);
-//
-//        if (_vo.openfunc.guide_name) {
-//            this.name = _vo.openfunc.guide_name;
-//        } else {
-//            this.name = "";
-//        }
-//
-//        ui.nameClose.innerHTML = "<span style='width:45px;margin: 0 auto;line-height:50px;font-size:40px;color:#373737;font-family:微软雅黑;align:center;'>" + "许愿树" + "</span>";
-
+    public function init(vo:FuncOpenVO, level:int, signal:SignalDispatcher):void {
+        this._vo = vo;
+        this.signal = signal;
         ui.close.visible = false;
-//        ui.nameClose.visible = false;
+        ui.nameLabel.text = vo.name;
     }
 
     public function update(level:int):void {
-//        var cfg:IOpenfuncCfg = _vo.openfunc;
-//
-//        if (cfg.level <= level && (!cfg.funcid || (cfg.funcid && FuncUtil.check(cfg.funcid)))) {
-//            //开放
-//            ui.close.visible = false;
-//            ui.btnOpen.visible = true;
-//            ui.btnOpen.skin = "main/icons/build_" + _vo.openfunc.priority + ".png";
-//            isLocked = false;
-//        } else {
-//            ui.close.visible = true;
-//            ui.btnOpen.visible = false;
-//            isLocked = true;
-//        }
     }
 }
 }

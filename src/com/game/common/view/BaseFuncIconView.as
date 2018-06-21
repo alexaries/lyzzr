@@ -2,7 +2,10 @@
  * Created by dingcj on 2018/6/20.
  */
 package com.game.common.view {
-import com.game.vo.ActivityVO;
+import com.game.vo.FuncOpenVO;
+import com.signal.SignalDispatcher;
+
+import laya.events.Event;
 
 import laya.ui.Box;
 
@@ -10,8 +13,9 @@ import ui.main.icons.BaseFuncIconViewUI;
 
 public class BaseFuncIconView extends Box {
     public var ui:BaseFuncIconViewUI;
-    public var _vo:ActivityVO;
+    public var _vo:FuncOpenVO;
     public var isLocked:Boolean = true;  //是否锁住了
+    private var signal:SignalDispatcher;
 
     public function BaseFuncIconView() {
         super();
@@ -21,14 +25,19 @@ public class BaseFuncIconView extends Box {
         super.createChildren();
         ui = new BaseFuncIconViewUI();
         addChild(ui);
+
+        this.ui.on(Event.CLICK, this, onClick);
     }
 
-    public function init(vo:ActivityVO, level:int):void {
-        _vo = vo;
-//        ui.nameLabel.text = _vo.name;
-//        ui.icon.skin = _vo.imgUrl;
-        update(level);
+    private function onClick():void {
+        if (signal)signal.dispatch([_vo]);
+    }
 
+    public function init(vo:FuncOpenVO, level:int, signal:SignalDispatcher):void {
+        this._vo = vo;
+        this.signal = signal;
+        ui.nameLabel.text = _vo.name;
+//        ui.icon.skin = _vo.imgUrl;
     }
 
     public function reset():void {
@@ -64,6 +73,7 @@ public class BaseFuncIconView extends Box {
 
     override public function destroy(b:Boolean = true):void {
         super.destroy(b);
+        this.ui.off(Event.CLICK, this, onClick);
     }
 }
 }

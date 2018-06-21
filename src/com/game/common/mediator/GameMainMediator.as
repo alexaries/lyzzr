@@ -6,7 +6,7 @@ import com.game.common.view.CalculatorView;
 import com.game.common.view.GameMain;
 import com.game.events.NotiEvent;
 import com.game.module.menu.events.MenuEvent;
-import com.game.vo.ActivityVO;
+import com.game.vo.FuncOpenVO;
 import com.game.vo.MenuWinType;
 
 import laya.display.Sprite;
@@ -30,11 +30,24 @@ public class GameMainMediator extends BaseMediator implements IMediator {
     override public function onRegister():void {
         super.onRegister();
         view.onCompleteSignal.getSignal(this).listen(onInstanceComplete);
-        view.build.gotoActivitySignal.getSignal(this).listen(gotoActivityHandler)
+//        view.build.gotoActivitySignal.getSignal(this).listen(gotoActivityHandler)
+        view.goSignal.getSignal(this).listen(gotoActivityHandler);
     }
 
-    private function gotoActivityHandler(acVo:ActivityVO):void {
-        openWindow(MenuWinType.TAVERN_VIEW, null);
+    private function gotoActivityHandler(acVo:FuncOpenVO):void {
+        if (acVo.winType == "heros_info") {
+            openWindow(MenuWinType.COMPANY_VIEW, null);
+        }
+        else if (acVo.winType == "heroicRetreatView") {
+            openWindow(MenuWinType.JIBAN_VIEW, null);
+        }
+        else {
+            openWindow(MenuWinType.TAVERN_VIEW, null);
+        }
+
+//        if (!acVo)return;
+//        var vo:MenuWindowVO = new MenuWindowVO(acVo.winType, MenuWindowVO.OPEN, new Object());
+//        openWindow(acVo.winType, vo.data);
     }
 
     private function onInstanceComplete():void {

@@ -14,8 +14,12 @@ import com.game.module.tavern.view.HeroDisplayView;
 import com.game.module.tavern.view.TavernHireView;
 import com.game.module.tavern.view.TavernTuView;
 import com.game.module.tavern.view.TavernView;
-import com.game.vo.ActivityVO;
+import com.game.utils.FuncUtil;
+import com.game.vo.FuncOpenVO;
 import com.game.vo.MenuWinType;
+import com.signal.SignalDispatcher;
+
+import globals.ConfigLocator;
 
 import globals.PlatformSDK;
 
@@ -40,8 +44,11 @@ public class GameMain extends BaseView {
 
     private var _userLevel:int;
 
+    public var goSignal:SignalDispatcher;
+
     public function GameMain() {
         super();
+        goSignal = new SignalDispatcher();
     }
 
     override public function getMediator():BaseMediator {
@@ -167,7 +174,6 @@ public class GameMain extends BaseView {
         if (viewLists.indexOf(menuWinTypeName) != -1) {
             viewLists.remove(menuWinTypeName);
         }
-
     }
 
     public function closeWindow(menuWinTypeName:String, data:Object = null) {
@@ -193,6 +199,7 @@ public class GameMain extends BaseView {
     private function init():void {
         if (!build)build = new HomeMap();
         if (build && !ui.map.contains(build))ui.map.addChild(build);
+        build.initInfo(goSignal);
 
         if (!money)money = new MoneyView();
         if (money && !ui.money.contains(money))ui.money.addChild(money);
@@ -216,31 +223,17 @@ public class GameMain extends BaseView {
     }
 
     private function renderLeftIconHandler(cell:BaseFuncIconView, index:int):void {
-        var ac:ActivityVO = ui.leftBtnList.array[index];
-        cell.init(ac, userLevel);
-        cell.on(Event.CLICK, this, onClickFuncIcon, [ac]);
+        var ac:FuncOpenVO = ui.leftBtnList.array[index];
+        cell.init(ac, userLevel, goSignal);
     }
 
     private function renderRightIconHandler(cell:BaseFuncIconView, index:int):void {
-        var ac:ActivityVO = ui.rightBtnList.array[index];
-        cell.init(ac, userLevel);
-        cell.on(Event.CLICK, this, onClickFuncIcon, [ac]);
-    }
-
-    private function onClickFuncIcon(acVo:ActivityVO):void {
-        if (!acVo)return;
-
-        var vo:MenuWindowVO = new MenuWindowVO(acVo.type, MenuWindowVO.OPEN, new Object());
-        openWindow(acVo.type, vo.data);
+        var ac:FuncOpenVO = ui.rightBtnList.array[index];
+        cell.init(ac, userLevel, goSignal);
     }
 
     public function updateRightButtonList():void {
-        var btnsAc:Array = [];
-
-        for (var i = 0; i < 5; i++) {
-            btnsAc.push("");
-        }
-
+        var btnsAc:Array = ConfigLocator.getInstance().getOpenfuncByPosition(FuncUtil.RIGHT_UP_INDEX);
         ui.rightBtnList.width = 196;
         ui.rightBtnList.height = btnsAc.length * 180;
         ui.rightBtnList.x = AppConst.width - ui.rightBtnList.width;
@@ -248,12 +241,7 @@ public class GameMain extends BaseView {
     }
 
     public function updateLeftButtonList():void {
-        var btnsAc:Array = [];
-
-        for (var i = 0; i < 3; i++) {
-            btnsAc.push("");
-        }
-
+        var btnsAc:Array = ConfigLocator.getInstance().getOpenfuncByPosition(FuncUtil.LEFT_DOWN_INDEX);
         ui.leftBtnList.width = 196;
         ui.leftBtnList.height = btnsAc.length * 180;
         ui.leftBtnList.x = 0;

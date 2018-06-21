@@ -19,7 +19,7 @@ public class TavernHireView extends BaseWindow {
     public function TavernHireView() {
         super();
         getSignal = new SignalDispatcher();
-        layer = BaseLayer.SPECIAL;
+        layer = BaseLayer.FRAME;
     }
 
     override public function getMediator():BaseMediator {

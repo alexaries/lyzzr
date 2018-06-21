@@ -25,7 +25,6 @@ public class CopyInfoView extends BaseWindow {
 
     public function CopyInfoView() {
         super();
-        layer = BaseLayer.FRAME;
         closeSignal = new SignalDispatcher();
         startSignal = new SignalDispatcher();
         onceSignal = new SignalDispatcher();

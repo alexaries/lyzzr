@@ -31,7 +31,7 @@ public class BattleView extends BaseFrame {
     public function BattleView() {
         super([]);
         closeSignal = new SignalDispatcher();
-        layer = BaseLayer.POP_FRAME;
+        layer = BaseLayer.FRAME;
     }
 
     override public function getMediator():BaseMediator {

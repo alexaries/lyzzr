@@ -40,7 +40,7 @@ public class ExpertView extends BaseFrame {
 
     public function ExpertView() {
         super([]);
-        layer = BaseLayer.ONKEY;
+        layer = BaseLayer.POP_FRAME;
 
         closeSignal = new SignalDispatcher();
         itemSignal = new SignalDispatcher();

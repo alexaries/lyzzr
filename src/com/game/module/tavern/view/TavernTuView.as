@@ -22,7 +22,7 @@ public class TavernTuView extends BaseWindow {
     public function TavernTuView() {
         super();
         closeSignal = new SignalDispatcher();
-        layer = BaseLayer.SPECIAL;
+        layer = BaseLayer.FRAME;
     }
 
     override public function getMediator():BaseMediator {

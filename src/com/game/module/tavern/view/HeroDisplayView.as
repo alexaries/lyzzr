@@ -20,7 +20,7 @@ public class HeroDisplayView extends BaseWindow {
     public function HeroDisplayView() {
         super();
         closeSignal = new SignalDispatcher();
-        layer = BaseLayer.DISPLAY;
+        layer = BaseLayer.POP_FRAME;
     }
 
     override public function getMediator():BaseMediator {

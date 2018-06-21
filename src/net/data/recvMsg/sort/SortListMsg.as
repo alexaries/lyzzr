@@ -1,9 +1,5 @@
 package net.data.recvMsg.sort {
 
-import globals.ConfigLocator;
-
-import utils.ByteArray;
-
 import net.data.BaseMsg;
 import net.data.structs.pack.EqInfoStruct;
 import net.data.structs.pack.ItemStruct;
@@ -14,6 +10,8 @@ import net.data.structs.pet.PetPoStruct;
 import net.data.structs.pet.PetStruct;
 import net.data.structs.sort.SortItemStruct;
 import net.utils.BytesUtil;
+
+import utils.ByteArray;
 
 /**
  * (S->C) 0xE8 排行榜数据
@@ -41,11 +39,7 @@ public class SortListMsg extends BaseMsg {
     }
 
     function getTypebyGoodsId(eqId:Number) {
-        var vo = ConfigLocator.getInstance().getGoodsById(eqId);
-        if (vo && (vo.type >= 13 && vo.type <= 15))
-            return true;
         return false
-
     }
 
     override public function byteArrayToMsg(bytes:ByteArray):Boolean {

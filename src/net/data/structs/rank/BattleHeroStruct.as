@@ -27,11 +27,5 @@ public class BattleHeroStruct {
     public function set heroid(value:uint):void {
         _heroid = value;
     }
-
-    public function get name():String{
-        return (ConfigLocator.getInstance().gernalHeros.get(_heroid) as GernalHeroVO).name
-    }
-
-
 }
 }

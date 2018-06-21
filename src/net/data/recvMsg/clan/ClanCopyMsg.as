@@ -1,11 +1,5 @@
 package net.data.recvMsg.clan {
-import com.game.module.clan.vo.ClanShopItemVO;
-import com.game.module.clan.vo.ClanshopItemBaseVO;
 import com.hurlant.math.BigInteger;
-
-import globals.ConfigLocator;
-
-import utils.ByteArray;
 
 import net.consts.StaticConfig;
 import net.data.BaseMsg;
@@ -18,8 +12,9 @@ import net.data.structs.clan.CcMonsterStruct;
 import net.data.structs.clan.CcPlayerStruct;
 import net.data.structs.clan.CcSpotStruct;
 import net.data.structs.clan.ClanCopyLogsStruct;
-import net.data.structs.clan.ClanShopItemStruct;
 import net.utils.BytesUtil;
+
+import utils.ByteArray;
 
 public class ClanCopyMsg extends BaseMsg {
     public var type:uint;
@@ -134,29 +129,6 @@ public class ClanCopyMsg extends BaseMsg {
     }
 
     private function readShopInfo(bytes:ByteArray):void {
-        shopType = BytesUtil.readByte1(bytes);
-        switch (shopType) {
-            case 0:
-                goodsArr = [];
-                count = BytesUtil.readByte1(bytes);
-                var len:int = BytesUtil.readByte1(bytes);
-                var vo:ClanShopItemVO;
-                for (var i:int = 0; i < len; i++) {
-                    var id:uint = bytes.readUnsignedInt();
-                    var status:int = BytesUtil.readByte1(bytes);
-                    vo = new ClanShopItemVO();
-                    vo.baseVo = ConfigLocator.getInstance().clanShopDic.get(id) as ClanshopItemBaseVO;
-                    vo.isBuy = Boolean(status);
-                    vo.posIndex = i + 1;
-                    goodsArr.push(vo);
-                }
-                break;
-            case 1:
-                //status = BytesUtil.readByte1(bytes);
-                break;
-            case 2:
-                break;
-        }
     }
 
     private function readBossInfo(bytes:ByteArray):void {

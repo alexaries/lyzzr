@@ -29,6 +29,7 @@ public class LunaUtil {
     //----------------------------------------------
     public function LunaUtil() {
     }
+
     public static function writeBitVec(bitVec:Vector.<Boolean>, value:uint):void {
         var length:uint = bitVec.length;
         for (var i:int = 0; i < length; i++) {
@@ -48,7 +49,6 @@ public class LunaUtil {
     }
 
 
-
     public static function getTimeByDay(day:uint):uint {
         return day * 86400;
     }
@@ -56,10 +56,11 @@ public class LunaUtil {
     public static function getDayByTime(time:uint):uint {
         return time / 86400;
     }
-    public static var  bgSkinArr:Array = ["common/surface/frame_blue.png","common/surface/frame_green.png","common/surface/frame_blue.png","common/surface/frame_purple.png","common/surface/frame_yellow.png","","common/surface/frame_red.png"];
+
+    public static var bgSkinArr:Array = ["common/surface/frame_blue.png", "common/surface/frame_green.png", "common/surface/frame_blue.png", "common/surface/frame_purple.png", "common/surface/frame_yellow.png", "", "common/surface/frame_red.png"];
 
     /**月卡图标*/
-    public static var  vipSkinArr:Array = ["","common/surface/frame_blue.png","common/surface/frame_green.png","common/surface/frame_green.png"];
+    public static var vipSkinArr:Array = ["", "common/surface/frame_blue.png", "common/surface/frame_green.png", "common/surface/frame_green.png"];
 
 
     /**
@@ -232,8 +233,6 @@ public class LunaUtil {
     }
 
 
-
-
     /**
      * 返回itemObject itemid itemNum
      * data 格式：499,20;56,2;57,2
@@ -279,17 +278,6 @@ public class LunaUtil {
         return itemObjectVec;
     }
 
-
-    /**过滤屏蔽字后 填充*   */
-    public static function getFilterRegExp(str:String):String
-    {
-        var filterWord:String = ConfigLocator.getInstance().filterWords;
-//        var filterStr:String = "("+filterWord.replace(/(\n|\r)+/mg,"|")+")";
-//        var filterRegExp:RegExp = new RegExp(filterStr,"img");
-        var filterRegExp:RegExp = new RegExp(filterWord,"img");
-        return str.replace(filterRegExp,"*");
-    }
-
     /**
      *
      * @param _idN 道具id、技能id
@@ -297,88 +285,52 @@ public class LunaUtil {
      * @return 技能id、道具id
      *
      */
-    public static function getUiltId(_idN:int,_bl:Boolean = true):int
-    {
-        if(_bl)
-        {
-            if(_idN>21000)
-                return (_idN-21000+210)*100;
-            return (_idN-1200+1)*100;
+    public static function getUiltId(_idN:int, _bl:Boolean = true):int {
+        if (_bl) {
+            if (_idN > 21000)
+                return (_idN - 21000 + 210) * 100;
+            return (_idN - 1200 + 1) * 100;
         }
-        else
-        {
-            if(_idN>21000)
-                return Math.floor(_idN*0.01)-210+21000;
-            return Math.floor(_idN*0.01)-1+1200;
+        else {
+            if (_idN > 21000)
+                return Math.floor(_idN * 0.01) - 210 + 21000;
+            return Math.floor(_idN * 0.01) - 1 + 1200;
         }
     }
 
-     //----------------------------------------------心法冲突相关-------------------------------------------------------------//
-    public static function checkCittaID(cittaid : int, selectCitta : int) : Boolean
-{
-    var cittavo : CittaVO ;
-    var index:int = -1 ;
-    if (selectCitta == cittaid) {
-        return true;
-    }else
-    {
-        var cittadiff : Array = getCittaDiffArray(Math.floor(cittaid / 100));
-        if (cittadiff) {
-            var nn : int = Math.floor(selectCitta / 100);
-            index = cittadiff.indexOf(nn);
-            if (index > -1) {
+    //----------------------------------------------心法冲突相关-------------------------------------------------------------//
+    public static function checkCittaID(cittaid:int, selectCitta:int):Boolean {
+        var cittavo:CittaVO;
+        var index:int = -1;
+        if (selectCitta == cittaid) {
+            return true;
+        } else {
+            var cittadiff:Array = getCittaDiffArray(Math.floor(cittaid / 100));
+            if (cittadiff) {
+                var nn:int = Math.floor(selectCitta / 100);
+                index = cittadiff.indexOf(nn);
+                if (index > -1) {
 //                cittavo = ConfigLocator.getInstance().cittaDatas.get(nn);
 //                dispatch(new NotiEvent(NotiEvent.ROLL_ALERT, '当前已装备心法[' + cittavo.name + '],与你要装备的心法冲突'));
-                return true ;
+                    return true;
+                }
             }
         }
+        return false;
     }
-    return false ;
-}
 
-    public static function getCittaDiffArray(cittaid : int) : Array {
-        var cittaArr:Array = [] ;
-        if(!ConfigLocator.getInstance().cittadiffDic)
-        {
-            for each (var arrT : Array in ConfigLocator.getInstance().skilldiffDic.values) {
-                var newArr:Array = [] ;
-                for each (var skillid : String in arrT) {
-                    if(!parseInt(skillid))
-                        continue ;
-                    for each (var cittaProp : GoodsPropsVO in ConfigLocator.getInstance().cittaPropDic.values)
-                    {
-                        if(Math.floor(parseInt(cittaProp.skills)/100) == parseInt(skillid))
-                        {
-                            newArr.push(Math.ceil(parseInt(cittaProp.id)/9));
-                            break;
-                        }
-                    }
-                }
-                cittaArr.push(newArr);
-            }
-            ConfigLocator.getInstance().cittadiffDic = cittaArr ;
-        }
-
-        for each (var arr : Array in ConfigLocator.getInstance().cittadiffDic) {
-            for each (var i : uint in arr) {
-                if ((i) == cittaid) {
-                    return arr ;
-                }
-            }
-        }
+    public static function getCittaDiffArray(cittaid:int):Array {
         return null;
     }
 
     //----------------------------------------------------------------------------------------------------------------//
 
     /**通过id 创建 物品 [[id,num],[id,num],[id,num]]*/
-    public static function getPackById(arr:Array):Array
-    {
+    public static function getPackById(arr:Array):Array {
         var a:Array;
         var p:PackVO;
-        var packList:Array =[];
-        for(var j:int=0;j<arr.length;j++)
-        {
+        var packList:Array = [];
+        for (var j:int = 0; j < arr.length; j++) {
             a = arr[j];
             p = PackUtil.createPackVO(a[0]);
             p.pileNums = a[1];

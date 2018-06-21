@@ -6,10 +6,6 @@ import com.game.vo.GoodsPropsVO;
 import com.game.vo.GoodsVO;
 import com.game.vo.PropertyDefine;
 
-import config.ConfigManager;
-import config.item.item.IItemCfg;
-import config.item.itemProp.IItemPropCfg;
-
 import globals.ConfigLocator;
 
 import lang.LangArrayTxt;
@@ -19,7 +15,6 @@ import laya.utils.Dictionary;
 
 import net.consts.StaticConfig;
 import net.data.structs.pack.ItemStruct;
-import net.utils.ColorUtil;
 
 import utils.ArrayUtil;
 
@@ -265,182 +260,6 @@ public class PackVO {
 
 
     public function PackVO(itemStruct:ItemStruct = null) {
-        if (itemStruct) {
-            var tmpId:int = 0;
-            if (itemStruct.type == ItemStruct.EQ || itemStruct.type == ItemStruct.BAOJU || itemStruct.type == ItemStruct.TALISMAN || itemStruct.type == ItemStruct.HUNQI) {
-                if (itemStruct.eqInfo && itemStruct.eqInfo.eqId != 0) {
-                    maxLevel = itemStruct.eqInfo.maxLevel;
-                    currentExp = itemStruct.eqInfo.currentExp;
-                    tmpId = itemStruct.eqInfo.eqId;
-                } else
-                    tmpId = itemStruct.itemId;
-            }
-            else if (itemStruct.zhenyuanVO) {
-                //建立互相引用的关系
-//                _zhenyuanVO = ZhenyuanVO.parse(itemStruct.zhenyuanVO);
-                _id = itemStruct.zhenyuanVO.itemID;
-                tmpId = itemStruct.zhenyuanVO.itemID;
-            }
-            else
-                tmpId = itemStruct.itemId;
-
-            trace(tmpId + "tmpId")
-            var tempStaticVO:IItemCfg = ArrayUtil.find(ConfigManager.instance.item_item.itemCfg, function (i:IItemCfg) {
-                //if(i.id == 18)return true;
-                return i.id == tmpId
-            });
-            if (!tempStaticVO) {
-                trace("这个物品我没有: ", itemStruct.eqInfo.eqId, itemStruct.itemId);
-            }
-            var tempPropsVO:IItemPropCfg = ArrayUtil.find(ConfigManager.instance.item_itemProp.itemPropCfg, function (i:IItemPropCfg) {
-                return i.id == tempStaticVO.propId
-            });
-            if (tempStaticVO && !tempPropsVO) {
-                trace("这个属性我没有: ", tempStaticVO.propId);
-            }
-            name = tempStaticVO.name;
-            type = tempStaticVO.type;
-            level = tempStaticVO.level;
-            color = tempStaticVO.color;
-            stackLimit = tempStaticVO.pile;
-            price = tempStaticVO.price;
-            energy = tempStaticVO.energy;
-            binding = itemStruct.binding;
-            useable = tempStaticVO.useable;
-            propId = tempStaticVO.propId;
-            description = tempStaticVO.tips;
-            imgID = tempStaticVO.imageId;
-            career = tempStaticVO.career;
-            trumpExp = tempStaticVO.trumpExp;
-            vlevel = tempStaticVO.vlevel;
-            saleup = tempStaticVO.saleup;
-            configSaleup = tempStaticVO.saleup;
-            if (itemStruct.type == ItemStruct.EQ && color == 5) {
-                soulLevel = itemStruct.eqInfo.soulLevel;
-                soulFormula = itemStruct.eqInfo.soulFormula;
-            }
-
-            var dic1:Dictionary = ConfigLocator.getInstance().trumpExpDic;
-            var temp:int = currentExp;
-            for (var j:int = 1; j < 13; j++) {
-                temp -= dic1.get(j)[color - 2];
-                if (temp < 0) {
-                    temp += dic1.get(j)[color - 2];
-                    break;
-                }
-            }
-
-            levelExp = temp;
-            currentLevel = j - 1;
-            if (itemStruct.itemId <= 9116 && itemStruct.itemId >= 9101 || itemStruct.itemId <= 668 && itemStruct.itemId >= 664) {
-                id = itemStruct.itemId;
-            }
-            if (type >= 13 && type <= 15) {//灵宝属性
-                isTongLing = itemStruct.eqInfo.isTongLing;
-                lbColor = itemStruct.eqInfo.lbColor;
-                if (lbColor != 0)
-                    color = lbColor;
-                lingbaoAttr = itemStruct.eqInfo.lingbaoAttr;
-                skill1 = itemStruct.eqInfo.skill1;
-                factor1 = itemStruct.eqInfo.factor1;
-                skill2 = itemStruct.eqInfo.skill2;
-                factor2 = itemStruct.eqInfo.factor2;
-            }
-            if (binding == 0)//非绑
-                normalNums = itemStruct.itemNums;
-            else
-                bindingNums = itemStruct.itemNums;
-            switch (itemStruct.type) {
-                case ItemStruct.COMM:
-                case ItemStruct.JEWELS:
-                case ItemStruct.TASK:
-                case ItemStruct.HEART:
-                case ItemStruct.SOUL:
-                case ItemStruct.SOUL_2:
-                case ItemStruct.BAOJU:
-                case ItemStruct.LINGZHU:
-                    id = itemStruct.itemId;
-                    break;
-                case ItemStruct.RANK:
-                    break;
-                case ItemStruct.TALISMAN:
-                case ItemStruct.EQ:
-                case ItemStruct.HUNQI:
-                    if (tempPropsVO) {
-                        eqType = tempPropsVO.physical_attack != 0 ? 0 : 1;
-                        eqPropValue = tempPropsVO.physical_attack != 0 ? tempPropsVO.physical_attack : tempPropsVO.physical_defense;
-                        eqMagicPropValue = tempPropsVO.magic_attack != 0 ? tempPropsVO.magic_attack : tempPropsVO.magic_defense;
-                        topProps = [tempPropsVO.strength, tempPropsVO.agility, tempPropsVO.intelligence, tempPropsVO.will, tempPropsVO.endurance];
-                        skillid = (tempPropsVO.bring_skills as int);
-                    }
-                    if (!itemStruct.eqInfo || (itemStruct.eqInfo && itemStruct.eqInfo.eqId == 0)) {
-                        id = itemStruct.itemId;
-                        return;
-                    }
-                    id = itemStruct.eqInfo.eqId;
-                    flowId = itemStruct.itemId;
-                    enhanceLevel = itemStruct.eqInfo.enhanceLevel;
-                    boreNums = itemStruct.eqInfo.boreNums;
-                    jewelsId = itemStruct.eqInfo.jewelIds;
-                    exNums = itemStruct.eqInfo.exNums;
-                    addedProps = itemStruct.eqInfo.exProps;
-
-                    critDef = itemStruct.eqInfo.critDef;   // 暴击抗性
-                    pierceDef = itemStruct.eqInfo.pierceDef;   //破击抗性
-                    repelDef = itemStruct.eqInfo.repelDef;   //反击抗性
-                    ap = itemStruct.eqInfo.ap;  //攻击穿透
-
-                    diaowenNum = itemStruct.eqInfo.diaowenNum;
-                    diaowenIds = itemStruct.eqInfo.diaowenIds;
-                    break;
-            }
-        }
-    }
-
-    public function refreshEnhanceProperty():Array {
-        if (!enhanceChange)
-            return enhancePropertyArray;
-        enhancePropertyArray = PropertyDefine.CreateZeroProperty();
-        var tempPropsVO:GoodsPropsVO = ConfigLocator.getInstance().goodsPropList.get(propId)
-        if (!tempPropsVO)
-            return enhancePropertyArray;
-        var hpMaxDic:Dictionary = ConfigLocator.getInstance().hpMaxDic
-        //判断强化等级是否更改   有更改可以重新计算
-        if (enhanceLevel > 0) {
-            switch (type) {
-                case 1:
-                    enhancePropertyArray[PropertyDefine.AP_VALUE] = (tempPropsVO.apValue * PackVO.POTENTIALIZATION[0][enhanceLevel - 1] / 100) as int;
-                    enhancePropertyArray[PropertyDefine.AP_MAGIC_VALUE] = (tempPropsVO.ap_magicValue * PackVO.POTENTIALIZATION[0][enhanceLevel - 1] / 100) as int;
-                    break;
-                case 2:
-                case 3:
-                case 4:
-                case 5:
-                case 6:
-                    enhancePropertyArray[PropertyDefine.DEF_VALUE] = (tempPropsVO.defValue * PackVO.POTENTIALIZATION[1][enhanceLevel - 1] / 100);
-                    enhancePropertyArray[PropertyDefine.DEF_MAGIC_VALUE] = (tempPropsVO.def_magicValue * PackVO.POTENTIALIZATION[1][enhanceLevel - 1] / 100);
-                    break;
-                case 7:
-                case 8:
-                    if (hpMaxDic && hpMaxDic.get(vlevel))
-                        enhancePropertyArray[PropertyDefine.HP_VALUE] = Math.floor(hpMaxDic.get(vlevel)[career] * PackVO.POTENTIALIZATION[2][enhanceLevel - 1]);
-                    else
-                        enhancePropertyArray[PropertyDefine.HP_VALUE] = Math.floor(hpMaxDic.get(10)[career] * PackVO.POTENTIALIZATION[2][enhanceLevel - 1]);
-                    break;
-                case 171:
-                    enhancePropertyArray[PropertyDefine.XIAN_AP] = (tempPropsVO.ap_magicValue * PackVO.POTENTIALIZATION[0][enhanceLevel - 1] / 100);
-                    enhancePropertyArray[PropertyDefine.AP_VALUE] = enhancePropertyArray[PropertyDefine.XIAN_AP] * PropertyDefine.xianTocommonFactor;
-                    enhancePropertyArray[PropertyDefine.AP_MAGIC_VALUE] = enhancePropertyArray[PropertyDefine.XIAN_AP] * PropertyDefine.xianTocommonFactor;
-                    break
-                case 172:
-                    enhancePropertyArray[PropertyDefine.XIAN_DEF] = (tempPropsVO.def_magicValue * PackVO.POTENTIALIZATION[1][enhanceLevel - 1] / 100);
-                    enhancePropertyArray[PropertyDefine.DEF_VALUE] = enhancePropertyArray[PropertyDefine.XIAN_DEF] * PropertyDefine.xianTocommonFactor;
-                    enhancePropertyArray[PropertyDefine.DEF_MAGIC_VALUE] = enhancePropertyArray[PropertyDefine.XIAN_DEF] * PropertyDefine.xianTocommonFactor;
-                    break;
-            }
-        }
-        enhanceChange = false;
-        return enhancePropertyArray;
     }
 
     public function refreshAddProperty():Array {
@@ -481,64 +300,6 @@ public class PackVO {
         }
         addedPropChange = false;
         return addPropertyArray;
-    }
-
-    /**
-     * 值受 jewelsId 和 stars影响
-     * */
-    public function refreshJewelProperty():Array {
-        // 宝石属性统计
-        jewelPropertyArray = PropertyDefine.CreateZeroProperty();
-
-        var a:Number = 0;
-        var b:Number = 0;
-        var c:Number = 0;
-        if (!heroId == 9999) {
-            trace(11111);
-        }
-
-        var num:int = jewelsId.length;
-        for (var j:int = 0; j < num; j++) {
-            var jewelPropID:uint;
-            var jewelvo:GoodsVO = ConfigLocator.getInstance().goodsList.get(jewelsId[j])//XMLLocator.getInstance().goodsList[];
-            if (jewelvo)
-                jewelPropID = jewelvo.propId;
-            else
-                continue;
-            var jewelGoodsProps:GoodsPropsVO = ConfigLocator.getInstance().goodsPropList.get(jewelPropID)//UserUtil.getGoodsPropByID(jewelPropID);
-            var singlejewelPropertyArray:Array = [];
-            if (jewelGoodsProps) {
-                singlejewelPropertyArray = PropertyDefine.goodsPropsToArray(jewelGoodsProps);
-
-                singlejewelPropertyArray[PropertyDefine.AP_VALUE] *= (1 + b);
-                singlejewelPropertyArray[PropertyDefine.AP_MAGIC_VALUE] *= (1 + b);
-                singlejewelPropertyArray[PropertyDefine.DEF_VALUE] *= (1 + b);
-                singlejewelPropertyArray[PropertyDefine.DEF_MAGIC_VALUE] *= (1 + b);
-
-                singlejewelPropertyArray[PropertyDefine.POWER_VALUE] *= (1 + a);
-                singlejewelPropertyArray[PropertyDefine.INELLIGENCE_VALUE] *= (1 + a);
-                singlejewelPropertyArray[PropertyDefine.STRENGTH_VALUE] *= (1 + a);
-                singlejewelPropertyArray[PropertyDefine.AGILITY_VALUE] *= (1 + a);
-                singlejewelPropertyArray[PropertyDefine.WILL_VALUE] *= (1 + a);
-                singlejewelPropertyArray[PropertyDefine.HP_VALUE] *= (1 + a);
-
-                singlejewelPropertyArray[PropertyDefine.ACT_VALUE] *= (1 + c);
-
-                //如果仙界宝石 攻击加仙攻 30%转物法攻  防御一样
-                if (jewelvo && jewelvo.id >= 20001 && jewelvo.id <= 20635) {
-                    singlejewelPropertyArray[PropertyDefine.XIAN_AP] = singlejewelPropertyArray[PropertyDefine.AP_MAGIC_VALUE];
-                    singlejewelPropertyArray[PropertyDefine.XIAN_DEF] = singlejewelPropertyArray[PropertyDefine.DEF_MAGIC_VALUE];
-
-                    singlejewelPropertyArray[PropertyDefine.AP_MAGIC_VALUE] = singlejewelPropertyArray[PropertyDefine.XIAN_AP] * PropertyDefine.xianTocommonFactor;
-                    singlejewelPropertyArray[PropertyDefine.DEF_MAGIC_VALUE] = singlejewelPropertyArray[PropertyDefine.XIAN_DEF] * PropertyDefine.xianTocommonFactor;
-                    singlejewelPropertyArray[PropertyDefine.AP_VALUE] = singlejewelPropertyArray[PropertyDefine.XIAN_AP] * PropertyDefine.xianTocommonFactor;
-                    singlejewelPropertyArray[PropertyDefine.DEF_VALUE] = singlejewelPropertyArray[PropertyDefine.XIAN_DEF] * PropertyDefine.xianTocommonFactor;
-                }
-            }
-            jewelPropertyArray = PropertyDefine.addProperty(jewelPropertyArray, singlejewelPropertyArray);
-        }
-        jewelsPropChange = false;
-        return jewelPropertyArray;
     }
 
     /**
@@ -801,58 +562,6 @@ public class PackVO {
     public function get totalNum():int {
         return this.bindingNums + this.normalNums;
     }
-
-
-    public function get actTrumpExp():String {
-        return trumpExp *  (ConfigLocator.getInstance().trumpMelt.get(color)[this.enhanceLevel]) + currentExp * 0.5;
-
-    }
-
-    /**
-     * 获得灵宝某条属性的颜色
-     * @param    attr 为一条属性记录.
-     *            arr[0]:属性id，arr[1]:属性值
-     * @return    属性颜色
-     *
-     */
-    public function getLbAttrColor(attr:Array):String {
-        if (!attr || !attr[0] || !attr[1])
-            return "#FFFFFF";
-        var maxValueArr:Array;
-        var arr:Array = ConfigLocator.getInstance().baojuAttrCfg;
-        var obj:Object;
-        for each (obj in arr) {
-            if (obj.type == this.type - 12 && obj.level == this.level) {
-                maxValueArr = [
-                    obj.ap_s, obj.magic_ap_s, obj.def_s, obj.magic_def_s,
-                    obj.hp, obj.tough, obj.act, obj.hit,
-                    obj.dodge, obj.crit, obj.pierce, obj.repel];
-                break;
-            }
-        }
-        var num1:Number = attr[1];
-        var num2:Number = maxValueArr[attr[0] - 1];
-        var percent:Number = 0;
-
-        if (num2 != 0) {
-            percent = num1 / num2;
-            if (percent >= 0 && percent < 0.3) {
-                return ColorUtil.CHAT_COLOR[1];
-            } else if (percent >= 0.3 && percent < 0.6) {
-                return ColorUtil.CHAT_COLOR[2];
-            } else if (percent >= 0.6 && percent < 0.8) {
-                return ColorUtil.CHAT_COLOR[3];
-            } else if (percent >= 0.8) {
-                return ColorUtil.CHAT_COLOR[4];
-            } else {
-                trace("Invalid percent!");
-                return ColorUtil.CHAT_COLOR[0];
-            }
-        }
-        return "#FFFFFF";
-
-    }
-
 
     public function get lingbaoPropAttr():Array {
         return [baojuPropertyArray[PropertyDefine.AP_VALUE], baojuPropertyArray[PropertyDefine.AP_MAGIC_VALUE], baojuPropertyArray[PropertyDefine.DEF_VALUE], baojuPropertyArray[PropertyDefine.DEF_MAGIC_VALUE],

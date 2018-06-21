@@ -77,28 +77,6 @@ public class UserRideVO {
         return _itemState;
     }
 
-    /**
-     * 设置子法器的状态
-     * @param value
-     */
-    public function set itemState(value:uint):void {
-        _itemState = value;
-    }
-
-    public function get enablePropIDs():Array {
-        var enables:Array = [];
-        for (var i:int = 0, len:int = itemIDs.length; i < len; i++) {
-            if ((itemState >> i) & 0x01) {
-                var tempStaticVO:GoodsVO = ConfigLocator.getInstance().goodsList.get(itemIDs[i]);
-                enables.push(tempStaticVO.propId);
-            }
-        }
-        if (itemState == 0xff) {
-            enables.push(propID);
-        }
-        return enables;
-    }
-
     public function clone():UserRideVO {
         var rvo:UserRideVO = new UserRideVO();
         rvo._items = _items;
@@ -156,14 +134,6 @@ public class UserRideVO {
 
     public function get hasFinished():Boolean {
         return _hasFinished;
-    }
-
-    private function  get cfg():RideVO {
-        return ConfigLocator.getInstance().rideDic.get(id) as RideVO;
-    }
-
-    public function get quality():int {
-        return cfg.quality;
     }
 }
 }

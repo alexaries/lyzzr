@@ -15,9 +15,12 @@ public class CopyProxy extends Proxy implements IProxy {
 
     private var connection:HttpConnectionProxy;
 
+    public var isInCopy:Boolean = false;
+
     public function CopyProxy() {
         super(NAME);
         connection = facade.retrieveProxy(HttpConnectionProxy.NAME) as HttpConnectionProxy;
+        isInCopy = false;
     }
 
     public function requestInfo():void {

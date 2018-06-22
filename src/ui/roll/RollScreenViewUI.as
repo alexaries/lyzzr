@@ -6,7 +6,7 @@ package ui.roll {
 	public class RollScreenViewUI extends View {
 		public var alertTxt:Label;
 
-		public static var uiView:Object =/*[STATIC SAFE]*/{"type":"View","props":{"width":415,"height":250},"child":[{"type":"Image","props":{"y":0,"x":0,"width":415,"skin":"main/common_bg.png","height":250,"sizeGrid":"5,5,5,5"}},{"type":"Image","props":{"y":0,"x":0,"width":415,"skin":"main/border_up_down.png","height":250,"sizeGrid":"24,0,24,0"}},{"type":"Label","props":{"y":75,"x":18,"text":"!","fontSize":100,"color":"#f8f806","bold":true}},{"type":"Label","props":{"y":32,"x":77,"wordWrap":true,"width":324,"var":"alertTxt","valign":"middle","text":"仙石不足！请充值！","height":188,"fontSize":30,"font":"Microsoft YaHei","color":"#feffec","align":"left"}}]};
+		public static var uiView:Object =/*[STATIC SAFE]*/{"type":"View","props":{"width":415,"height":250},"child":[{"type":"Image","props":{"y":0,"x":0,"width":415,"skin":"surface/shuxingdi.png","height":250}},{"type":"Image","props":{"y":0,"x":0,"width":415,"skin":"surface/iconditiao2.png","sizeGrid":"0,50,0,50","height":250}},{"type":"Label","props":{"y":75,"x":18,"text":"!","fontSize":100,"color":"#f8f806","bold":true}},{"type":"Label","props":{"y":32,"x":77,"wordWrap":true,"width":324,"var":"alertTxt","valign":"middle","text":"仙石不足！请充值！","height":188,"fontSize":36,"font":"Arial","color":"#f1fdfd","align":"left"}}]};
 		override protected function createChildren():void {
 			super.createChildren();
 			createView(uiView);

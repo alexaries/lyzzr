@@ -21,7 +21,6 @@ public class ExpertView extends BaseFrame {
 
     public var closeSignal:SignalDispatcher;
     public var itemSignal:SignalDispatcher;
-    public var selectSignal:SignalDispatcher;
 
     private var itemHeight:int = 370;
     private var itemSpace = 20;
@@ -31,6 +30,7 @@ public class ExpertView extends BaseFrame {
     private var otherCount = 0;
 
     private var infoView:ExpertInfoView;
+    private var selectionView:ExpertSelectionView;
 
     private var isInBattle:Boolean = true;
 
@@ -44,7 +44,6 @@ public class ExpertView extends BaseFrame {
 
         closeSignal = new SignalDispatcher();
         itemSignal = new SignalDispatcher();
-        selectSignal = new SignalDispatcher();
     }
 
     override public function getMediator():BaseMediator {
@@ -81,7 +80,6 @@ public class ExpertView extends BaseFrame {
     }
 
     private function init():void {
-
         ui.panel.vScrollBarSkin = "";
 
         ui.ownList.itemRender = ExpertItem;
@@ -111,24 +109,12 @@ public class ExpertView extends BaseFrame {
         ui.cancelSelectBtn.visible = false;
 
         itemSignal.getSignal(this).listen(onItemClick);
-        selectSignal.getSignal(this).listen(onSelectClick);
 
         isInBattle = data;
     }
 
-    private function onSelectClick():void {
-
-    }
-
     private function onItemClick(type:int):void {
-        if (infoView) {
-            infoView.refresh(type, isInBattle);
-            infoView.show();
-        }
-        else {
-            addInfoView();
-            infoView.refresh(type, isInBattle);
-        }
+        addInfoView(type);
     }
 
     private function onRenderPropertyItem(cell:PropertyValueItem, index:int):void {
@@ -170,9 +156,22 @@ public class ExpertView extends BaseFrame {
         ui.otherList.array = arr;
     }
 
-    public function addInfoView():void {
-        infoView = new ExpertInfoView();
-        addChildView(infoView);
+    public function addInfoView(type:int):void {
+        if (!infoView) {
+            infoView = new ExpertInfoView();
+            addChildView(infoView);
+            infoView.refresh(type, isInBattle);
+        }
+        else {
+            infoView.refresh(type, isInBattle);
+            infoView.show();
+        }
+    }
+
+    public function addSelectionView():void {
+        if (!selectionView) selectionView = new ExpertSelectionView();
+        addChildView(selectionView);
+        selectionView.show();
     }
 
     private function addChildView(view:Sprite):void {
@@ -182,7 +181,7 @@ public class ExpertView extends BaseFrame {
     }
 
     private function onClickSelectBtn():void {
-        if (selectSignal)selectSignal.dispatch(null);
+        addSelectionView();
     }
 
     private function onClickCloseBtn():void {
@@ -197,12 +196,16 @@ public class ExpertView extends BaseFrame {
             infoView = null;
         }
 
+        if (selectionView) {
+            selectionView.tryDispose();
+            selectionView = null;
+        }
+
         if (ui.ownList.renderHandler)ui.ownList.renderHandler.clear();
         if (ui.otherList.renderHandler)ui.otherList.renderHandler.clear();
 
         if (closeSignal)closeSignal.dispose();
         if (itemSignal)itemSignal.dispose();
-        if (selectSignal)selectSignal.dispose();
     }
 }
 }

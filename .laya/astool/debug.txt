@@ -1,2 +1,20 @@
-Project configuration:d:\Documents\myLayaaaaqaaaaaqqsaaaaaaaareqaaaaasaaqq/.actionScriptProperties.
+1,0.00,,0,Project command:d:\newgit\lyzzr/.actionScriptProperties;iflash=false;windowshow=false;chromerun=false;quickcompile=true
+Project configuration:d:\newgit\lyzzr/.actionScriptProperties.
+1,0.00,,0,output path:d:/newgit/lyzzr/bin/h5/
+1,0.00,,0,Main Class:d:/newgit/lyzzr/src/LayaSample.as
+1,0.00,,0,output file:LayaSample
+1,0.00,,0,compilerSourcePath d:/newgit/lyzzr/libs/laya/src/
+
+1,0.00,,0,Compile Path:d:/newgit/lyzzr/src/
+
+1,0.00,,0,Compile Path:d:/newgit/lyzzr/libs/laya/src/
+
+1,0.00,d:/newgit/lyzzr/src,0,Collect
+1,0.00,d:/newgit/lyzzr/libs/laya/src,0,Collect
+1,2.00,,0,read class message
+7,56.23,d:/newgit/lyzzr/src/com/game/module/task/view/TaskKeepView.as,55,TaskHookView This variable is not defined.
+1,89.72,,0,Disable Flash3D d:/newgit/lyzzr/src/LayaSample.as
+12,89.72,d:/newgit/lyzzr/bin/h5/LayaSample.max.js,2641850,
+11,89.72,d:/newgit/lyzzr/bin/h5/LayaSample.max.html,893,
 ******************************************************************************
+14,89.72,,0,

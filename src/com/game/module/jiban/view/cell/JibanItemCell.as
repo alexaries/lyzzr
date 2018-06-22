@@ -1,28 +1,47 @@
 package com.game.module.jiban.view.cell
 {
 	import com.game.module.jiban.vo.JibanVO;
+	import com.signal.SignalDispatcher;
 	
+	import laya.ui.Box;
 	import laya.ui.Image;
+	import laya.utils.Handler;
 	
 	import ui.jiban.JibanItemUI;
 	
-	public class JibanItemCell extends JibanItemUI
+	
+	public class JibanItemCell extends Box
 	{
+		private var _ui:JibanItemUI = null;
 		public function JibanItemCell()
 		{
 			super();
+		}
+		
+		override protected function createChildren():void {
+			super.createChildren();
+			_ui = new JibanItemUI();
+			//_ui.btnOk.clickHandler = Handler.create(this, onClick, null, false)
+			addChild(_ui);
+		}
+		
+		
+		
+		public function init(vo:JibanVO, ind:int, actSignal:SignalDispatcher):void
+		{
+			setvo(vo);
 		}
 		/**
 		 *星级 
 		 * @param value
 		 * 
 		 */		
-		private function set starLevel(value:int):void
+		private function setstarLevel(value:int):void
 		{
 			var img:Image = null;
 			for(var i:int = 0; i < 5; i ++)
 			{
-				img = this["icon" + i.toString()] as Image;
+				img = _ui["icon" + i.toString()] as Image;
 				if(i < value)
 				{
 					img.visible = true;
@@ -32,18 +51,15 @@ package com.game.module.jiban.view.cell
 				
 			}
 		}
-		private function get starLevel():int
-		{
-			return _vo.starLevel;
-		}
+	
 		
 		private var _vo:JibanVO = null;
-		public function set vo(value:JibanVO):void
+		private function setvo(value:JibanVO):void
 		{
 			_vo = value;
-			levelTxt.text = value.level.toString();
-			countTxt.text = value.count.toString();
-			starLevel = value.starLevel;
+			_ui.levelTxt.text = value.level.toString();
+			_ui.countTxt.text = value.count.toString();
+			//setstarLevel(value.starLevel);
 		}
 		
 		public function get vo():JibanVO

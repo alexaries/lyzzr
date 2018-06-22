@@ -8,7 +8,7 @@ import ui.copy.PropertyItemUI;
 
 public class PropertyItem extends Box {
 
-    private var ui:PropertyItemUI;
+    protected var ui:PropertyItemUI;
 
     public function PropertyItem() {
         super();

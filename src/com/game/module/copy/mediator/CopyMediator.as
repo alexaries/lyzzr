@@ -5,6 +5,7 @@ package com.game.module.copy.mediator {
 import com.game.common.events.MenuWindowVO;
 import com.game.common.mvc.BaseMediator;
 import com.game.events.NotiEvent;
+import com.game.module.copy.proxy.CopyProxy;
 import com.game.module.copy.view.CopyView;
 import com.game.module.menu.events.MenuEvent;
 import com.game.vo.MenuWinType;
@@ -16,6 +17,8 @@ import org.puremvc.as3.patterns.observer.Notification;
 public class CopyMediator extends BaseMediator implements IMediator {
     public static const NAME:String = "CopyMediator";
 
+    private var proxy:CopyProxy;
+
     private function get view():CopyView {
         return getViewComponent() as CopyView;
     };
@@ -25,6 +28,10 @@ public class CopyMediator extends BaseMediator implements IMediator {
 
     override public function onRegister():void {
         super.onRegister();
+
+        proxy = facade.retrieveProxy(CopyProxy.NAME) as CopyProxy;
+        proxy.isInCopy = true;
+
         view.closeSignal.getSignal(this).listen(closeClick);
         view.itemSignal.getSignal(this).listen(itemClick);
     }
@@ -39,6 +46,7 @@ public class CopyMediator extends BaseMediator implements IMediator {
 
     override public function onRemove():void {
         super.onRemove();
+        proxy.isInCopy = false;
     }
 
     override public function listNotificationInterests():Array {

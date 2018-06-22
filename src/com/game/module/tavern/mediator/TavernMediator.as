@@ -4,15 +4,20 @@
 package com.game.module.tavern.mediator {
 import com.game.common.events.MenuWindowVO;
 import com.game.common.mvc.BaseMediator;
+import com.game.events.NotiEvent;
+import com.game.module.copy.proxy.CopyProxy;
 import com.game.module.menu.events.MenuEvent;
 import com.game.module.tavern.view.TavernView;
 import com.game.vo.MenuWinType;
 
 import org.puremvc.as3.interfaces.IMediator;
 import org.puremvc.as3.interfaces.INotification;
+import org.puremvc.as3.patterns.observer.Notification;
 
 public class TavernMediator extends BaseMediator implements IMediator {
     public static const NAME:String = "TavernMediator";
+
+    private var copyProxy:CopyProxy;
 
     private function get view():TavernView {
         return getViewComponent() as TavernView;
@@ -24,10 +29,18 @@ public class TavernMediator extends BaseMediator implements IMediator {
     override public function onRegister():void {
         super.onRegister();
 
+        copyProxy = facade.retrieveProxy(CopyProxy.NAME) as CopyProxy;
+
+        view.onCompleteSignal.getSignal(this).listen(onInstanceComplete);
+
         view.tuSignal.getSignal(this).listen(tuClick);
         view.oneSignal.getSignal(this).listen(oneClick);
         view.tenSignal.getSignal(this).listen(tenClick);
         view.closeSignal.getSignal(this).listen(closeClick);
+    }
+
+    private function onInstanceComplete():void {
+        dispatch(new Notification(NotiEvent.OPEN_MONEY));
     }
 
     private function closeClick():void {
@@ -48,6 +61,7 @@ public class TavernMediator extends BaseMediator implements IMediator {
 
     override public function onRemove():void {
         super.onRemove();
+        if (copyProxy.isInCopy)dispatch(new Notification(NotiEvent.CLOSE_MONEY));
     }
 
     override public function listNotificationInterests():Array {

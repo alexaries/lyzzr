@@ -10,6 +10,7 @@ import com.game.module.copy.view.CopyInfoView;
 import com.game.module.copy.view.CopyView;
 import com.game.module.jiban.view.JibanView;
 import com.game.module.plot.view.PlotView;
+import com.game.module.roll.view.RollScreenView;
 import com.game.module.tavern.view.HeroDisplayView;
 import com.game.module.tavern.view.TavernHireView;
 import com.game.module.tavern.view.TavernTuView;
@@ -203,6 +204,9 @@ public class GameMain extends BaseView {
 
         if (!money)money = new MoneyView();
         if (money && !ui.money.contains(money))ui.money.addChild(money);
+
+        var rollScreen:RollScreenView = new RollScreenView();
+        Laya.stage.addChild(rollScreen);
 
         ui.rightBtnList.itemRender = BaseFuncIconView;
         ui.rightBtnList.renderHandler = Handler.create(this, renderRightIconHandler, null, false);

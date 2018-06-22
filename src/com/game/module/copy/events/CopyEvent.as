@@ -4,5 +4,7 @@
 package com.game.module.copy.events {
 public class CopyEvent {
     public static var COPY_REQUEST_INFO = "COPY_REQUEST_INFO";
+
+    public static var COPY_RESPONSE_INFO = "COPY_RESPONSE_INFO";
 }
 }

@@ -5,6 +5,8 @@ package com.game.events {
 import org.puremvc.as3.interfaces.INotification;
 import org.puremvc.as3.patterns.observer.Notification;
 
+import utils.StringHelper;
+
 public class NotiEvent extends Notification implements INotification {
     public static var BAOJU_PURIFICATION_OPEN_SKILL_RETURN:String = "BAOJU_PURIFICATION_OPEN_SKILL_RETURN";
     public static var BAOJU_PURIFICATION_RETURN:String = "BAOJU_PURIFICATION_RETURN"; //
@@ -115,6 +117,7 @@ public class NotiEvent extends Notification implements INotification {
 
     public static const ROLL_SCREEN:String = "rollScreen";//滚屏信息
     public static const ROLL_ALERT:String = "rollAlert";//滚屏提示
+    public static const ROLL_MIDDLE_SCREEN:String = "rollMiddleScreen";
 
     //背包
     public static const PACK_DEAL_REQUEST:String = "packlistrequest"; //请求背包列表信息

@@ -6,7 +6,6 @@ import laya.display.Sprite;
 import laya.events.Event;
 import laya.ui.Button;
 import laya.ui.ViewStack;
-import laya.utils.Handler;
 import laya.utils.HitArea;
 
 import net.consts.AppConst;
@@ -14,57 +13,45 @@ import net.consts.AppConst;
 public class BaseFrame extends BaseWindow {
     var $ui:Sprite;
     var views:Array = []
-		
-	private var _backbtn:Button = null;
-	private var _clickBackSignal:SignalDispatcher = null;
-	
-	public function get clickBackSignal():SignalDispatcher
-	{
-		if(_clickBackSignal == null)
-			_clickBackSignal = new SignalDispatcher();
-		return _clickBackSignal;
-	}
+
+    private var _backbtn:Button = null;
+    private var _clickBackSignal:SignalDispatcher = null;
+
+    public function get clickBackSignal():SignalDispatcher {
+        if (_clickBackSignal == null)
+            _clickBackSignal = new SignalDispatcher();
+        return _clickBackSignal;
+    }
 
     public function BaseFrame(resArray:Array = null) {
         super(resArray);
     }
-	
-	override public function dispose():void
-	{
-		if(_backbtn)
-		{
-			_backbtn.off(Event.CLICK, this, clickback);
-			_backbtn = null;
-			
-			
-		}
-		if(_clickBackSignal)
-		{
-			_clickBackSignal.clear();
-			_clickBackSignal = null;
-		}
-		super.dispose();
-	}
-	
-	public function addback(posX:Number = 38, posY:Number = 15):void
-	{
-		if(_backbtn == null)
-		{
-			
-			_backbtn = new Button("button/btn_fanhui.png");
-			_backbtn.stateNum = 1;
-			
-			_backbtn.pos(posX, posY);
-			this.addChild(_backbtn);
-			
-			_backbtn.on(Event.CLICK, this, clickback);
-		}
-	}
-	
-	private function clickback():void
-	{
-		clickBackSignal.dispatch(null);
-	}
+
+    override public function dispose():void {
+        if (_backbtn) {
+            _backbtn.off(Event.CLICK, this, clickback);
+            _backbtn = null;
+        }
+        if (_clickBackSignal)_clickBackSignal.dispose();
+        super.dispose();
+    }
+
+    public function addback(posX:Number = 38, posY:Number = 15):void {
+        if (_backbtn == null) {
+
+            _backbtn = new Button("button/btn_fanhui.png");
+            _backbtn.stateNum = 1;
+
+            _backbtn.pos(posX, posY);
+            this.addChild(_backbtn);
+
+            _backbtn.on(Event.CLICK, this, clickback);
+        }
+    }
+
+    private function clickback():void {
+        clickBackSignal.dispatch(null);
+    }
 
     override public function base_init():void {
         $base_init();

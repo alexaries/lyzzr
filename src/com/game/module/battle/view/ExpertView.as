@@ -32,11 +32,7 @@ public class ExpertView extends BaseFrame {
     private var infoView:ExpertInfoView;
     private var selectionView:ExpertSelectionView;
 
-    private var isInBattle:Boolean = true;
-
-    public function get isBattle():Boolean {
-        return isInBattle;
-    }
+    private var isInBattle:Boolean = false;
 
     public function ExpertView() {
         super([]);
@@ -109,8 +105,10 @@ public class ExpertView extends BaseFrame {
         ui.cancelSelectBtn.visible = false;
 
         itemSignal.getSignal(this).listen(onItemClick);
+    }
 
-        isInBattle = data;
+    public function initInfo(isInBattle:Boolean):void {
+        this.isInBattle = isInBattle;
     }
 
     private function onItemClick(type:int):void {

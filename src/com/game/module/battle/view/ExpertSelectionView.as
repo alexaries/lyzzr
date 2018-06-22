@@ -3,15 +3,17 @@
  */
 package com.game.module.battle.view {
 import com.game.common.mvc.BaseMediator;
+import com.game.common.view.Alert;
 import com.game.common.view.BaseView;
 import com.game.module.battle.mediator.ExpertSelectionMediator;
-import com.game.module.copy.view.items.PropertyItem;
 import com.signal.SignalDispatcher;
 
 import laya.events.Event;
 import laya.utils.Handler;
 
 import ui.battle.ExpertSelectionViewUI;
+
+import utils.ArrayUtil;
 
 public class ExpertSelectionView extends BaseView {
 
@@ -20,7 +22,10 @@ public class ExpertSelectionView extends BaseView {
     public var itemListSignal:SignalDispatcher;
     public var itemSelectedSignal:SignalDispatcher;
 
-    private var selectArr:Array = [];
+    private var selectArr:Array = [];//存储propertyId
+    private var listArr:Array = [];//存储propertyId
+
+    private var selectMaxCount:int = 10;
 
     public function ExpertSelectionView() {
         super([]);
@@ -59,26 +64,66 @@ public class ExpertSelectionView extends BaseView {
     }
 
     private function init():void {
+
         ui.bg.on(Event.CLICK, this, onClickBg);
         ui.cancelBtn.on(Event.CLICK, this, onClickCancelBtn);
         ui.sureBtn.on(Event.CLICK, this, onClickSureBtn);
 
-        ui.selectedList.itemRender = PropertyItem;
+        ui.selectedList.itemRender = ExpertPropertyItem;
         ui.selectedList.renderHandler = Handler.create(this, onRenderSelectedItem, null, false);
         ui.selectedList.array = [];
 
-        ui.list.itemRender = PropertyItem;
+        ui.selectedList.repeatX = 5;
+        ui.selectedList.repeatY = 2;
+        ui.selectedList.spaceX = 20;
+        ui.selectedList.spaceY = 10;
+
+        ui.list.itemRender = ExpertPropertyItem;
         ui.list.renderHandler = Handler.create(this, onRenderListItem, null, false);
-        ui.list.array = [];
+//        ui.list.array = [];
+        ui.list.repeatX = 6;
+        ui.list.repeatY = 5;
+        ui.list.spaceX = 20;
+        ui.list.spaceY = 10;
+
+        itemListSignal.getSignal(this).listen(onItemListClick);
+        itemSelectedSignal.getSignal(this).listen(onItemSelectedClick);
+
+        initList();
     }
 
-    private function onRenderListItem(cell:PropertyItem, index:int):void {
-
-
+    private function initList():void {
+        listArr = [];
+        for (var i = 0; i < 30; i++) {
+            listArr.push(i);
+        }
+        ui.list.array = listArr;
     }
 
-    private function onRenderSelectedItem(cell:PropertyItem, index:int):void {
+    private function onItemSelectedClick(id:int):void {
+        ArrayUtil.remove(selectArr, id);
+        ui.selectedList.array = selectArr;
+        listArr.push(id);
+        ui.list.array = listArr;
+    }
 
+    private function onItemListClick(id:int):void {
+        if (selectArr.length >= selectMaxCount) {
+            Alert.roll("无法选中更多的属性");
+            return;
+        }
+        selectArr.push(id);
+        ui.selectedList.array = selectArr;
+        ArrayUtil.remove(listArr, id);
+        ui.list.array = listArr;
+    }
+
+    private function onRenderListItem(cell:ExpertPropertyItem, index:int):void {
+        cell.initInfo(itemListSignal, ui.list.array[index]);
+    }
+
+    private function onRenderSelectedItem(cell:ExpertPropertyItem, index:int):void {
+        cell.initInfo(itemSelectedSignal, ui.selectedList.array[index]);
     }
 
     private function onClickSureBtn():void {
@@ -103,7 +148,9 @@ public class ExpertSelectionView extends BaseView {
         if (sureSignal)sureSignal.dispose();
         if (itemListSignal)itemListSignal.dispose();
         if (itemSelectedSignal)itemSelectedSignal.dispose();
+
         selectArr = [];
+        listArr = [];
 
         if (ui.selectedList.renderHandler)ui.selectedList.renderHandler.clear();
         if (ui.list.renderHandler)ui.list.renderHandler.clear();

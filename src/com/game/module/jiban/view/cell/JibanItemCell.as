@@ -5,7 +5,6 @@ package com.game.module.jiban.view.cell
 	
 	import laya.ui.Box;
 	import laya.ui.Image;
-	import laya.utils.Handler;
 	
 	import ui.jiban.JibanItemUI;
 	

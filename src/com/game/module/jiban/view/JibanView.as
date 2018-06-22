@@ -56,16 +56,18 @@ package com.game.module.jiban.view
 			
 			_ui.list.vScrollBarSkin = "";
 			_ui.list.itemRender = JibanItemCell;
-			
 			_ui.list.renderHandler = Handler.create(this, onJipanItemRender, null, false);
-			_ui.list.array = [new JibanVO()];
-			init();
 			
-			 listarr.push([new JibanVO(), new JibanVO(), new JibanVO()]);
+			
+			 listarr.push([new JibanVO(), new JibanVO(), new JibanVO(), new JibanVO(), new JibanVO(), new JibanVO(), new JibanVO()]);
 				 listarr.push([new JibanVO(), new JibanVO()]);
 					 listarr.push([new JibanVO()]);
 						 listarr.push([new JibanVO(), new JibanVO(), new JibanVO()]);
 							 listarr.push([new JibanVO(), new JibanVO(), new JibanVO()]);
+							 
+							 
+							 _ui.list.array = listarr[0];
+							 init();
 		}
 		
 		private function onSelectTab(index:int):void

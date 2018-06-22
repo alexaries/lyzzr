@@ -3,6 +3,7 @@ package com.game.module.jiban.mediator
 	import com.game.common.events.MenuWindowVO;
 	import com.game.common.mvc.BaseMediator;
 	import com.game.module.jiban.view.JibanView;
+	import com.game.module.jiban.vo.JibanVO;
 	import com.game.module.menu.events.MenuEvent;
 	import com.game.vo.MenuWinType;
 	
@@ -41,6 +42,11 @@ package com.game.module.jiban.mediator
 			_view = view;
 			
 			_view.clickBackSignal.getSignal(this).listen(doClose)
+			_view.jibanitemsig.getSignal(this).listen(onClickjibanitem);
+		}
+		
+		private function onClickjibanitem(vo:JibanVO):void
+		{
 			
 		}
 		

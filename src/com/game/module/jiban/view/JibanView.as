@@ -7,7 +7,6 @@ package com.game.module.jiban.view
 	import com.game.module.jiban.vo.JibanVO;
 	import com.signal.SignalDispatcher;
 	
-	import laya.events.Event;
 	import laya.utils.Handler;
 	
 	import ui.jiban.JibanUI;
@@ -21,13 +20,23 @@ package com.game.module.jiban.view
 	public class JibanView extends BaseFrame
 	{
 		private var _ui:JibanUI = null;
+		public var jibanitemsig:SignalDispatcher = null;
 		
-		public var clickBackSignal:SignalDispatcher = null;
+		
 		public function JibanView(resArray:Array=null)
 		{
 			super(resArray);
-			clickBackSignal = new SignalDispatcher();
+			jibanitemsig = new SignalDispatcher();
+		}
+		
+		override public function dispose():void
+		{
 			
+			if(_ui.tab.selectHandler) _ui.tab.selectHandler.clear();
+			if(_ui.nameTab.selectHandler) _ui.nameTab.selectHandler.clear();
+			if(_ui.list.renderHandler) _ui.list.renderHandler.clear();
+			
+			super.dispose();
 		}
 		
 		
@@ -45,13 +54,14 @@ package com.game.module.jiban.view
 			_ui = new JibanUI();
 			addChild(_ui);
 			
+			addback();
+			
 			_ui.tab.selectHandler = Handler.create(this, onSelectTab, null, false);
 			_ui.tab.selectedIndex = 0;
 			
 			_ui.nameTab.selectHandler = Handler.create(this, onSelectTab, null, false);
 			_ui.nameTab.selectedIndex = 0;
 			
-			_ui.back.on(Event.CLICK, this, clickback);
 			
 			
 			_ui.list.vScrollBarSkin = "";
@@ -59,15 +69,17 @@ package com.game.module.jiban.view
 			_ui.list.renderHandler = Handler.create(this, onJipanItemRender, null, false);
 			
 			
-			 listarr.push([new JibanVO(), new JibanVO(), new JibanVO(), new JibanVO(), new JibanVO(), new JibanVO(), new JibanVO()]);
-				 listarr.push([new JibanVO(), new JibanVO()]);
-					 listarr.push([new JibanVO()]);
-						 listarr.push([new JibanVO(), new JibanVO(), new JibanVO()]);
-							 listarr.push([new JibanVO(), new JibanVO(), new JibanVO()]);
+			listarr.push([new JibanVO(), new JibanVO(), new JibanVO(), new JibanVO(), new JibanVO(), new JibanVO(), new JibanVO()]);
+			listarr.push([new JibanVO(), new JibanVO()]);
+			listarr.push([new JibanVO()]);
+			listarr.push([new JibanVO(), new JibanVO(), new JibanVO()]);
+			listarr.push([new JibanVO(), new JibanVO(), new JibanVO()]);
 							 
 							 
-							 _ui.list.array = listarr[0];
-							 init();
+			 _ui.list.array = listarr[0];
+			 init();
+			 
+			 
 		}
 		
 		private function onSelectTab(index:int):void
@@ -76,9 +88,9 @@ package com.game.module.jiban.view
 		}
 		
 		
-		private function onJipanItemRender(cell:JibanItemCell, index:int, actSignal:SignalDispatcher):void
+		private function onJipanItemRender(cell:JibanItemCell, index:int):void
 		{
-			cell.init(_ui.list.array[index], index, actSignal);
+			cell.init(_ui.list.array[index], index, jibanitemsig);
 		}
 										   
 		
@@ -86,7 +98,6 @@ package com.game.module.jiban.view
 		{
 			_ui.liushibtn.visible = true;
 			_ui.list.visible = true;
-			
 		}
 		
 		
@@ -101,10 +112,6 @@ package com.game.module.jiban.view
 		}
 	
 		
-		private function clickback(e:Event):void
-		{
-			clickBackSignal.dispatch(null);
-		}
 		
 		private function init():void
 		{

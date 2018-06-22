@@ -3,6 +3,7 @@ package com.game.module.jiban.view.cell
 	import com.game.module.jiban.vo.JibanVO;
 	import com.signal.SignalDispatcher;
 	
+	import laya.events.Event;
 	import laya.ui.Box;
 	import laya.ui.Image;
 	
@@ -12,6 +13,7 @@ package com.game.module.jiban.view.cell
 	public class JibanItemCell extends Box
 	{
 		private var _ui:JibanItemUI = null;
+		private var _sig:SignalDispatcher = null;
 		public function JibanItemCell()
 		{
 			super();
@@ -21,13 +23,23 @@ package com.game.module.jiban.view.cell
 			super.createChildren();
 			_ui = new JibanItemUI();
 			//_ui.btnOk.clickHandler = Handler.create(this, onClick, null, false)
+			_ui.on(Event.CLICK, onClickthis, null);
 			addChild(_ui);
 		}
 		
+		private function onClickthis():void
+		{
+			_sig.dispatch(vo);
+		}
 		
+		override public function destroy(destroyChild:Boolean=true):void
+		{
+			super.destroy(destroyChild);
+		}
 		
 		public function init(vo:JibanVO, ind:int, actSignal:SignalDispatcher):void
 		{
+			_sig = actSignal;
 			setvo(vo);
 		}
 		/**

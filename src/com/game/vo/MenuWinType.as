@@ -18,6 +18,7 @@ public class MenuWinType {
 	 *羁绊 
 	 */	
 	public static const JIBAN_VIEW:String = "jiban_view";
+	public static const JIBAN_INFOVIEW:String = "jibaninfo_view";
 
     public static const TAVERN_HIRE_VIEW:String = "tavern_hire_view";//招募成功界面
     public static const TAVERN_TU_VIEW:String = "tavern_tu_view";//散仙图鉴

@@ -100,7 +100,7 @@ package com.game.module.plot.mediator
 				{
 					_bgmusic = _nowPlotvo.bgMusic;
 					SoundManager.playMusic(ResPath.getBGSound(_nowPlotvo.bgMusic));
-						return;
+					return;
 						
 				}
 				else

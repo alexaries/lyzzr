@@ -1,7 +1,7 @@
 package com.game.module.plot.view
 {
 	import com.game.common.mvc.BaseMediator;
-	import com.game.common.view.BaseWindow;
+	import com.game.common.view.BaseFrame;
 	import com.game.consts.ResPath;
 	import com.game.module.plot.mediator.PlotMediator;
 	import com.signal.SignalDispatcher;
@@ -18,7 +18,7 @@ package com.game.module.plot.view
 	 * @author svn
 	 * 
 	 */	
-	public class PlotView extends BaseWindow
+	public class PlotView extends BaseFrame
 	{
 		private var _ui:PlotViewUI = null;
 		public var nextSigle:SignalDispatcher = null;
@@ -33,12 +33,13 @@ package com.game.module.plot.view
 		
 		public function get data():Object
 		{
-			return 10101;
+			//return 10101;
 			return _data;
 		}
 		
 		override public function dispose():void 
 		{
+			_ui.bgImg.off(Event.CLICK, this, onClickbg);
 			
 			if(_dialogview != null)
 			{

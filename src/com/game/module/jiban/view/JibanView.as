@@ -35,6 +35,8 @@ package com.game.module.jiban.view
 			if(_ui.tab.selectHandler) _ui.tab.selectHandler.clear();
 			if(_ui.nameTab.selectHandler) _ui.nameTab.selectHandler.clear();
 			if(_ui.list.renderHandler) _ui.list.renderHandler.clear();
+			jibanitemsig.clear();
+			jibanitemsig = null;
 			
 			super.dispose();
 		}

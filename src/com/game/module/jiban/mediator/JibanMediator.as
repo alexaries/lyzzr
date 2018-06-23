@@ -34,20 +34,22 @@ package com.game.module.jiban.mediator
 		}
 		
 		private function get view():JibanView {
-			return getViewComponent() as JibanView;
+			if(_view == null)
+				_view = getViewComponent() as JibanView;
+			return _view;
 		}
 		
 		override public function onRegister():void {
 			super.onRegister();
-			_view = view;
 			
-			_view.clickBackSignal.getSignal(this).listen(doClose)
-			_view.jibanitemsig.getSignal(this).listen(onClickjibanitem);
+			view.clickBackSignal.getSignal(this).listen(doClose)
+			view.jibanitemsig.getSignal(this).listen(onClickjibanitem);
 		}
+		
 		
 		private function onClickjibanitem(vo:JibanVO):void
 		{
-			
+			dispatch(new MenuEvent(MenuEvent.MENU_CLIK, new MenuWindowVO(MenuWinType.JIBAN_INFOVIEW, MenuWindowVO.OPEN, vo)));
 		}
 		
 		private function doClose():void

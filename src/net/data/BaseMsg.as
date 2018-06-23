@@ -22,5 +22,9 @@ public class BaseMsg {
         return true;
     }
 
+    public function jsonToMsg(json:JSON):Boolean {
+        return true;
+    }
+
 }
 }

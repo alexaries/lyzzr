@@ -1,19 +1,13 @@
 /**
- * Created by huangcb on 2017/8/16.
+ * Created by dingcj on 2018/6/23.
  */
 package net.command {
 
-import net.data.recvMsg.CheckIDMsg;
-import net.data.recvMsg.LoginMsg;
-import net.data.recvMsg.user.SysAlertMsg;
-import net.events.MsgEvent;
 import net.proxy.ReMapProxy;
-import net.utils.MsgCenter;
 
 import org.puremvc.as3.interfaces.ICommand;
 import org.puremvc.as3.interfaces.INotification;
 import org.puremvc.as3.patterns.command.SimpleCommand;
-import org.puremvc.as3.patterns.facade.Facade;
 
 import utils.ByteArray;
 

@@ -8,6 +8,8 @@ import laya.events.Event;
 
 import laya.net.HttpRequest;
 
+import net.utils.MsgCenter;
+
 import org.puremvc.as3.interfaces.IProxy;
 import org.puremvc.as3.patterns.observer.Notification;
 
@@ -45,8 +47,11 @@ public class HttpConnectionProxy extends BaseProxy implements IProxy {
         parse(name, json);
     }
 
+    //这个解析还是单独放在 另外的地方处理吧
     private function parse(name:String, msgData:JSON):void {
-        dispatch(new Notification(name, msgData));
+        //结构---------------------------------后面看情况吧
+        dispatch(new Notification(name, MsgCenter.toMsg(null, msgData)));
+        //此处传出去BaseMsg
     }
 }
 }

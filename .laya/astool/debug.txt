@@ -12,13 +12,9 @@ Project configuration:d:\newgit\lyzzr/.actionScriptProperties.
 1,0.00,d:/newgit/lyzzr/src,0,Collect
 1,0.00,d:/newgit/lyzzr/libs/laya/src,0,Collect
 1,2.00,,0,read class message
-7,56.21,d:/newgit/lyzzr/src/com/game/module/task/view/TaskKeepView.as,55,TaskHookView This variable is not defined.
-7,74.44,d:/newgit/lyzzr/src/ui/jiban/JibanUI.as,15,HEAD This variable is not defined.
-1,89.96,,0,Disable Flash3D d:/newgit/lyzzr/src/LayaSample.as
-12,89.96,d:/newgit/lyzzr/bin/h5/LayaSample.max.js,2653604,
-11,89.96,d:/newgit/lyzzr/bin/h5/LayaSample.max.html,893,
+7,56.15,d:/newgit/lyzzr/src/com/game/module/task/view/TaskKeepView.as,55,TaskHookView This variable is not defined.
+1,89.98,,0,Disable Flash3D d:/newgit/lyzzr/src/LayaSample.as
+12,89.98,d:/newgit/lyzzr/bin/h5/LayaSample.max.js,2673252,
+11,89.98,d:/newgit/lyzzr/bin/h5/LayaSample.max.html,893,
 ******************************************************************************
-Error or warning message:LayaSample.max.js
-1 file:///d:/newgit/lyzzr/src/ui/jiban/JibanUI.as (15):warning:HEAD This variable is not defined.
-******************************************************************************
-14,89.96,,0,
+14,89.98,,0,

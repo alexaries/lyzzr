@@ -14,6 +14,7 @@ package com.game.module.jiban.view.cell
 	{
 		private var _ui:JibanItemUI = null;
 		private var _sig:SignalDispatcher = null;
+		private var _starlist:StarList = null;
 		public function JibanItemCell()
 		{
 			super();
@@ -25,6 +26,8 @@ package com.game.module.jiban.view.cell
 			//_ui.btnOk.clickHandler = Handler.create(this, onClick, null, false)
 			_ui.on(Event.CLICK, onClickthis, null);
 			addChild(_ui);
+			
+			_starlist = new StarList(_ui.starlist);
 		}
 		
 		private function onClickthis():void
@@ -40,7 +43,9 @@ package com.game.module.jiban.view.cell
 		public function init(vo:JibanVO, ind:int, actSignal:SignalDispatcher):void
 		{
 			_sig = actSignal;
+			_starlist.setStar(vo.starLevel, vo.base.topStart);
 			setvo(vo);
+			
 		}
 		/**
 		 *星级 
@@ -68,9 +73,10 @@ package com.game.module.jiban.view.cell
 		private function setvo(value:JibanVO):void
 		{
 			_vo = value;
+			_ui.nameTxt.text = value.stringName;
 			_ui.levelTxt.text = value.level.toString();
-			_ui.countTxt.text = value.count.toString();
-			//setstarLevel(value.starLevel);
+			_ui.countTxt.text = "已拥有:" + value.count.toString();
+			setstarLevel(value.starLevel);
 		}
 		
 		public function get vo():JibanVO

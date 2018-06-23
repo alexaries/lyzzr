@@ -9,6 +9,8 @@ import com.game.common.view.BaseFrame;
 import com.game.module.tavern.mediator.TavernMediator;
 import com.signal.SignalDispatcher;
 
+import config.ConfigManager;
+
 import laya.events.Event;
 
 import ui.tavern.TavernViewUI;

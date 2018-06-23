@@ -1,5 +1,6 @@
 package config {
 import config.ceshi.ICeShi;
+import config.chapter.Ichapter;
 import config.functionopen.IfunctionOpen;
 import config.memorybase.ImemoryBase;
 import config.memorybase.ImemoryBaseCfg;
@@ -14,12 +15,13 @@ public class ConfigManager extends BaseConfig {
     // CONTENTS
     public var ceshi_ceshi:config.ceshi.ICeShi;
     public var story_story:config.story.Istory;
-	public var memoryBase_memoryBase:config.memorybase.ImemoryBase;
-	public var memoryExp_memoryExp:config.memoryexp.ImemoryExp;
-	public var memoryUp_memoryUp:config.memoryup.ImemoryUp;
-	
+    public var memoryBase_memoryBase:config.memorybase.ImemoryBase;
+    public var memoryExp_memoryExp:config.memoryexp.ImemoryExp;
+    public var memoryUp_memoryUp:config.memoryup.ImemoryUp;
+
     public var stage:config.stage.Istage;//关卡配置
     public var functionOpen:config.functionopen.IfunctionOpen;//功能主界面配置
+    public var chapter:config.chapter.Ichapter;
 
     static var __instance:ConfigManager;
 
@@ -44,13 +46,13 @@ public class ConfigManager extends BaseConfig {
         ceshi_ceshi = readAndToClass('CeShi');
         story_story = readAndToClass('story');
         stage = readAndToClass('stage');
-		
-		memoryBase_memoryBase = readAndToClass('memoryBase');
-		memoryExp_memoryExp = readAndToClass('memoryExp');
-		memoryUp_memoryUp = readAndToClass('memoryUp');
-		
-		
+
+        memoryBase_memoryBase = readAndToClass('memoryBase');
+        memoryExp_memoryExp = readAndToClass('memoryExp');
+        memoryUp_memoryUp = readAndToClass('memoryUp');
+
         functionOpen = readAndToClass('functionOpen');
+        chapter = readAndToClass('chapter');
     }
 
     override protected function attributeSerialization(version:String):void {

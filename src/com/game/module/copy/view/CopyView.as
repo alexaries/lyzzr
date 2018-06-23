@@ -10,11 +10,16 @@ import com.game.module.copy.view.items.ComboBoxItem;
 import com.game.module.copy.view.items.CopyItem;
 import com.signal.SignalDispatcher;
 
+import config.ConfigManager;
+import config.chapter.IchapterCfg;
+
 import laya.events.Event;
 import laya.ui.List;
 import laya.utils.Handler;
 
 import ui.copy.CopyViewUI;
+
+import utils.ArrayUtil;
 
 public class CopyView extends BaseView {
 
@@ -65,6 +70,21 @@ public class CopyView extends BaseView {
 
         initInfo();
         refreshArr();
+
+        refreshCombox();
+    }
+
+    private function refreshCombox():void {
+        var arr:Array = ArrayUtil.filter(ConfigManager.instance.chapter.chapterCfg, function (item:IchapterCfg) {
+            return item.functionID == 1;
+        });
+
+        var strs:String = "";
+        for (var i = 0; i < arr.length; i++) {
+            strs += arr[i].chapterName;
+            if (i < arr.length - 1)strs += ",";
+        }
+        ui.combox.labels = strs;
     }
 
     private function onRenderCopyItem(cell:CopyItem, index:int):void {

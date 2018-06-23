@@ -9,6 +9,7 @@ import laya.events.Event;
 import laya.net.HttpRequest;
 
 import org.puremvc.as3.interfaces.IProxy;
+import org.puremvc.as3.patterns.observer.Notification;
 
 public class HttpConnectionProxy extends BaseProxy implements IProxy {
     public static const NAME:String = "HttpConnectionProxy";
@@ -17,14 +18,7 @@ public class HttpConnectionProxy extends BaseProxy implements IProxy {
         super(NAME);
     }
 
-    public function send(url:String,
-                         data:*,
-                         completeFunc:Function,
-                         progressFunc:Function = null,
-                         errorFunc:Function = null,
-                         method:String = "post",
-                         resposeType:String = "arraybuffer",
-                         headers:Array = null):Boolean {
+    public function send(url:String, data:* = null, method:String = "post", resposeType:String = "arraybuffer", headers:Array = null):Boolean {
         var hr:HttpRequest = new HttpRequest();
 
         hr.once(Event.PROGRESS, this, progressFunc);
@@ -32,6 +26,27 @@ public class HttpConnectionProxy extends BaseProxy implements IProxy {
         hr.once(Event.COMPLETE, this, completeFunc);
 
         hr.send(url, data, method, resposeType, headers);
+    }
+
+    private function progressFunc(e:* = null):void {
+
+    }
+
+    private function errorFunc(e:* = null):void {
+        trace("[消息访问出问题]：" + e);
+    }
+
+    private function completeFunc(e:* = null):void {
+        var evt = e as Object;
+
+        var name:String = "";
+        var json:JSON = null;
+
+        parse(name, json);
+    }
+
+    private function parse(name:String, msgData:JSON):void {
+        dispatch(new Notification(name, msgData));
     }
 }
 }

@@ -25,7 +25,7 @@ public class CopyProxy extends Proxy implements IProxy {
 
     public function requestInfo():void {
         var url:String = "";
-        connection.send(url, null, onRespionseInfo);
+        connection.send(url);
     }
 
     public function onRespionseInfo():void {

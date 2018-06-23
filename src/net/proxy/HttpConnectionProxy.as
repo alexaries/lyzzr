@@ -8,7 +8,10 @@ import laya.events.Event;
 
 import laya.net.HttpRequest;
 
+import net.utils.MsgCenter;
+
 import org.puremvc.as3.interfaces.IProxy;
+import org.puremvc.as3.patterns.observer.Notification;
 
 public class HttpConnectionProxy extends BaseProxy implements IProxy {
     public static const NAME:String = "HttpConnectionProxy";
@@ -17,14 +20,7 @@ public class HttpConnectionProxy extends BaseProxy implements IProxy {
         super(NAME);
     }
 
-    public function send(url:String,
-                         data:*,
-                         completeFunc:Function,
-                         progressFunc:Function = null,
-                         errorFunc:Function = null,
-                         method:String = "post",
-                         resposeType:String = "arraybuffer",
-                         headers:Array = null):Boolean {
+    public function send(url:String, data:* = null, method:String = "post", resposeType:String = "arraybuffer", headers:Array = null):Boolean {
         var hr:HttpRequest = new HttpRequest();
 
         hr.once(Event.PROGRESS, this, progressFunc);
@@ -33,5 +29,41 @@ public class HttpConnectionProxy extends BaseProxy implements IProxy {
 
         hr.send(url, data, method, resposeType, headers);
     }
+
+    private function progressFunc(e:* = null):void {
+
+    }
+
+    private function errorFunc(e:* = null):void {
+        trace("[消息访问出问题]：" + e);
+    }
+
+    private function completeFunc(e:* = null):void {
+        var evt = e as Object;
+
+        var name:String = "";
+        var json:JSON = null;
+
+        parse(name, json);
+    }
+
+    //这个解析还是单独放在 另外的地方处理吧
+    private function parse(name:String, msgData:JSON):void {
+        //结构---------------------------------后面看情况吧
+        dispatch(new Notification(name, MsgCenter.toMsg(null, msgData)));
+        //此处传出去BaseMsg
+    }
+
+    /*思路
+     ReMapProxy->StartUpCommand//注册 && 将需要处理的协议添加带reMapList
+     HttpConnectionProxy->StartConnectCommand->StartUpCommand//注册
+     (SocketNotification.MSG,MsgCommand)->StartUpCommand//注册
+
+     MsgCommand收到消息->ReMapProxy.parse来解析协议
+     ReMapProxy将解析好的协议Msg传出去
+
+     MsgCenter
+     BaseMsg
+     */
 }
 }

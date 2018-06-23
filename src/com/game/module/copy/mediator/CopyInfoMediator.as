@@ -33,11 +33,13 @@ public class CopyInfoMediator extends BaseMediator implements IMediator {
     }
 
     private function onFiveClick():void {
-
+        var copyId:int = 1;
+        dispatch(new MenuEvent(MenuEvent.MENU_CLIK, new MenuWindowVO(MenuWinType.COPY_MOP_VIEW, MenuWindowVO.OPEN, [5, copyId])));
     }
 
     private function onOnceClick():void {
-
+        var copyId:int = 1;
+        dispatch(new MenuEvent(MenuEvent.MENU_CLIK, new MenuWindowVO(MenuWinType.COPY_MOP_VIEW, MenuWindowVO.OPEN, [1, copyId])));
     }
 
     private function onStartClick():void {

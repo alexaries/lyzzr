@@ -7,6 +7,7 @@ import com.game.module.battle.view.BattleView;
 import com.game.module.battle.view.ExpertView;
 import com.game.module.company.view.CompanyView;
 import com.game.module.copy.view.CopyInfoView;
+import com.game.module.copy.view.CopyMopView;
 import com.game.module.copy.view.CopyView;
 import com.game.module.jiban.view.JibanView;
 import com.game.module.plot.view.PlotView;
@@ -109,6 +110,9 @@ public class GameMain extends BaseView {
                     break;
                 case MenuWinType.COPY_INFO_VIEW:
                     win = new CopyInfoView();
+                    break;
+                case MenuWinType.COPY_MOP_VIEW:
+                    win = new CopyMopView();
                     break;
                 case MenuWinType.BATTLE_VIEW:
                     win = new BattleView();

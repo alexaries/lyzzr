@@ -53,5 +53,17 @@ public class HttpConnectionProxy extends BaseProxy implements IProxy {
         dispatch(new Notification(name, MsgCenter.toMsg(null, msgData)));
         //此处传出去BaseMsg
     }
+
+    /*思路
+     ReMapProxy->StartUpCommand//注册 && 将需要处理的协议添加带reMapList
+     HttpConnectionProxy->StartConnectCommand->StartUpCommand//注册
+     (SocketNotification.MSG,MsgCommand)->StartUpCommand//注册
+
+     MsgCommand收到消息->ReMapProxy.parse来解析协议
+     ReMapProxy将解析好的协议Msg传出去
+
+     MsgCenter
+     BaseMsg
+     */
 }
 }

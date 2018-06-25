@@ -30,20 +30,24 @@ public class CopyInfoMediator extends BaseMediator implements IMediator {
         view.startSignal.getSignal(this).listen(onStartClick);
         view.onceSignal.getSignal(this).listen(onOnceClick);
         view.fiveSignal.getSignal(this).listen(onFiveClick);
+        view.onCompleteSignal.getSignal(this).listen(onInstanceComplete);
+    }
+
+    private function onInstanceComplete():void {
+
     }
 
     private function onFiveClick():void {
-        var copyId:int = 1;
-        dispatch(new MenuEvent(MenuEvent.MENU_CLIK, new MenuWindowVO(MenuWinType.COPY_MOP_VIEW, MenuWindowVO.OPEN, [5, copyId])));
+        dispatch(new MenuEvent(MenuEvent.MENU_CLIK, new MenuWindowVO(MenuWinType.COPY_MOP_VIEW, MenuWindowVO.OPEN, [5, view.cfg.ID])));
     }
 
     private function onOnceClick():void {
-        var copyId:int = 1;
-        dispatch(new MenuEvent(MenuEvent.MENU_CLIK, new MenuWindowVO(MenuWinType.COPY_MOP_VIEW, MenuWindowVO.OPEN, [1, copyId])));
+        dispatch(new MenuEvent(MenuEvent.MENU_CLIK, new MenuWindowVO(MenuWinType.COPY_MOP_VIEW, MenuWindowVO.OPEN, [1, view.cfg.ID])));
     }
 
     private function onStartClick():void {
-        dispatch(new Notification(BattleEvent.BATTLE_ENTER, [102]));
+        dispatch(new Notification(BattleEvent.BATTLE_ENTER, [view.cfg.ID]));
+        trace("查看一下  copyId:" + view.cfg.ID);
     }
 
     private function onCloseClick():void {

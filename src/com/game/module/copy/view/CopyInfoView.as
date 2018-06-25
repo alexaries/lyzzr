@@ -4,11 +4,12 @@
 package com.game.module.copy.view {
 import com.game.common.mvc.BaseMediator;
 import com.game.common.view.BaseFrame;
-import com.game.common.view.BaseWindow;
 import com.game.module.copy.mediator.CopyInfoMediator;
 import com.game.module.copy.view.items.PropertyItem;
 import com.game.module.pack.view.ItemCell;
 import com.signal.SignalDispatcher;
+
+import config.stage.IstageCfg;
 
 import laya.events.Event;
 import laya.utils.Handler;
@@ -22,6 +23,7 @@ public class CopyInfoView extends BaseFrame {
     public var startSignal:SignalDispatcher;
     public var onceSignal:SignalDispatcher;
     public var fiveSignal:SignalDispatcher;
+    public var cfg:IstageCfg;
 
     public function CopyInfoView() {
         super();
@@ -41,9 +43,9 @@ public class CopyInfoView extends BaseFrame {
     }
 
     private function __onComplete():void {
+        this.cfg = _data[0] as IstageCfg;
         ui = new CopyInfoViewUI();
         addChild(ui);
-
         init();
         adapt();
     }
@@ -72,6 +74,16 @@ public class CopyInfoView extends BaseFrame {
         ui.propertyList.repeatY = 1;
 
         ui.propertyList.spaceX = 10;
+
+        initInfo();
+    }
+
+    private function initInfo():void {
+        ui.introduceLabel.text = cfg.stageIntroduce;
+        ui.costLabel.text = "消耗体力 " + cfg.vitality;
+
+        //关卡属性
+        ui.list.array = cfg.reward.split('|');
     }
 
     private function onRenderPropertyItem(cell:PropertyItem, index:int):void {
@@ -79,7 +91,8 @@ public class CopyInfoView extends BaseFrame {
     }
 
     private function onRenderItem(cell:ItemCell, index:int):void {
-
+        var strs:Array = ui.list.array[index].split('_');
+//        cell.setData({itemid: strs[0], itemNum: strs[1]});
     }
 
     private function onClickFiveBtn(e:Event):void {

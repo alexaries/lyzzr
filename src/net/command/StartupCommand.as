@@ -3,9 +3,9 @@
  */
 package net.command {
 import net.events.ConnectionNotification;
-import net.events.SocketNotification;
-import net.proxy.ReMapProxy;
-import net.proxy.SocketConnectionProxy;
+import net.events.HttpNotification;
+import net.proxy.HttpConnectionProxy;
+import net.proxy.ReHttpProxy;
 
 import org.puremvc.as3.interfaces.ICommand;
 import org.puremvc.as3.interfaces.INotification;
@@ -13,14 +13,13 @@ import org.puremvc.as3.patterns.command.SimpleCommand;
 
 public class StartupCommand extends SimpleCommand implements ICommand {
     override public function execute(notification:INotification):void {
-        facade.registerProxy(new ReMapProxy());
-        facade.registerProxy(new SocketConnectionProxy());
-        facade.registerCommand(SocketNotification.STARTUP_CONNECT, StartConnectCommand);
+        facade.registerProxy(new ReHttpProxy());
+        facade.registerProxy(new HttpConnectionProxy());
+        facade.registerCommand(HttpNotification.MSG, MsgCommand);
 
-        facade.registerCommand(SocketNotification.CONNECTION, ConnectionCommand);
-        facade.registerCommand(ConnectionNotification.CONNECTION_ERROR, ConnectionCommand)
-        facade.registerCommand(SocketNotification.MSG, MsgCommand);
-
+        facade.registerCommand(HttpNotification.STARTUP_CONNNECT, StartConnectCommand);
+        facade.registerCommand(HttpNotification.CONNECTION, ConnectionCommand);
+        facade.registerCommand(ConnectionNotification.CONNECTION_ERROR, ConnectionCommand);
     }
 }
 }

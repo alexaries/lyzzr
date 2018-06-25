@@ -2,7 +2,6 @@ package com.game.module.pack.util {
 import com.game.module.pack.vo.PackVO;
 
 import config.ConfigManager;
-import config.item.item.IItemCfg;
 
 import utils.ArrayUtil;
 

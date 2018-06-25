@@ -4,7 +4,7 @@
 package net.proxy {
 import com.game.common.mvc.BaseProxy;
 
-import net.data.recvMsg.active.ActiveInfoMsg;
+import net.data.recvMsg.login.LoginMsg;
 
 import net.events.MsgEvent;
 
@@ -15,12 +15,12 @@ import org.puremvc.as3.interfaces.IProxy;
 public class ReHttpProxy extends BaseProxy implements IProxy {
     public static const NAME:String = "ReHttpProxy";
 
-    public var reHttpList:Array = [];
+    public var reHttpList = {};
 
     public function ReHttpProxy() {
         super(NAME);
 
-        add(MsgEvent.ACTIVE_INFO, ActiveInfoMsg);
+        add(MsgEvent.LOGIN_REQUEST, LoginMsg);
     }
 
     private function add(name:String, cls:Class):void {

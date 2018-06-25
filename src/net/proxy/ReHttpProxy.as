@@ -4,7 +4,10 @@
 package net.proxy {
 import com.game.common.mvc.BaseProxy;
 
+import net.data.recvMsg.copy.CopyMsg;
+
 import net.data.recvMsg.login.LoginMsg;
+import net.data.recvMsg.tavern.TavernMsg;
 
 import net.events.MsgEvent;
 
@@ -21,6 +24,8 @@ public class ReHttpProxy extends BaseProxy implements IProxy {
         super(NAME);
 
         add(MsgEvent.LOGIN_REQUEST, LoginMsg);
+        add(MsgEvent.HOTEL_PUB_LIST, TavernMsg);
+        add(MsgEvent.COPY_INFO, CopyMsg);
     }
 
     private function add(name:String, cls:Class):void {

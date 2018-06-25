@@ -4,6 +4,8 @@
 package com.game.module.copy.proxy {
 import com.game.module.copy.events.CopyEvent;
 
+import net.data.sendCmd.copy.CopyCmd;
+
 import net.proxy.HttpConnectionProxy;
 
 import org.puremvc.as3.interfaces.IProxy;
@@ -24,8 +26,9 @@ public class CopyProxy extends Proxy implements IProxy {
     }
 
     public function requestInfo():void {
-        var url:String = "";
-        connection.send(url);
+        var cmd:CopyCmd = new CopyCmd();
+        cmd.param1 = "你好呀";
+        connection.send(cmd);
     }
 
     public function onRespionseInfo():void {

@@ -4,9 +4,7 @@
 package net.mediator {
 import com.game.common.mvc.BaseMediator;
 
-import net.data.sendCmd.KeepAliveCmd;
 import net.events.MsgEvent;
-
 import net.proxy.HttpConnectionProxy;
 
 import org.puremvc.as3.interfaces.IMediator;
@@ -33,10 +31,10 @@ public class HttpConnectionMediator extends BaseMediator implements IMediator {
 
     function keepAliveStart():void {
         return;
-        var cmd:KeepAliveCmd = new KeepAliveCmd();
-        var flag:uint = Laya.timer.currTimer;
-        cmd.flag = flag;
-        httpConnectionProxy.send("", cmd);
+//        var cmd:KeepAliveCmd = new KeepAliveCmd();
+//        var flag:uint = Laya.timer.currTimer;
+//        cmd.flag = flag;
+//        httpConnectionProxy.send("", cmd);
     }
 
     override public function listNotificationInterests():Array {

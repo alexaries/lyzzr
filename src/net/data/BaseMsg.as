@@ -1,3 +1,6 @@
+/**
+ * Created by dingcj on 2018/6/25.
+ */
 package net.data {
 public class BaseMsg {
     private var _errorCode:int = 0;

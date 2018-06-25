@@ -1,4 +1,4 @@
-package com.game.module.jiban
+package com.game.utils
 {
 	import config.ConfigManager;
 	import config.memorybase.ImemoryBase;
@@ -8,11 +8,13 @@ package com.game.module.jiban
 	import config.memoryup.ImemoryUp;
 	import config.memoryup.ImemoryUpCfg;
 
-	public class JibanManager
+	public class JibanUtil
 	{
-		public function JibanManager()
+		public function JibanUtil()
 		{
 		}
+		
+		
 		
 		private var _memoryUp:ImemoryUp = null;
 		private var _memoryUpLen:int = 0;
@@ -25,7 +27,13 @@ package com.game.module.jiban
 			}
 			return _memoryUp;
 		}
-		
+		/**
+		 *羁绊等级属性 
+		 * @param id
+		 * @param level
+		 * @return 
+		 * 
+		 */		
 		public function getMemoryUpCfg(id:int, level:int):ImemoryUpCfg
 		{
 			memoryUp;
@@ -46,6 +54,11 @@ package com.game.module.jiban
 		
 		private var _memoryExp:ImemoryExp = null;
 		private var _memoryExpLen:int = 0;
+		/**
+		 *羁绊品质等级经验表 
+		 * @return 
+		 * 
+		 */		
 		private function get memoryExp():ImemoryExp
 		{
 			if(_memoryExp == null)
@@ -114,11 +127,11 @@ package com.game.module.jiban
 		}
 		
 		
-		private static var __instance:JibanManager = null;
-		public static function get instance():JibanManager
+		private static var __instance:JibanUtil = null;
+		public static function get instance():JibanUtil
 		{
 			if(__instance == null)
-				__instance = new JibanManager();
+				__instance = new JibanUtil();
 			return __instance;
 		}
 	}

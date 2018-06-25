@@ -30,7 +30,8 @@ public class BaseFrame extends BaseWindow {
     override public function dispose():void {
         if (_backbtn) {
             _backbtn.off(Event.CLICK, this, clickback);
-            _backbtn = null;
+            _backbtn.removeSelf();
+			_backbtn = null;
         }
         if (_clickBackSignal)_clickBackSignal.dispose();
         super.dispose();

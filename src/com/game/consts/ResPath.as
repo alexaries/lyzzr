@@ -12,6 +12,38 @@ package com.game.consts
 		public static const BGSOUND:String = "sound/bg/";
 		public static const STROYSOUND:String = "sound/story/";
 		
+		public static const ROLESOUND:String = "sound/role/";
+		
+		/**
+		 *角色音乐 
+		 * @param soundid
+		 * @return 
+		 * 
+		 */		
+		public static function getRoleSound(soundid:int):String
+		{
+			return ROLESOUND + soundid.toString() + ".mp3";
+		}
+		/**
+		 *专长框
+		 * @param quality
+		 * @return 
+		 * 
+		 */		
+		public static function getSpecialtyKuang(quality:int):String
+		{
+			return "ui/icon/kuang_specialty_" + quality.toString() + ".png";
+		}
+		/**
+		 *品质ICON 
+		 * @param quality
+		 * @return 
+		 * 
+		 */		
+		public static function getQualityIcon(quality:int):String
+		{
+			return "ui/icon/icon_quality_" + quality.toString() + ".png";
+		}
 		/**
 		 *近回背景音乐 
 		 * @param value

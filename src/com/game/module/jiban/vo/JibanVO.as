@@ -1,6 +1,6 @@
 package com.game.module.jiban.vo
 {
-	import com.game.module.jiban.JibanManager;
+	import com.game.utils.JibanUtil;
 	
 	import config.memorybase.ImemoryBaseCfg;
 	import config.memoryup.ImemoryUpCfg;
@@ -25,6 +25,11 @@ package com.game.module.jiban.vo
 		 */		
 		public var id:int = 2101;
 		
+		
+		/**
+		 *觉醒等级 
+		 */		
+		public var awakenLevel:int = 0;
 	
 		/**
 		 *等级 
@@ -37,8 +42,8 @@ package com.game.module.jiban.vo
 		public function set level(value:int):void
 		{
 			_level = value;
-			upCfg = JibanManager.instance.getMemoryUpCfg(id, value);
-			maxExp = JibanManager.instance.getmemoryUpNeedExp(value, base.quality);
+			upCfg = JibanUtil.instance.getMemoryUpCfg(id, value);
+			maxExp = JibanUtil.instance.getmemoryUpNeedExp(value, base.quality);
 		}
 		/**
 		 *星级 
@@ -67,7 +72,7 @@ package com.game.module.jiban.vo
 		{
 			if(_base == null)
 			{
-				_base = JibanManager.instance.getMemoryBaseCfg(id);
+				_base = JibanUtil.instance.getMemoryBaseCfg(id);
 				if(_base == null)
 				{
 					trace("当前羁绊ID不存在:" + id);

@@ -8,6 +8,7 @@ package com.game.module.jiban.mediator
 	public class JibanInfoMediator extends BaseMediator implements IMediator
 	{
 		public static const NAME:String = "JibanInfoMediator"; 
+		private var _view:JibanInfoView = null;
 		public function JibanInfoMediator(viewComponent:Object=null)
 		{
 			super(NAME, viewComponent);
@@ -15,7 +16,15 @@ package com.game.module.jiban.mediator
 		
 		
 		private function get view():JibanInfoView {
-			return getViewComponent() as JibanInfoView;
+			if(_view == null)
+				_view = getViewComponent() as JibanInfoView;
+			return _view;
 		}
+		
+		override public function onRegister():void {
+			super.onRegister();
+		
+		}
+		
 	}
 }

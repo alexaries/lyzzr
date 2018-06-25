@@ -8,6 +8,7 @@ import com.game.module.battle.view.ExpertView;
 import com.game.module.company.view.CompanyView;
 import com.game.module.copy.view.CopyInfoView;
 import com.game.module.copy.view.CopyView;
+import com.game.module.jiban.view.JibanInfoView;
 import com.game.module.jiban.view.JibanView;
 import com.game.module.plot.view.PlotView;
 import com.game.module.roll.view.RollScreenView;
@@ -21,11 +22,9 @@ import com.game.vo.MenuWinType;
 import com.signal.SignalDispatcher;
 
 import globals.ConfigLocator;
-
 import globals.PlatformSDK;
 
 import laya.events.Event;
-
 import laya.utils.Dictionary;
 import laya.utils.Handler;
 
@@ -89,6 +88,9 @@ public class GameMain extends BaseView {
             var win:BaseWindow = null;
             trace("menuWinTypeName:", menuWinTypeName);
             switch (menuWinTypeName) {
+				case MenuWinType.JIBAN_INFOVIEW:
+					win = new JibanInfoView();
+					break;
                 case MenuWinType.JIBAN_VIEW:
                     win = new JibanView();
                     break;

@@ -2,6 +2,7 @@ package com.game.module.jiban.mediator
 {
 	import com.game.common.events.MenuWindowVO;
 	import com.game.common.mvc.BaseMediator;
+	import com.game.module.jiban.proxy.JibanProxy;
 	import com.game.module.jiban.view.JibanView;
 	import com.game.module.jiban.vo.JibanVO;
 	import com.game.module.menu.events.MenuEvent;
@@ -17,6 +18,17 @@ package com.game.module.jiban.mediator
 		{
 			super(NAME, viewComponent);
 		}
+		
+		private var _jibanproxy:JibanProxy = null;
+		private function get jibanproxy():JibanProxy
+		{
+			if(_jibanproxy == null)
+				_jibanproxy = facade.retrieveProxy(JibanProxy.NAME) as JibanProxy;
+			return _jibanproxy;
+		}
+		
+		
+	
 		
 		public function showMyJiban():void
 		{

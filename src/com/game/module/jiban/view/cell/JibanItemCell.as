@@ -24,14 +24,16 @@ package com.game.module.jiban.view.cell
 			super.createChildren();
 			_ui = new JibanItemUI();
 			//_ui.btnOk.clickHandler = Handler.create(this, onClick, null, false)
-			_ui.on(Event.CLICK, onClickthis, null);
-			addChild(_ui);
 			
+		
+			addChild(_ui);
+			_ui.on(Event.CLICK, this, onClickthis);
 			_starlist = new StarList(_ui.starlist);
 		}
 		
 		private function onClickthis():void
 		{
+			trace("JibanItemCell, onClickthis");
 			_sig.dispatch(vo);
 		}
 		
@@ -54,7 +56,8 @@ package com.game.module.jiban.view.cell
 		 */		
 		private function setstarLevel(value:int):void
 		{
-			var img:Image = null;
+			_starlist.setStar(value, _vo.base.topStart);
+			/*var img:Image = null;
 			for(var i:int = 0; i < 5; i ++)
 			{
 				img = _ui["icon" + i.toString()] as Image;
@@ -65,7 +68,7 @@ package com.game.module.jiban.view.cell
 				else
 					img.visible = false;
 				
-			}
+			}*/
 		}
 	
 		

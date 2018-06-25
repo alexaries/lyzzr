@@ -12,7 +12,7 @@ import globals.vo.PlatformRoleInfo;
 import laya.utils.Handler;
 
 import net.consts.StaticConfig;
-import net.mediator.SocketConnectionMediator;
+import net.mediator.HttpConnectionMediator;
 
 import org.puremvc.as3.interfaces.IMediator;
 import org.puremvc.as3.interfaces.INotification;
@@ -55,14 +55,14 @@ public class GameMediator extends Mediator implements IMediator {
 
         switch (name) {
             case DataEvent.CREATE_ROLE:
-                keepLiveSocketConnectionMediator();
+                keepLiveHttpConnectionMediator();
                 createRole();
                 break;
             case DataEvent.ILLEGAL_LOGIN:
                 illegalLogin();
                 break;
             case DataEvent.LOGIN_SUCCESS:
-                keepLiveSocketConnectionMediator();
+                keepLiveHttpConnectionMediator();
                 loginSuccess();
                 break;
         }
@@ -73,8 +73,8 @@ public class GameMediator extends Mediator implements IMediator {
         gameView.login();
     }
 
-    function keepLiveSocketConnectionMediator() {
-        facade.registerMediator(new SocketConnectionMediator(getViewComponent()));
+    function keepLiveHttpConnectionMediator():void {
+        facade.registerMediator(new HttpConnectionMediator(getViewComponent()));
     }
 
     private function loginSuccess():void {

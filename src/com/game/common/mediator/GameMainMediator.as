@@ -9,10 +9,6 @@ import com.game.module.menu.events.MenuEvent;
 import com.game.vo.FuncOpenVO;
 import com.game.vo.MenuWinType;
 
-import laya.display.Sprite;
-
-import net.consts.AppConst;
-
 import org.puremvc.as3.interfaces.IMediator;
 import org.puremvc.as3.interfaces.INotification;
 

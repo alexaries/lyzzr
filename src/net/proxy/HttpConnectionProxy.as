@@ -5,29 +5,33 @@ package net.proxy {
 import com.game.common.mvc.BaseProxy;
 
 import laya.events.Event;
-
 import laya.net.HttpRequest;
 
-import net.utils.MsgCenter;
+import net.events.ConnectionNotification;
+
+import net.events.HttpNotification;
+import net.events.MsgEvent;
 
 import org.puremvc.as3.interfaces.IProxy;
-import org.puremvc.as3.patterns.observer.Notification;
 
 public class HttpConnectionProxy extends BaseProxy implements IProxy {
     public static const NAME:String = "HttpConnectionProxy";
+    public var serverTimeDelay:Number;
+    public var startKeepAlive:Number = 0;
+    public var isReConnect:Boolean = false;
+    public var kickOff:Boolean = false;//被踢掉
 
     public function HttpConnectionProxy() {
         super(NAME);
     }
 
-    public function send(url:String, data:* = null, method:String = "post", resposeType:String = "arraybuffer", headers:Array = null):Boolean {
+    public function send(url:String, data:* = null, method:String = "post", resposeType:String = "json", headers:Array = null):Boolean {
         var hr:HttpRequest = new HttpRequest();
-
         hr.once(Event.PROGRESS, this, progressFunc);
         hr.once(Event.ERROR, this, errorFunc);
         hr.once(Event.COMPLETE, this, completeFunc);
-
         hr.send(url, data, method, resposeType, headers);
+        return true;
     }
 
     private function progressFunc(e:* = null):void {
@@ -36,22 +40,15 @@ public class HttpConnectionProxy extends BaseProxy implements IProxy {
 
     private function errorFunc(e:* = null):void {
         trace("[消息访问出问题]：" + e);
+        this.sendNotification(HttpNotification.CONNECTION, "--@--SocketConnectionProxy.ioErrorHandler() .... ", ConnectionNotification.IO_ERROR);
     }
 
     private function completeFunc(e:* = null):void {
         var evt = e as Object;
-
         var name:String = "";
         var json:JSON = null;
-
-        parse(name, json);
-    }
-
-    //这个解析还是单独放在 另外的地方处理吧
-    private function parse(name:String, msgData:JSON):void {
-        //结构---------------------------------后面看情况吧
-        dispatch(new Notification(name, MsgCenter.toMsg(null, msgData)));
-        //此处传出去BaseMsg
+        var msgEvent:MsgEvent = new MsgEvent(HttpNotification.MSG, json, name);
+        facade.notifyObservers(msgEvent);
     }
 
     /*思路
@@ -65,5 +62,19 @@ public class HttpConnectionProxy extends BaseProxy implements IProxy {
      MsgCenter
      BaseMsg
      */
+
+    public function addListener(type:String, args:Array = null):Boolean {
+        var hr:HttpRequest = new HttpRequest();
+        hr.on(type, this, completeFunc, args);
+        return true;
+    }
+
+    public function removeListener(type:String, onceOnly:Boolean = false):Boolean {
+
+    }
+
+    public function reconnect():void {
+
+    }
 }
 }

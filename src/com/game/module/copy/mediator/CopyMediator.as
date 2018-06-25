@@ -4,11 +4,14 @@
 package com.game.module.copy.mediator {
 import com.game.common.events.MenuWindowVO;
 import com.game.common.mvc.BaseMediator;
+import com.game.common.view.Alert;
 import com.game.events.NotiEvent;
 import com.game.module.copy.proxy.CopyProxy;
 import com.game.module.copy.view.CopyView;
 import com.game.module.menu.events.MenuEvent;
 import com.game.vo.MenuWinType;
+
+import config.stage.IstageCfg;
 
 import org.puremvc.as3.interfaces.IMediator;
 import org.puremvc.as3.interfaces.INotification;
@@ -36,8 +39,14 @@ public class CopyMediator extends BaseMediator implements IMediator {
         view.itemSignal.getSignal(this).listen(itemClick);
     }
 
-    private function itemClick():void {
-        dispatch(new MenuEvent(MenuEvent.MENU_CLIK, new MenuWindowVO(MenuWinType.COPY_INFO_VIEW, MenuWindowVO.OPEN)));
+    private function itemClick(cfg:IstageCfg):void {
+        if (cfg.isStory == 1) {
+            Alert.roll("这是剧情关卡 开始播放剧情");
+            dispatch(new MenuEvent(MenuEvent.MENU_CLIK, new MenuWindowVO(MenuWinType.PLOT_VIEW, MenuWindowVO.OPEN, [10101])));
+        }
+        else {
+            dispatch(new MenuEvent(MenuEvent.MENU_CLIK, new MenuWindowVO(MenuWinType.COPY_INFO_VIEW, MenuWindowVO.OPEN, [cfg])));
+        }
     }
 
     private function closeClick():void {

@@ -23,8 +23,8 @@ public class GameInitCommand extends MacroCommand implements ICommand {
         addSubCommand(CopyStartUpCommand);
         addSubCommand(BattleStartUpCommand);
         addSubCommand(CompanyStartUpCommand);
-        return;
         addSubCommand(UserStartupCommand);
+        return;
         addSubCommand(TaskStartupCommand);
         addSubCommand(MapStartupCommand);
         addSubCommand(RedPointStartupCommand);

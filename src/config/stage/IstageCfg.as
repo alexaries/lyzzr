@@ -21,6 +21,7 @@ package config.stage{
         function get expert():Number;
         function get story():Number;
         function get endStory():Number;
+        function get bgPic():Number;
         function get stageIntroduce():String;
         function get dialogEventIntroduce():String;
         function get dialogEventContent():String;

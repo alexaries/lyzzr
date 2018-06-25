@@ -7,18 +7,19 @@ public class MenuWinType {
 
     //#region NEW
     public static const COPY_INFO_VIEW = "COPY_INFO_VIEW";//副本信息
+    public static const COPY_MOP_VIEW = "COPY_MOP_VIEW";//副本扫荡界面
 
     public static const BATTLE_VIEW = "BATTLE_VIEW";//战斗
     public static const EXPERT_VIEW = "EXPERT_VIEW";//专家界面
-	/**
-	 *剧情 播放  
-	 */
+    /**
+     *剧情 播放
+     */
     public static const PLOT_VIEW:String = "plot_view";
-	/**
-	 *羁绊 
-	 */	
-	public static const JIBAN_VIEW:String = "jiban_view";
-	public static const JIBAN_INFOVIEW:String = "jibaninfo_view";
+    /**
+     *羁绊
+     */
+    public static const JIBAN_VIEW:String = "jiban_view";
+    public static const JIBAN_INFOVIEW:String = "jibaninfo_view";
 
     public static const TAVERN_HIRE_VIEW:String = "tavern_hire_view";//招募成功界面
     public static const TAVERN_TU_VIEW:String = "tavern_tu_view";//散仙图鉴

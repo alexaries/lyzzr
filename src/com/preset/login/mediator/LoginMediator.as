@@ -11,9 +11,8 @@ import globals.PlatformSDK;
 import laya.utils.Handler;
 
 import net.consts.StaticConfig;
-
-import net.events.SocketNotification;
-import net.proxy.SocketConnectionProxy;
+import net.events.HttpNotification;
+import net.proxy.HttpConnectionProxy;
 
 import org.puremvc.as3.interfaces.IMediator;
 import org.puremvc.as3.interfaces.INotification;
@@ -29,7 +28,7 @@ public class LoginMediator extends Mediator implements IMediator {
 
     private var view:LoginView;
 
-    private var socketConnectionProxy:SocketConnectionProxy;
+    private var connection:HttpConnectionProxy;
 
 
     public function LoginMediator(__viewComponent:Object = null) {
@@ -39,7 +38,7 @@ public class LoginMediator extends Mediator implements IMediator {
     override public function onRegister():void {
         super.onRegister();
 
-        socketConnectionProxy = facade.retrieveProxy(SocketConnectionProxy.NAME) as SocketConnectionProxy;
+        connection = facade.retrieveProxy(HttpConnectionProxy.NAME) as HttpConnectionProxy;
 
         view = getViewComponent() as LoginView;
         view.loginClick.getSignal(this).listen(OnClickLoginBtn);
@@ -99,10 +98,8 @@ public class LoginMediator extends Mediator implements IMediator {
 
     //发送协议开始请求登录
     public function requestLogin(_ip:String, _port:Number):void {
-//			StaticConfig.userId=_id;
-        //socketConnectionProxy.startMsg();
         trace("@requestLogin==", _ip, _port);
-        facade.notifyObservers(new Notification(SocketNotification.STARTUP_CONNECT, {ip: _ip, port: _port}));
+        facade.notifyObservers(new Notification(HttpNotification.STARTUP_CONNNECT, {ip: _ip, port: _port}));
     }
 }
 

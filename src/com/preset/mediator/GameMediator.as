@@ -113,7 +113,6 @@ public class GameMediator extends Mediator implements IMediator {
 
         sendNotification(ApplicationFacade.GAME_STARTUP);
         gameView.createGameMain();
-        //
     }
 
     private function illegalLogin():void {

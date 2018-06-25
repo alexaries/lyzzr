@@ -31,7 +31,7 @@ public class CopyProxy extends Proxy implements IProxy {
         connection.send(cmd);
     }
 
-    public function onRespionseInfo():void {
+    public function onResponseInfo():void {
         facade.notifyObservers(new Notification(CopyEvent.COPY_RESPONSE_INFO));
     }
 

@@ -46,7 +46,7 @@ public class ExpertMediator extends BaseMediator implements IMediator {
 
     override public function onRemove():void {
         super.onRemove();
-        if (battleProxy)dispatch(new Notification(NotiEvent.CLOSE_MONEY));
+        if (battleProxy.isInBattle)dispatch(new Notification(NotiEvent.CLOSE_MONEY));
     }
 
     override public function listNotificationInterests():Array {

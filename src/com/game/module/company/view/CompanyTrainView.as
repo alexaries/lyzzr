@@ -7,6 +7,7 @@ import com.game.common.view.BaseView;
 import com.game.module.company.mediator.CompanyTrainMediator;
 import com.game.module.company.view.items.CompanyCourseItem;
 import com.game.module.company.view.items.CompanyDepartItem;
+import com.game.module.company.view.items.CompanySelectItem;
 import com.game.module.copy.view.items.PropertyValueItem;
 import com.signal.SignalDispatcher;
 
@@ -19,6 +20,8 @@ public class CompanyTrainView extends BaseView {
 
     private var ui:CompanyTrainViewUI;
     public var oneKeySignal:SignalDispatcher;
+    public var itemSelectSignal:SignalDispatcher;//待选列表的item
+    public var itemCourseSignal:SignalDispatcher;//已经选中的item
 
     private var posArr:Array = [
         {x: 183, y: 549},
@@ -32,6 +35,8 @@ public class CompanyTrainView extends BaseView {
     public function CompanyTrainView() {
         super([]);
         oneKeySignal = new SignalDispatcher();
+        itemSelectSignal = new SignalDispatcher();
+        itemCourseSignal = new SignalDispatcher();
     }
 
     override public function getMediator():BaseMediator {
@@ -71,11 +76,38 @@ public class CompanyTrainView extends BaseView {
         ui.propertyList.itemRender = PropertyValueItem;
         ui.propertyList.renderHandler = Handler.create(this, onRenderPropertyValueItem, null, false);
 
-        ui.courseList.itemRender = CompanyCourseItem;
-        ui.courseList.renderHandler = Handler.create(this, onRenderCourseItem, null, false);
-        ui.courseList.hScrollBarSkin = "";
+        ui.selectList.itemRender = CompanySelectItem;
+        ui.selectList.renderHandler = Handler.create(this, onRenderSelectItem, null, false);
+        ui.selectList.hScrollBarSkin = "";
+        ui.selectList.repeatX = 10;
+        ui.selectList.repeatY = 1;
+        ui.selectList.spaceX = 20;
+
+        itemSelectSignal.getSignal(this).listen(onSelectItemClick);
+        itemCourseSignal.getSignal(this).listen(onCourseItemClick);
 
         initCourse();
+        updateSelectInfo();
+    }
+
+    private function onCourseItemClick():void {
+        ///////-------------------------------------------------------------------working
+    }
+
+    private function onSelectItemClick():void {
+
+    }
+
+    public function updateSelectInfo():void {
+        var arr:Array = [];
+        for (var i = 0; i < 6; i++) {
+            arr.push("");
+        }
+        ui.selectList.array = arr;
+    }
+
+    private function onRenderSelectItem(cell:CompanySelectItem, index:int):void {
+        cell.initInfo(index, itemSelectSignal);
     }
 
     private function initCourse():void {
@@ -84,7 +116,7 @@ public class CompanyTrainView extends BaseView {
             var course:CompanyCourseItem = new CompanyCourseItem();
             ui.container.addChild(course);
             courseArr.push(course);
-            course.initInfo(posArr[i]);
+            course.initInfo(itemCourseSignal, posArr[i]);
         }
     }
 
@@ -93,11 +125,6 @@ public class CompanyTrainView extends BaseView {
             courseArr[i].destroy();
         }
         courseArr = [];
-    }
-
-    //这个是下方 待选择的列表
-    private function onRenderCourseItem(cell:CompanyCourseItem, index:int):void {
-
     }
 
     private function onRenderPropertyValueItem(cell:PropertyValueItem, index:int):void {
@@ -122,11 +149,14 @@ public class CompanyTrainView extends BaseView {
 
     override public function dispose():void {
         super.dispose();
+
         if (oneKeySignal)oneKeySignal.dispose();
+        if (itemSelectSignal)itemSelectSignal.dispose();
+        if (itemCourseSignal)itemCourseSignal.dispose();
 
         if (ui.departList.renderHandler)ui.departList.renderHandler.clear();
         if (ui.propertyList.renderHandler)ui.propertyList.renderHandler.clear();
-        if (ui.courseList.renderHandler)ui.courseList.renderHandler.clear();
+        if (ui.selectList.renderHandler)ui.selectList.renderHandler.clear();
 
         destroyCourse();
     }

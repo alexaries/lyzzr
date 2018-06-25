@@ -30,6 +30,9 @@ public class HttpConnectionMediator extends BaseMediator implements IMediator {
     }
 
     function keepAliveStart():void {
+
+        trace("发送协议 保持服务器连接... ...");
+
         return;
 //        var cmd:KeepAliveCmd = new KeepAliveCmd();
 //        var flag:uint = Laya.timer.currTimer;

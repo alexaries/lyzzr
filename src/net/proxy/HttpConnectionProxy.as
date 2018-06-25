@@ -23,6 +23,8 @@ public class HttpConnectionProxy extends BaseProxy implements IProxy {
     public var isReConnect:Boolean = false;
     public var kickOff:Boolean = false;//被踢掉
 
+    public var url:String = "www.baidu.com";
+
     public function HttpConnectionProxy() {
         super(NAME);
     }
@@ -32,8 +34,6 @@ public class HttpConnectionProxy extends BaseProxy implements IProxy {
         hr.once(Event.PROGRESS, this, progressFunc);
         hr.once(Event.ERROR, this, errorFunc);
         hr.once(Event.COMPLETE, this, completeFunc);
-
-        var url:String = cmd.protocolID;
 
         if (cmd.msgToJson()) {
             var json:Object = cmd.json;

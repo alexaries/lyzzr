@@ -2,6 +2,7 @@ package config {
 import config.ceshi.ICeShi;
 import config.chapter.Ichapter;
 import config.functionopen.IfunctionOpen;
+import config.memoryadvance.ImemoryAdvance;
 import config.memorybase.ImemoryBase;
 import config.memorybase.ImemoryBaseCfg;
 import config.memoryexp.ImemoryExp;
@@ -18,6 +19,7 @@ public class ConfigManager extends BaseConfig {
     public var memoryBase_memoryBase:config.memorybase.ImemoryBase;
     public var memoryExp_memoryExp:config.memoryexp.ImemoryExp;
     public var memoryUp_memoryUp:config.memoryup.ImemoryUp;
+	public var memoryAdvance_memoryAdvance:config.memoryadvance.ImemoryAdvance;
 
     public var stage:config.stage.Istage;//关卡配置
     public var functionOpen:config.functionopen.IfunctionOpen;//功能主界面配置
@@ -50,7 +52,7 @@ public class ConfigManager extends BaseConfig {
         memoryBase_memoryBase = readAndToClass('memoryBase');
         memoryExp_memoryExp = readAndToClass('memoryExp');
         memoryUp_memoryUp = readAndToClass('memoryUp');
-
+		memoryAdvance_memoryAdvance = readAndToClass("memoryAdvance_memoryAdvance");
         functionOpen = readAndToClass('functionOpen');
         chapter = readAndToClass('chapter');
     }

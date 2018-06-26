@@ -1,6 +1,8 @@
 package com.game.utils
 {
 	import config.ConfigManager;
+	import config.memoryadvance.ImemoryAdvance;
+	import config.memoryadvance.ImemoryAdvanceCfg;
 	import config.memorybase.ImemoryBase;
 	import config.memorybase.ImemoryBaseCfg;
 	import config.memoryexp.ImemoryExp;
@@ -27,6 +29,52 @@ package com.game.utils
 			}
 			return _memoryUp;
 		}
+		
+		
+		private var _memoryadvance:ImemoryAdvance = null;
+		private var _memoryadvanceLen:int = 0;
+		public function get memoryadvance():ImemoryAdvance
+		{
+			if(_memoryadvance == null)
+			{
+				_memoryadvance = ConfigManager.instance.memoryAdvance_memoryAdvance;
+				_memoryadvanceLen = _memoryadvance.memoryadvanceCfg.length;
+			}
+			return _memoryadvance;
+		}
+		
+		/**
+		 *星级类型 
+		 */		
+		public static const DISTINGUISHTYPE_1:int = 1;//distinguishType
+		/**
+		 *进化类型 
+		 */		
+		public static const DISTINGUISHTYPE_2:int = 2;
+		/**
+		 *获取memoadvance觉醒和星级等级 
+		 * @param id
+		 * @param distinguishType
+		 * @param starOrAwaken
+		 * @return 
+		 * 
+		 */		
+		public function getMemoryAdvance(id:int, distinguishType:int, starOrAwaken:int):ImemoryAdvanceCfg
+		{
+			memoryadvance;
+			var cfg:ImemoryAdvanceCfg = null;
+			for(var i:int = 0; i < _memoryadvanceLen; i ++)
+			{
+				cfg = memoryadvance.memoryadvanceCfg[i];
+				if(cfg.ID == id && cfg.distinguishType == distinguishType && cfg.starOrAwaken)
+				{
+					return cfg;
+				}
+			}
+			
+			return null;
+		}
+		
 		/**
 		 *羁绊等级属性 
 		 * @param id

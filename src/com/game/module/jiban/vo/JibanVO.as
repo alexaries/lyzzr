@@ -2,6 +2,7 @@ package com.game.module.jiban.vo
 {
 	import com.game.utils.JibanUtil;
 	
+	import config.memoryadvance.ImemoryAdvanceCfg;
 	import config.memorybase.ImemoryBaseCfg;
 	import config.memoryup.ImemoryUpCfg;
 
@@ -24,12 +25,33 @@ package com.game.module.jiban.vo
 		 *ID 
 		 */		
 		public var id:int = 2101;
-		
-		
+		/**
+		 *通过ID获得属性 
+		 * @param value
+		 * @return 
+		 * 
+		 */		
+		public function getattackByID(value:int):int
+		{
+			var atk1:int = base["attack" + value.toString()] + upCfg["attack" + value.toString()];
+			atk1 = (1 + awakenCfg["attack" + value.toString() + "Percent"] * 0.01) * atk1;
+			atk1 = (1 + starCfg["attack" + value.toString() + "Percent"] * 0.01) * atk1;
+			return atk1;
+		}
 		/**
 		 *觉醒等级 
-		 */		
-		public var awakenLevel:int = 0;
+		 */	
+		private var _awakenLevel:int = 0;
+		
+		public function get awakenLevel():int
+		{
+			return _awakenLevel;
+		}
+		public function set awakenLevel(value:int):void
+		{
+			_awakenLevel = value;
+			awakenCfg = JibanUtil.instance.getMemoryAdvance(id, JibanUtil.DISTINGUISHTYPE_2, value);
+		}
 	
 		/**
 		 *等级 
@@ -45,10 +67,28 @@ package com.game.module.jiban.vo
 			upCfg = JibanUtil.instance.getMemoryUpCfg(id, value);
 			maxExp = JibanUtil.instance.getmemoryUpNeedExp(value, base.quality);
 		}
+		
+		public var starCfg:ImemoryAdvanceCfg = null;
+		public var awakenCfg:ImemoryAdvanceCfg = null;
+		
+		
+	
+		
 		/**
 		 *星级 
 		 */		
-		public var starLevel:int = 0;
+		private var _starLevel:int = 0;
+		public function set starLevel(value:int):void
+		{
+			_starLevel = value;
+			
+			starCfg = JibanUtil.instance.getMemoryAdvance(id, JibanUtil.DISTINGUISHTYPE_1, value);
+		}
+		public function get starLevel():int
+		{
+			return _starLevel;
+		}
+		
 		/**
 		 *经验 
 		 */		

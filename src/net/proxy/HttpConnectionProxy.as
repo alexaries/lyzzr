@@ -41,6 +41,7 @@ public class HttpConnectionProxy extends BaseProxy implements IProxy {
         }
         else {
             trace("[" + cmd.protocolID + "]协议有问题");
+            return false;
         }
         return true;
     }

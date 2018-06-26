@@ -3,6 +3,7 @@
  */
 package com.game.module.company.view {
 import com.game.common.mvc.BaseMediator;
+import com.game.common.view.Alert;
 import com.game.common.view.BaseView;
 import com.game.module.company.mediator.CompanyTrainMediator;
 import com.game.module.company.view.items.CompanyCourseItem;
@@ -15,6 +16,8 @@ import laya.events.Event;
 import laya.utils.Handler;
 
 import ui.company.CompanyTrainViewUI;
+
+import utils.ArrayUtil;
 
 public class CompanyTrainView extends BaseView {
 
@@ -31,6 +34,8 @@ public class CompanyTrainView extends BaseView {
         {x: 867, y: 879},
         {x: 664, y: 549}
     ];
+
+    private var courseItemArr:Array = [];
 
     public function CompanyTrainView() {
         super([]);
@@ -64,8 +69,6 @@ public class CompanyTrainView extends BaseView {
         init();
     }
 
-    private var courseArr:Array = [];
-
     private function init():void {
         ui.closeBtn.on(Event.CLICK, this, onClickCloseBtn);
         ui.oneKeyBtn.on(Event.CLICK, this, onClickOneKeyBtn);
@@ -90,41 +93,63 @@ public class CompanyTrainView extends BaseView {
         updateSelectInfo();
     }
 
-    private function onCourseItemClick():void {
-        ///////-------------------------------------------------------------------working
-    }
-
-    private function onSelectItemClick():void {
+    private function onCourseItemClick(id:int):void {
+        ArrayUtil.remove(courseArr, id);
+        selectArr.push(id);
 
     }
+
+    private function onSelectItemClick(id:int):void {
+        if (courseArr.length >= maxCount) {
+            Alert.show("所选培训已经超过最大数量");
+            return;
+        }
+        courseArr.push(id);
+        ArrayUtil.remove(selectArr, id);
+
+
+        updateCourseInfo();
+    }
+
+    private var selectArr:Array = [];//待选列表的Id
+    private var courseArr:Array = [];//已选列表的Id
+    private var maxCount:int = 6;//最大可选数量
 
     public function updateSelectInfo():void {
-        var arr:Array = [];
-        for (var i = 0; i < 6; i++) {
-            arr.push("");
+//        var arr:Array = [];
+//        for (var i = 0; i < 6; i++) {
+//            arr.push("");
+//        }
+//        ui.selectList.array = arr;
+    }
+
+    public function updateCourseInfo():void {
+        if (courseArr == null || courseArr.length == 0)return;
+        for (var i = 0; i < courseArr.length; i++) {
+            courseItemArr[i].updateInfo(courseArr[i]);
         }
-        ui.selectList.array = arr;
     }
 
     private function onRenderSelectItem(cell:CompanySelectItem, index:int):void {
-        cell.initInfo(index, itemSelectSignal);
+        var id:int = 1;
+        cell.initInfo(index, itemSelectSignal, id);
     }
 
     private function initCourse():void {
-        courseArr = [];
+        courseItemArr = [];
         for (var i = 0; i < 6; i++) {
             var course:CompanyCourseItem = new CompanyCourseItem();
             ui.container.addChild(course);
-            courseArr.push(course);
+            courseItemArr.push(course);
             course.initInfo(itemCourseSignal, posArr[i]);
         }
     }
 
     private function destroyCourse():void {
-        for (var i = 0; i < courseArr.length; i++) {
-            courseArr[i].destroy();
+        for (var i = 0; i < courseItemArr.length; i++) {
+            courseItemArr[i].destroy();
         }
-        courseArr = [];
+        courseItemArr = [];
     }
 
     private function onRenderPropertyValueItem(cell:PropertyValueItem, index:int):void {
@@ -149,6 +174,8 @@ public class CompanyTrainView extends BaseView {
 
     override public function dispose():void {
         super.dispose();
+        ui.closeBtn.off(Event.CLICK, this, onClickCloseBtn);
+        ui.oneKeyBtn.off(Event.CLICK, this, onClickOneKeyBtn);
 
         if (oneKeySignal)oneKeySignal.dispose();
         if (itemSelectSignal)itemSelectSignal.dispose();

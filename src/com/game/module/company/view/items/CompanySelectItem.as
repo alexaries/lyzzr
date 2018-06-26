@@ -12,7 +12,8 @@ import ui.company.CompanySelectItemUI;
 
 public class CompanySelectItem extends Box {
     private var ui:CompanySelectItemUI;
-    private var index:int;
+    private var _index:int;
+    private var _id:int = 0;
 
     public function CompanySelectItem() {
         super();
@@ -25,14 +26,14 @@ public class CompanySelectItem extends Box {
         this.addChild(ui);
     }
 
-    public function initInfo(index:int, signal:SignalDispatcher):void {
-        this.index = index;
-
+    public function initInfo(index:int, signal:SignalDispatcher, id:int):void {
+        this._index = index;
+        this._id = id;
         this.ui.on(Event.CLICK, this, onClick, [signal]);
     }
 
     private function onClick(signal:SignalDispatcher):void {
-        if (signal)signal.dispatch(null);
+        if (signal)signal.dispatch([_id]);
     }
 
     override public function destroy(destroyChild:Boolean = true):void {

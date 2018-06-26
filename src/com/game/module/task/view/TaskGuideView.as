@@ -9,7 +9,7 @@ import com.game.module.task.utils.TaskUtils;
 import com.component.DownTime;
 import com.game.module.task.vo.TaskGuideVo;
 import com.game.utils.ShellUtils;
-import com.game.vo.TaskCfg;
+import com.game.vo.TaskVO;
 import com.signal.SignalDispatcher;
 
 import lang.LangTxt;
@@ -212,7 +212,7 @@ public class TaskGuideView extends BaseWindow {
         s.style.height = 124;
     }
 
-    private function toAward(taskVo:TaskCfg):String {
+    private function toAward(taskVo:TaskVO):String {
         var html:String;
         if (taskVo) {
             html = TaskUtils.toTaskAward(taskVo.id).join("&nbsp;&nbsp;&nbsp;&nbsp;");

@@ -1,15 +1,7 @@
 package utils {
 import com.game.module.pack.util.PackUtil;
 import com.game.module.pack.vo.PackVO;
-import com.game.vo.CittaVO;
-import com.game.vo.GoodsPropsVO;
 import com.hurlant.math.BigInteger;
-
-import globals.ConfigLocator;
-
-import mx.core.ByteArrayAsset;
-
-import utils.ByteArray;
 
 import net.consts.StaticConfig;
 import net.utils.BytesUtil;
@@ -296,31 +288,6 @@ public class LunaUtil {
                 return Math.floor(_idN * 0.01) - 210 + 21000;
             return Math.floor(_idN * 0.01) - 1 + 1200;
         }
-    }
-
-    //----------------------------------------------心法冲突相关-------------------------------------------------------------//
-    public static function checkCittaID(cittaid:int, selectCitta:int):Boolean {
-        var cittavo:CittaVO;
-        var index:int = -1;
-        if (selectCitta == cittaid) {
-            return true;
-        } else {
-            var cittadiff:Array = getCittaDiffArray(Math.floor(cittaid / 100));
-            if (cittadiff) {
-                var nn:int = Math.floor(selectCitta / 100);
-                index = cittadiff.indexOf(nn);
-                if (index > -1) {
-//                cittavo = ConfigLocator.getInstance().cittaDatas.get(nn);
-//                dispatch(new NotiEvent(NotiEvent.ROLL_ALERT, '当前已装备心法[' + cittavo.name + '],与你要装备的心法冲突'));
-                    return true;
-                }
-            }
-        }
-        return false;
-    }
-
-    public static function getCittaDiffArray(cittaid:int):Array {
-        return null;
     }
 
     //----------------------------------------------------------------------------------------------------------------//

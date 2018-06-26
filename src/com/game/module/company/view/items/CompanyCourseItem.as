@@ -2,6 +2,8 @@
  * Created by dingcj on 2018/6/20.
  */
 package com.game.module.company.view.items {
+import com.signal.SignalDispatcher;
+
 import laya.ui.Box;
 
 import ui.company.CompanyCourseItemUI;
@@ -24,7 +26,7 @@ public class CompanyCourseItem extends Box {
 //        ui.info.visible = false;
     }
 
-    public function initInfo(point:Object):void {
+    public function initInfo(signal:SignalDispatcher, point:Object):void {
         this.ui.pos(point.x, point.y);
     }
 
